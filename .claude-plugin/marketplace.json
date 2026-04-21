@@ -1,0 +1,41 @@
+{
+  "name": "lovstudio-dev",
+  "owner": {
+    "name": "Lovstudio",
+    "email": "shawninjuly@gmail.com"
+  },
+  "metadata": {
+    "description": "Lovstudio dev skills — `npx skills add lovstudio/dev-skills`."
+  },
+  "plugins": [
+    {
+      "name": "meta",
+      "source": "./",
+      "description": "Meta — 2 free skills bundled together.",
+      "category": "Meta",
+      "skills": [
+        "./skills/skill-creator",
+        "./skills/skill-optimizer"
+      ],
+      "strict": false
+    },
+    {
+      "name": "dev-tools",
+      "source": "./",
+      "description": "Dev Tools — 9 free skills bundled together.",
+      "category": "Dev Tools",
+      "skills": [
+        "./skills/auto-context",
+        "./skills/cc-migrate-session",
+        "./skills/deploy-to-vercel",
+        "./skills/finder-action",
+        "./skills/gh-access",
+        "./skills/gh-contribute",
+        "./skills/gh-tidy",
+        "./skills/obsidian-reset-cache",
+        "./skills/project-port"
+      ],
+      "strict": false
+    }
+  ]
+}

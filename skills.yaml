@@ -1,0 +1,105 @@
+version: 1
+skills:
+- name: skill-creator
+  repo: lovstudio/skill-creator-skill
+  name_zh: 技能脚手架
+  paid: false
+  category: Meta
+  description: Scaffold new lovstudio skills with proper structure, SKILL.md + README.md.
+  tagline_en: Scaffold a new Claude Code skill with the right structure in seconds.
+  tagline_zh: 一条命令生成规范的 Claude Code 技能骨架，结构即对即用。
+- name: skill-optimizer
+  repo: lovstudio/skill-optimizer-skill
+  name_zh: 技能优化器
+  paid: false
+  category: Meta
+  description: Audit + auto-fix an existing skill, bump semver, and append a CHANGELOG
+    entry.
+  tagline_en: Audit an existing skill, auto-fix issues, and bump its version in one
+    pass.
+  tagline_zh: 一键体检并修复现有技能，自动升版本号并追加 CHANGELOG。
+- name: auto-context
+  repo: lovstudio/auto-context-skill
+  name_zh: 上下文体检
+  paid: false
+  category: Dev Tools
+  description: Context hygiene checker. Suggests /fork or /btw when context is polluted.
+  tagline_en: Watch your Claude Code context for pollution and suggest when to fork
+    or reset.
+  tagline_zh: 监测 Claude Code 上下文是否被污染，适时提示你 /fork 或 /btw。
+- name: cc-migrate-session
+  repo: lovstudio/cc-migrate-session
+  name_zh: 会话迁移
+  paid: false
+  category: Dev Tools
+  version: 0.1.1
+  skill_path: skill/lovstudio-cc-mv
+  description: Migrate Claude Code sessions when a project folder moves
+  tagline_en: Keep your Claude Code session history working after you move a project
+    folder.
+  tagline_zh: 项目目录搬家后，让 Claude Code 的历史会话还能正常 `--resume`。
+- name: deploy-to-vercel
+  repo: lovstudio/deploy-to-vercel-skill
+  name_zh: 部署到 Vercel
+  paid: false
+  category: Dev Tools
+  description: Deploy frontend to Vercel with auto Cloudflare DNS + custom domain
+    setup.
+  tagline_en: Ship a frontend to Vercel with custom domain and Cloudflare DNS wired
+    up automatically.
+  tagline_zh: 一键把前端部署到 Vercel，自动配好 Cloudflare DNS 和自定义域名。
+- name: finder-action
+  repo: lovstudio/finder-action-skill
+  name_zh: 访达右键动作
+  paid: false
+  category: Dev Tools
+  description: Generate Mac Finder right-click menu actions. Quick Action or Finder
+    Sync Extension.
+  tagline_en: Add a custom right-click action to macOS Finder in minutes.
+  tagline_zh: 几分钟给 macOS 访达右键菜单加一个你自己的动作。
+- name: gh-access
+  repo: lovstudio/gh-access-skill
+  name_zh: GitHub 协作者管理
+  paid: false
+  category: Dev Tools
+  description: Grant / revoke / list collaborator access on private GitHub repos by
+    username or email. Read-only by default.
+  tagline_en: Grant, revoke, or audit collaborator access on private GitHub repos
+    in one command.
+  tagline_zh: 一条命令给私有 GitHub 仓库加减协作者权限，或盘点现有访问清单。
+- name: gh-contribute
+  repo: lovstudio/gh-contribute-skill
+  name_zh: GitHub 投稿 PR
+  paid: false
+  category: Dev Tools
+  version: 0.1.0
+  description: Contribute clean, professional PRs to upstream GitHub repos — fork,
+    branch, commit, push, open PR, with smart splitting.
+  tagline_en: Ship a clean PR to any upstream GitHub repo — fork, branch, push, and
+    open PR for you.
+  tagline_zh: 给任意上游 GitHub 仓库提一份干净的 PR——fork、分支、推送、开 PR 一站搞定。
+- name: gh-tidy
+  repo: lovstudio/gh-tidy-skill
+  name_zh: GitHub 仓库整理
+  paid: false
+  category: Dev Tools
+  description: Triage & clean up GitHub issues, PRs, branches, and labels in one pass.
+  tagline_en: Triage and clean up GitHub issues, PRs, branches, and labels in a single
+    pass.
+  tagline_zh: 一次过清理 GitHub 上的 issue、PR、分支和标签，让仓库重新整洁。
+- name: obsidian-reset-cache
+  repo: lovstudio/obsidian-reset-cache-skill
+  name_zh: 重置 Obsidian 缓存
+  paid: false
+  category: Dev Tools
+  description: 重置 Obsidian 缓存，解决卡在 Loading cache 的问题。
+  tagline_en: Reset Obsidian's cache when it gets stuck on "Loading cache".
+  tagline_zh: Obsidian 卡在 Loading cache 时，一键重置缓存救场。
+- name: project-port
+  repo: lovstudio/project-port-skill
+  name_zh: 项目端口分配
+  paid: false
+  category: Dev Tools
+  description: Generate stable unique dev port (3000–8999) from project name.
+  tagline_en: Assign each project a stable, unique dev port so services stop colliding.
+  tagline_zh: 给每个项目分配一个稳定且唯一的开发端口，彻底告别端口撞车。

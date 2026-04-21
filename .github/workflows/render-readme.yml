@@ -1,0 +1,81 @@
+name: Render index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills.yaml"
+      - "scripts/render-readme.py"
+      - "scripts/render-marketplace.py"
+      - "scripts/sync-skills.py"
+      - "README.md"
+      - "README.en.md"
+      - ".github/workflows/render-readme.yml"
+  schedule:
+    # Nightly: pull fresh descriptions from each skill repo's GitHub description,
+    # and re-mirror every free skill so `npx skills add lovstudio/skills` sees
+    # the latest SKILL.md content.
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      gh_sync:
+        description: "Sync descriptions from GitHub repo metadata"
+        required: false
+        default: "true"
+        type: string
+      mirror:
+        description: "Re-mirror free skill repos into ./skills/"
+        required: false
+        default: "true"
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: render-index
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install pyyaml
+
+      - name: Mirror free skill repos
+        # Runs on schedule/dispatch (to pull upstream changes) and on push
+        # (cheap: shallow clones, < 1 MB total today). The commit step below
+        # no-ops if nothing actually changed.
+        if: >
+          github.event_name == 'schedule' ||
+          github.event_name == 'push' ||
+          inputs.mirror == 'true'
+        run: python3 scripts/sync-skills.py
+
+      - name: Render marketplace.json
+        run: python3 scripts/render-marketplace.py
+
+      - name: Render READMEs
+        env:
+          GH_SYNC: ${{ (github.event_name == 'schedule' || inputs.gh_sync == 'true') && '1' || '' }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/render-readme.py
+
+      - name: Commit changes
+        run: |
+          git add -A README.md README.en.md .claude-plugin/marketplace.json skills/
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: auto-sync skills mirror + re-render index"
+          git push
