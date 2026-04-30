@@ -1,5 +1,5 @@
 ---
-name: lovstudio:deploy-to-vercel
+name: lovstudio-deploy-to-vercel
 category: Dev Tools
 tagline: "Deploy frontend to Vercel with auto Cloudflare DNS + custom domain setup."
 description: >

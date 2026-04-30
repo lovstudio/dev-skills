@@ -1,5 +1,5 @@
 ---
-name: lovstudio:auto-context
+name: lovstudio-auto-context
 category: Dev Tools
 tagline: "Context hygiene operator. Evaluates, writes memory, edits CLAUDE.md, suggests /fork or /compact."
 description: >

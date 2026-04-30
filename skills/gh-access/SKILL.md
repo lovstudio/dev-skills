@@ -1,5 +1,5 @@
 ---
-name: lovstudio:gh-access
+name: lovstudio-gh-access
 category: Developer Tools
 tagline: "Grant / revoke / list collaborator access on private GitHub repos by username or email."
 description: >

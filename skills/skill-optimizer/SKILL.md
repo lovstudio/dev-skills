@@ -1,5 +1,5 @@
 ---
-name: lovstudio:skill-optimizer
+name: lovstudio-skill-optimizer
 category: Meta Skills
 tagline: "Audit + auto-fix an existing skill, bump semver, and append a CHANGELOG entry."
 description: >

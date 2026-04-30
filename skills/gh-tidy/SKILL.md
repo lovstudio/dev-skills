@@ -1,5 +1,5 @@
 ---
-name: lovstudio:gh-tidy
+name: lovstudio-gh-tidy
 category: Developer Tools
 tagline: "Triage & clean up GitHub issues, PRs, branches, and labels in one pass."
 description: >
