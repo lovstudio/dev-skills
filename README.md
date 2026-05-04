@@ -30,7 +30,7 @@
 ## 技能列表
 
 <!-- COUNT:START -->
-> **11 个技能** — 11 个免费 + 0 个付费。
+> **12 个技能** — 12 个免费 + 0 个付费。
 <!-- COUNT:END -->
 
 <!-- SKILLS:START -->
@@ -43,6 +43,7 @@
 | ![Free](https://img.shields.io/badge/Free-green) | [上下文体检 · `auto-context`](https://github.com/lovstudio/auto-context-skill) | 监测 Claude Code 上下文是否被污染，适时提示你 /fork 或 /btw。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [会话迁移 · `cc-migrate-session`](https://github.com/lovstudio/cc-migrate-session) | 项目目录搬家后，让 Claude Code 的历史会话还能正常 `--resume`。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [部署到 Vercel · `deploy-to-vercel`](https://github.com/lovstudio/deploy-to-vercel-skill) | 一键把前端部署到 Vercel，自动配好 Cloudflare DNS 和自定义域名。 |
+| ![Free](https://img.shields.io/badge/Free-green) | [开发博客 · `dev-blog`](https://github.com/lovstudio/dev-blog-skill) | 把一次开发会话沉淀成中文技术博客，并发布到 LovStudio 网站博客列表。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [访达右键动作 · `finder-action`](https://github.com/lovstudio/finder-action-skill) | 几分钟给 macOS 访达右键菜单加一个你自己的动作。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [GitHub 协作者管理 · `gh-access`](https://github.com/lovstudio/gh-access-skill) | 一条命令给私有 GitHub 仓库加减协作者权限，或盘点现有访问清单。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [GitHub 投稿 PR · `gh-contribute`](https://github.com/lovstudio/gh-contribute-skill) | 给任意上游 GitHub 仓库提一份干净的 PR——fork、分支、推送、开 PR 一站搞定。 |

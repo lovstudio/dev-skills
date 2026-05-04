@@ -27,6 +27,17 @@ skills:
   tagline_en: Watch your Claude Code context for pollution and suggest when to fork
     or reset.
   tagline_zh: 监测 Claude Code 上下文是否被污染，适时提示你 /fork 或 /btw。
+- name: dev-blog
+  repo: lovstudio/dev-blog-skill
+  name_zh: 开发博客
+  paid: false
+  category: Dev Tools
+  version: 0.1.0
+  description: Summarize a development session into a practical Chinese blog post
+    and publish it to LovStudio's Supabase blog feed.
+  tagline_en: Turn a development session into a practical blog post and publish it
+    to LovStudio's blog feed.
+  tagline_zh: 把一次开发会话沉淀成中文技术博客，并发布到 LovStudio 网站博客列表。
 - name: cc-migrate-session
   repo: lovstudio/cc-migrate-session
   name_zh: 会话迁移
