@@ -30,7 +30,7 @@ Each skill still lives in its own `github.com/lovstudio/{name}-skill` repo. This
 ## Skills
 
 <!-- COUNT:START -->
-> **11 skills** — 11 Free + 0 Paid.
+> **12 skills** — 12 Free + 0 Paid.
 <!-- COUNT:END -->
 
 <!-- SKILLS:START -->
@@ -43,6 +43,7 @@ Each skill still lives in its own `github.com/lovstudio/{name}-skill` repo. This
 | ![Free](https://img.shields.io/badge/Free-green) | [`auto-context`](https://github.com/lovstudio/auto-context-skill) | Watch your Claude Code context for pollution and suggest when to fork or reset. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`cc-migrate-session`](https://github.com/lovstudio/cc-migrate-session) | Keep your Claude Code session history working after you move a project folder. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`deploy-to-vercel`](https://github.com/lovstudio/deploy-to-vercel-skill) | Ship a frontend to Vercel with custom domain and Cloudflare DNS wired up automatically. |
+| ![Free](https://img.shields.io/badge/Free-green) | [`dev-blog`](https://github.com/lovstudio/dev-blog-skill) | Turn a development session into a practical blog post and publish it to LovStudio's blog feed. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`finder-action`](https://github.com/lovstudio/finder-action-skill) | Add a custom right-click action to macOS Finder in minutes. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`gh-access`](https://github.com/lovstudio/gh-access-skill) | Grant, revoke, or audit collaborator access on private GitHub repos in one command. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`gh-contribute`](https://github.com/lovstudio/gh-contribute-skill) | Ship a clean PR to any upstream GitHub repo — fork, branch, push, and open PR for you. |
