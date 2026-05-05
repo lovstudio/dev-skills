@@ -130,6 +130,8 @@ def render_table(skills: list[dict], lang: str) -> str:
         for s in sorted(grouped[key], key=lambda x: x["name"]):
             badge = PAID_BADGE if s.get("paid") else FREE_BADGE
             link = f"https://github.com/{s['repo']}"
+            if s.get("skill_path"):
+                link += f"/tree/main/{s['skill_path'].strip('/')}"
             if lang == "zh" and s.get("name_zh"):
                 name_cell = f"[{s['name_zh']} · `{s['name']}`]({link})"
             else:
