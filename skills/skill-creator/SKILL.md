@@ -268,33 +268,6 @@ development produced a cloud-split skill whose handler returned
 correct; protection was zero. The audit catches this class of bug before
 it ships.
 
-**If Q1 chose cloud-split (tier 3)**: after running init_skill.py, don't put
-your real logic in `scripts/`. Instead:
-1. Read `references/cloud-split.md` end-to-end before writing any code
-   **(this is not optional — the rules for non-leaky payloads are there, not here)**
-2. **Start from `threshold-check` as the reference pattern**, NOT `paid-add`.
-   `paid-add` is an architecture demo with an intentionally leaky payload
-   (for teaching). Copying its return shape into a real skill defeats the
-   whole point of cloud-split.
-3. Write the handler at `~/lovstudio/coding/web/supabase/functions/skill_call/handlers/<name>.ts`
-   — return a minimal symbolic payload (`{verdict: "A" | "B"}` style), not
-   descriptive strings or narrative `display` fields
-4. Write the thin SKILL.md per the `threshold-check` template — rendering
-   via a **symbol → text table**, never via a computed algorithm
-5. **MANDATORY pre-flight audit** — before registering the handler in the
-   dispatcher, before deploying, before telling the user "done":
-   run the checklist in `references/cloud-split.md` → "MANDATORY pre-flight
-   audit" section. Report each item's result to the user. If any item
-   fails, rewrite before moving on.
-6. Skip the normal Step 4 "write scripts" — there usually aren't any for
-   cloud-split skills (unless you need client-side rendering of server output)
-
-**Why the audit is mandatory**: a real incident during skill-creator
-development produced a cloud-split skill whose handler returned
-`{score, verdict: "below", display: "2+6=8 (below 10)"}`. Architecture was
-correct; protection was zero. The audit catches this class of bug before
-it ships.
-
 ### Step 4: Implement
 
 1. **Write scripts** in `scripts/` — test by running directly
