@@ -5,9 +5,13 @@ skills:
   name_zh: 技能脚手架
   paid: false
   category: Meta
-  description: Scaffold new lovstudio skills with proper structure, SKILL.md + README.md.
-  tagline_en: Scaffold a new Claude Code skill with the right structure in seconds.
-  tagline_zh: 一条命令生成规范的 Claude Code 技能骨架，结构即对即用。
+  version: 2.1.0
+  description: Scaffold lovstudio skills as independent repos or bundled dev-skills
+    entries.
+  tagline_en: Scaffold a new Claude Code skill as an independent repo or dev-skills
+    bundle entry.
+  tagline_zh: 一条命令生成规范的 Claude Code 技能骨架，支持独立仓库或 dev-skills
+    聚合分发。
 - name: skill-optimizer
   repo: lovstudio/skill-optimizer-skill
   name_zh: 技能优化器
@@ -87,6 +91,18 @@ skills:
   tagline_en: Triage and clean up GitHub issues, PRs, branches, and labels in a single
     pass.
   tagline_zh: 一次过清理 GitHub 上的 issue、PR、分支和标签，让仓库重新整洁。
+- name: install-tanstack-query
+  repo: lovstudio/dev-skills
+  skill_path: skills/install-tanstack-query
+  name_zh: TanStack Query 初始化
+  paid: false
+  category: Dev Tools
+  version: 0.1.0
+  description: Initialize or refactor a frontend project to use TanStack Query as
+    the unified server-state layer.
+  tagline_en: Initialize TanStack Query and migrate request state into shared query
+    keys and hooks.
+  tagline_zh: 初始化 TanStack Query，并把分散的请求状态收敛到统一 query keys 和 hooks。
 - name: obsidian-reset-cache
   repo: lovstudio/obsidian-reset-cache-skill
   name_zh: 重置 Obsidian 缓存
