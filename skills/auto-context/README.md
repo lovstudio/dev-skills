@@ -1,5 +1,7 @@
 # AutoContext
 
+![Version](https://img.shields.io/badge/version-0.2.1-CC785C)
+
 Context operator for Claude Code sessions — not just a health check.
 
 ## What It Does
@@ -26,6 +28,10 @@ You (turn 80):  transcript size crosses threshold
 
 ## Install
 
+```bash
+npx lovstudio skills add auto-context -g -y
+```
+
 Works standalone as a manual skill. Auto-trigger on long transcripts
 requires the [lovstudio plugin](https://github.com/lovstudio/claude-code-plugin)
 which registers the `UserPromptSubmit` hook.
@@ -34,7 +40,7 @@ which registers the `UserPromptSubmit` hook.
 
 ```
 /lovstudio-auto-context                              # health report + opportunistic memory write
-/lovstudio-auto-context 记到全局                      # edit ~/.claude/CLAUDE.md with confirm
+/lovstudio-auto-context 记到全局                      # edit configured global instructions with confirm
 /lovstudio-auto-context 记到项目                      # edit project CLAUDE.md with confirm
 /lovstudio-auto-context 记住 X                        # write project memory
 /lovstudio-auto-context 该分叉了吗                    # evaluate + suggest /fork
@@ -45,6 +51,11 @@ which registers the `UserPromptSubmit` hook.
 Harness-owned commands (`/fork`, `/compact`, `/btw`, `/clear`, new
 session) can't be invoked programmatically. The skill will print the
 exact command for you to paste.
+
+## User Configuration
+
+Set `LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME` to override the agent home directory.
+When unset, the skill uses `$HOME/.claude` for Claude Code compatibility.
 
 ## Version
 

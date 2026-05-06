@@ -3,6 +3,13 @@
 All notable changes to this skill are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · Versioning: [SemVer](https://semver.org/)
 
+## [0.6.1] - 2026-05-07
+
+### Fixed
+
+- recognize lovstudio CLI install commands
+- treat npx lovstudio skills add as the canonical README install surface
+
 ## [0.6.0] - 2026-05-07
 
 ### Added

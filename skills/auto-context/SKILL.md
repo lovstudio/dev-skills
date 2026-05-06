@@ -12,11 +12,14 @@ description: >
   confirmed based on sensitivity; harness-only commands (/fork etc.) are
   surfaced as one-click suggestions.
 license: MIT
-compatibility: claude-code
+compatibility: >
+  Claude Code-oriented instruction skill. Agent home defaults to
+  `${LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME:-$HOME/.claude}` and can be overridden
+  for compatible runtimes.
 metadata:
-  author: Mark (手工川)
-  version: 0.2.0
-  repo: https://github.com/lovstudio/skills
+  author: lovstudio
+  version: "0.2.1"
+  tags: context memory claude-code
 ---
 
 # AutoContext: Context Operator
@@ -27,7 +30,7 @@ context. Three layers by action sensitivity:
 | Layer | Examples | Behavior |
 |-------|----------|----------|
 | **Auto-execute** | write project memory, update `MEMORY.md` index | Do it, report path |
-| **Confirm-first** | edit `~/.claude/CLAUDE.md`, edit project `CLAUDE.md`, overwrite/delete existing memory | Show diff, wait for "yes" |
+| **Confirm-first** | edit global agent instructions, edit project `CLAUDE.md`, overwrite/delete existing memory | Show diff, wait for "yes" |
 | **Suggest-only** | `/fork`, `/compact`, `/btw`, new session | Print the exact command to paste |
 
 The harness owns `/fork` and `/compact`; this skill cannot invoke them. But
@@ -87,7 +90,7 @@ Parse the instruction and route to the right action class:
 
 | Instruction pattern | Action | Sensitivity |
 |---|---|---|
-| "记到全局 / write to global / 加到 ~/.claude/CLAUDE.md" | edit `~/.claude/CLAUDE.md` | **Confirm-first** |
+| "记到全局 / write to global / 加到全局指令" | edit the configured global instructions file | **Confirm-first** |
 | "记到项目 / 加到项目 CLAUDE.md" | edit project `CLAUDE.md` | **Confirm-first** |
 | "记住 X / 记到 memory" | write project memory | Auto-execute |
 | "忘掉 X / forget X" | remove relevant memory file + index entry | **Confirm-first** |
@@ -96,8 +99,8 @@ Parse the instruction and route to the right action class:
 
 ## Action: Write Project Memory (auto-execute)
 
-Directory: `~/.claude/projects/<project-slug>/memory/` (already exists; do
-not mkdir).
+Directory: `${LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME:-$HOME/.claude}/projects/<project-slug>/memory/`
+(already exists; do not mkdir).
 
 Procedure:
 1. Pick filename: `<type>_<topic>.md` (e.g. `feedback_output_paths.md`).
@@ -109,7 +112,7 @@ Procedure:
 
 ## Action: Edit Global CLAUDE.md (confirm-first)
 
-Target: `~/.claude/CLAUDE.md`.
+Target: `${LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME:-$HOME/.claude}/CLAUDE.md`.
 
 Procedure:
 1. Read the file.
@@ -161,3 +164,8 @@ paste.
 Every action that writes a file must echo its absolute + relative path
 (per project-wide output-paths rule). Applies to memory files, CLAUDE.md
 edits (show final path), and any derived artifacts.
+
+## User Configuration
+
+Use `LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME` to override the agent home directory.
+When unset, the skill uses `$HOME/.claude` for Claude Code compatibility.

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1] - 2026-05-07
+
+### Fixed
+
+- standardize agent home configuration
+- add public install command and user configuration docs
+
 ## 0.2.0 — 2026-04-18
 
 - Expand scope from "hygiene checker" to **context operator** covering all

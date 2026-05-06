@@ -21,7 +21,7 @@ compatibility: >
   Must be run inside the lovstudio-skills repo (auto-detects repo root).
 metadata:
   author: lovstudio
-  version: "0.6.0"
+  version: "0.6.1"
   tags: meta skill-maintenance versioning changelog lint
 ---
 

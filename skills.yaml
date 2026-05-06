@@ -17,7 +17,7 @@ skills:
   name_zh: 技能优化器
   paid: false
   category: Meta
-  version: 0.6.0
+  version: 0.6.1
   description: Audit + auto-fix an existing skill, bump semver, and append a CHANGELOG
     entry.
   tagline_en: Audit an existing skill, auto-fix issues, and bump its version in one
@@ -37,7 +37,7 @@ skills:
   name_zh: 会话迁移
   paid: false
   category: Dev Tools
-  version: 0.1.1
+  version: 0.2.1
   skill_path: skill/lovstudio-cc-mv
   description: Migrate Claude Code sessions when a project folder moves
   tagline_en: Keep your Claude Code session history working after you move a project

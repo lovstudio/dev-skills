@@ -416,6 +416,7 @@ class Linter:
         has_install = any(
             token in text
             for token in (
+                "npx lovstudio skills add",
                 "npx skills add",
                 "git clone https://github.com/lovstudio",
                 "/plugin install",

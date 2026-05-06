@@ -1,6 +1,6 @@
 # lovstudio:skill-optimizer
 
-![Version](https://img.shields.io/badge/version-0.6.0-CC785C)
+![Version](https://img.shields.io/badge/version-0.6.1-CC785C)
 
 自动优化 lovstudio skill — 审计规范、应用修复、bump 版本、追加 changelog。
 现在会额外检查 Agent Skills 命名兼容性和本地环境耦合，例如
