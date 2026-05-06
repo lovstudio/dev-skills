@@ -117,6 +117,7 @@ skills:
   name_zh: 项目端口分配
   paid: false
   category: Dev Tools
+  version: 0.1.1
   description: Generate stable unique dev port (3000–8999) from project name.
   tagline_en: Assign each project a stable, unique dev port so services stop colliding.
   tagline_zh: 给每个项目分配一个稳定且唯一的开发端口，彻底告别端口撞车。

@@ -2,7 +2,19 @@
 name: lovstudio-project-port
 category: Dev Tools
 tagline: "Generate stable unique dev port (3000–8999) from project name."
-description: 基于项目名生成稳定唯一的端口号，并自动更新项目配置。当用户需要为项目设置端口、启动开发服务器、解决端口冲突或初始化新项目配置时使用此 skill。
+description: >
+  Generate a stable unique dev port (3000-8999) from a project name and help
+  update project config. Use when the user needs to set a project port, start a
+  dev server, resolve port conflicts, initialize a new project, or mentions
+  "端口", "port", "dev server", "端口冲突", "project port".
+license: MIT
+compatibility: >
+  Requires bash for scripts/hashport.sh. Works on macOS/Linux; port occupancy
+  reporting uses lsof when available.
+metadata:
+  author: lovstudio
+  version: "0.1.1"
+  tags: dev-server ports project-setup
 ---
 
 # Project Port Generator
