@@ -1,8 +1,10 @@
 # lovstudio:skill-optimizer
 
-![Version](https://img.shields.io/badge/version-0.3.0-CC785C)
+![Version](https://img.shields.io/badge/version-0.6.0-CC785C)
 
 自动优化 lovstudio skill — 审计规范、应用修复、bump 版本、追加 changelog。
+现在会额外检查 Agent Skills 命名兼容性和本地环境耦合，例如
+`/Users/mark`、`~/lovstudio`、固定 `~/.claude` runtime 路径，以及缺失的用户初始化层。
 
 Part of [lovstudio/skills](https://github.com/lovstudio/skills) — by [lovstudio.ai](https://lovstudio.ai)
 
@@ -58,6 +60,7 @@ Audit only:
 ```bash
 python3 scripts/lint_skill.py any2pdf
 python3 scripts/lint_skill.py any2pdf --json
+python3 scripts/lint_skill.py --all --root .
 ```
 
 Bump version and write changelog:
@@ -80,6 +83,7 @@ python3 scripts/bump_version.py any2pdf --type patch -m "..." --dry-run
 | Check | Severity | What it catches |
 |-------|----------|-----------------|
 | Directory prefix `lovstudio-` | error | Wrong dir naming |
+| Agent Skills-compatible `name` | error/warn | Invalid names or legacy `lovstudio:<name>` |
 | `SKILL.md` / `README.md` present | error | Missing core files |
 | Frontmatter required fields | error | Missing `name` / `description` / `license` / `compatibility` / `metadata` |
 | `name` matches directory | error | `lovstudio:foo` vs `lovstudio-bar` drift |
@@ -92,6 +96,7 @@ python3 scripts/bump_version.py any2pdf --type patch -m "..." --dry-run
 | Scripts use argparse | warn | CLI without argparse |
 | SKILL.md body length | warn | > 500 lines — should split to `references/` |
 | TODO placeholders | error | Uninitialized template content |
+| Local path portability | warn/info | `/Users/mark`, `~/lovstudio`, fixed `~/.claude`, missing user config |
 | CJK handling for doc skills | info | Document skills without visible CJK code paths |
 
 ## Version Bump Rules
@@ -113,6 +118,8 @@ Per repo convention: stay in `0.x` unless explicitly authorized.
 | `<name>` | — | Skill name (with/without `lovstudio-` prefix) |
 | `--path` | — | Absolute path to skill dir |
 | `--json` | off | Emit JSON |
+| `--all` | off | Audit every `SKILL.md` below the detected root |
+| `--root` | detected | Root directory for `--all` |
 
 ### `bump_version.py`
 

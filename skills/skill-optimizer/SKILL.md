@@ -6,12 +6,14 @@ description: >
   Audit and automatically optimize a lovstudio skill against repo conventions
   and official Anthropic skill-creator best practices, then bump the semver
   version and append a CHANGELOG entry. Checks SKILL.md frontmatter/trigger
-  quality, script CLI hygiene, directory naming, README badge, and progressive
-  disclosure structure. Prioritizes issues raised in the current conversation
-  (e.g. bugs the user just hit) over a generic sweep. Use when the user asks
-  to "optimize", "refine", "audit", or "polish" an existing skill, or when they
-  say "bump version", "update changelog", or "fix this skill". Also trigger
-  when the user mentions "优化 skill", "skill 审计", "刷一遍 skill",
+  quality, script CLI hygiene, directory naming, README badge, progressive
+  disclosure structure, Agent Skills-compatible naming, and portability issues
+  such as hard-coded `/Users/mark`, `~/lovstudio`, fixed `~/.claude` runtime
+  paths, or missing user configuration. Prioritizes issues raised in the
+  current conversation (e.g. bugs the user just hit) over a generic sweep. Use
+  when the user asks to "optimize", "refine", "audit", or "polish" an existing
+  skill, or when they say "bump version", "update changelog", or "fix this
+  skill". Also trigger when the user mentions "优化 skill", "skill 审计", "刷一遍 skill",
   "skill-optimizer", "bump skill version", "update skill changelog".
 license: MIT
 compatibility: >
@@ -19,7 +21,7 @@ compatibility: >
   Must be run inside the lovstudio-skills repo (auto-detects repo root).
 metadata:
   author: lovstudio
-  version: "0.3.0"
+  version: "0.6.0"
   tags: meta skill-maintenance versioning changelog lint
 ---
 
@@ -71,6 +73,11 @@ Prioritize in this order:
 3. Lint `warn` findings
 4. Lint `info` findings — apply only if cheap and safe
 
+For standardization work, portability findings are high priority when the skill
+is reusable by other users. Mark/LovStudio private paths should either be
+removed, moved into `references/user-config.md` + env/profile handling, or
+explicitly marked author-only in `compatibility`.
+
 ### Step 3: Apply fixes directly
 
 Edit `SKILL.md`, `README.md`, `scripts/*.py` with the `Edit` tool based on the
@@ -82,6 +89,10 @@ prioritized fix list. Guidelines:
   root cause — don't paper over it.
 - **Progressive disclosure**: if SKILL.md body > 500 lines, split the largest
   section to `references/<topic>.md`.
+- **User initialization**: if the skill references `/Users/mark`,
+  `~/lovstudio`, private brand assets, design guides, or output roots, add a
+  `references/user-config.md` profile/env contract and replace required local
+  paths with CLI flags, environment variables, or profile lookups.
 - **Don't write tests or docs that weren't asked for.** The CHANGELOG entry IS
   the documentation of the change.
 - **Don't add emojis** unless the original file already uses them consistently.
@@ -117,6 +128,12 @@ This updates:
 
 ```bash
 python3 skills/lovstudio-skill-optimizer/scripts/lint_skill.py <name>
+```
+
+For a repo-wide standardization baseline:
+
+```bash
+python3 skills/lovstudio-skill-optimizer/scripts/lint_skill.py --all --root .
 ```
 
 Report to the user, in this exact shape and nothing more:

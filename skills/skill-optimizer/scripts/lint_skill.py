@@ -23,10 +23,69 @@ SEVERITIES = ("error", "warn", "info")
 
 FRONTMATTER_REQUIRED = ["name", "description", "license", "compatibility", "metadata"]
 METADATA_REQUIRED = ["author", "version", "tags"]
+STANDARD_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+USER_CONFIG_CUES = (
+    "## User Configuration",
+    "## 用户配置",
+    "user-config.md",
+    "LOVSTUDIO_SKILLS_PROFILE",
+    "LOVSTUDIO_SKILLS_HOME",
+    "LOVSTUDIO_SKILLS_WORKSPACE_ROOT",
+    "LOVSTUDIO_SKILLS_OUTPUT_DIR",
+    "LOVSTUDIO_SKILLS_BRAND_PROFILE",
+    "LOVSTUDIO_SKILLS_DESIGN_GUIDE",
+    "LOVSTUDIO_MAINTAIN_PARTNERS_SITE_ROOT",
+    "LOVSTUDIO_MAINTAIN_PARTNERS_FILE",
+    # Legacy cues accepted during migration.
+    "AGENT_SKILL_PROFILE",
+    "LOVSTUDIO_SKILL_PROFILE",
+    "PARTNERS_SITE_ROOT",
+    "PARTNERS_FILE",
+)
+LOCAL_PATH_PATTERNS = (
+    ("LOCAL_MARK_PATH", re.compile(r"/Users/mark(?:/|\b)"), "/Users/mark"),
+    ("LOCAL_LOVSTUDIO_PATH", re.compile(r"(?<![A-Za-z0-9_])~/?lovstudio(?:/|\b)|\$HOME/lovstudio(?:/|\b)"), "~/lovstudio"),
+    ("LOCAL_CLAUDE_PATH", re.compile(r"~/\.claude|/\.claude/skills|\$HOME/\.claude"), "~/.claude"),
+    ("LOCAL_AGENTS_PATH", re.compile(r"~/\.agents|/\.agents/skills|\$HOME/\.agents"), "~/.agents"),
+    ("CLIENT_PLUGIN_ENV", re.compile(r"CLAUDE_PLUGIN_ROOT"), "CLAUDE_PLUGIN_ROOT"),
+)
+NEGATIVE_LOCAL_PATH_CONTEXT_RE = re.compile(
+    r"must not assume|do not hard-?code|not require|should not require|avoid hard-?coded|"
+    r"without assuming|move user-specific paths",
+    re.I,
+)
+
+
+def has_required_local_path(text: str, pattern: re.Pattern) -> bool:
+    for line in text.splitlines():
+        if not pattern.search(line):
+            continue
+        if NEGATIVE_LOCAL_PATH_CONTEXT_RE.search(line):
+            continue
+        return True
+    return False
+
+
+def looks_like_skills_root(path: Path) -> bool:
+    if not path.exists() or not path.is_dir():
+        return False
+    try:
+        for child in path.iterdir():
+            if child.is_dir() and (child / "SKILL.md").exists():
+                return True
+            if child.is_dir() and child.name.endswith("-skill") and (child / "SKILL.md").exists():
+                return True
+    except OSError:
+        return False
+    return False
 
 
 def find_repo_root(start: Path) -> Path:
     for p in [start] + list(start.parents):
+        if looks_like_skills_root(p):
+            return p
+        if (p / "skills.yaml").exists() and (p / "skills").is_dir():
+            return p
         if (p / "CLAUDE.md").exists() and (p / "skills").is_dir():
             return p
     return start
@@ -35,9 +94,34 @@ def find_repo_root(start: Path) -> Path:
 def resolve_skill_dir(name: str, path: str | None) -> Path:
     if path:
         return Path(path).resolve()
+    raw = name
     name = name.removeprefix("lovstudio-").removeprefix("lovstudio:")
+    if name.endswith("-skill"):
+        name = name[: -len("-skill")]
     root = find_repo_root(Path.cwd())
-    return (root / "skills" / f"lovstudio-{name}").resolve()
+    candidates = [
+        root / f"{name}-skill",
+        root / f"lovstudio-{name}",
+        root / name,
+        root / "skills" / f"lovstudio-{name}",
+        root / "skills" / name,
+        root / "skills" / f"{name}-skill",
+        root / raw,
+    ]
+    for c in candidates:
+        if (c / "SKILL.md").exists():
+            return c.resolve()
+    return candidates[0].resolve()
+
+
+def discover_skill_dirs(root: Path) -> list[Path]:
+    dirs = []
+    for skill_md in root.rglob("SKILL.md"):
+        parts = set(skill_md.parts)
+        if ".git" in parts or "node_modules" in parts:
+            continue
+        dirs.append(skill_md.parent)
+    return sorted(set(dirs))
 
 
 def parse_frontmatter(text: str) -> tuple[dict, str]:
@@ -86,7 +170,14 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
 class Linter:
     def __init__(self, skill_dir: Path):
         self.dir = skill_dir
-        self.name = skill_dir.name.removeprefix("lovstudio-")
+        dir_name = skill_dir.name
+        short = dir_name
+        if short.endswith("-skill"):
+            short = short[: -len("-skill")]
+        short = short.removeprefix("lovstudio-")
+        self.name = short
+        self.expected_standard_name = f"lovstudio-{short}"
+        self.expected_legacy_name = f"lovstudio:{short}"
         self.findings: list[dict] = []
 
     def add(self, severity: str, code: str, message: str, fix_hint: str = "", file: str = ""):
@@ -106,12 +197,13 @@ class Linter:
         if not self.dir.exists():
             self.add("error", "DIR_MISSING", f"Skill directory not found: {self.dir}")
             return
-        if not self.dir.name.startswith("lovstudio-"):
+        source_dir_ok = self.dir.name == self.name or self.dir.name == f"{self.name}-skill" or self.dir.name == self.expected_standard_name
+        if not source_dir_ok or not STANDARD_NAME_RE.match(self.dir.name.removesuffix("-skill")):
             self.add(
-                "error",
-                "DIR_PREFIX",
-                f"Directory '{self.dir.name}' must start with 'lovstudio-'",
-                "Rename directory to lovstudio-<name>",
+                "warn",
+                "DIR_NONSTANDARD",
+                f"Directory '{self.dir.name}' is not in a recognized source/install format",
+                "Use <name>-skill for source repos or lovstudio-<name> for installed/distributed dirs",
             )
         for required in ("SKILL.md", "README.md"):
             f = self.dir / required
@@ -142,12 +234,28 @@ class Linter:
                 )
 
         name = fm.get("name", "")
-        if name and name != f"lovstudio:{self.name}":
+        if name == self.expected_legacy_name:
+            self.add(
+                "warn",
+                "FM_LEGACY_NAME",
+                f"frontmatter name '{name}' uses legacy colon naming",
+                f"Migrate to name: {self.expected_standard_name} when updating the skill",
+                file="SKILL.md",
+            )
+        elif name and not STANDARD_NAME_RE.match(name):
             self.add(
                 "error",
+                "FM_NAME_INVALID",
+                f"frontmatter name '{name}' is not Agent Skills-compatible",
+                f"Use name: {self.expected_standard_name}",
+                file="SKILL.md",
+            )
+        elif name and name != self.expected_standard_name:
+            self.add(
+                "warn",
                 "FM_NAME_MISMATCH",
-                f"frontmatter name '{name}' does not match directory (expected 'lovstudio:{self.name}')",
-                f"Set name: lovstudio:{self.name}",
+                f"frontmatter name '{name}' does not match standard expected name '{self.expected_standard_name}'",
+                f"Set name: {self.expected_standard_name} or document why this is author-only/legacy",
                 file="SKILL.md",
             )
 
@@ -225,6 +333,65 @@ class Linter:
                 file="SKILL.md",
             )
 
+    def check_portability(self):
+        files = []
+        for rel in ("SKILL.md", "README.md"):
+            path = self.dir / rel
+            if path.exists():
+                files.append((rel, path))
+        scripts_dir = self.dir / "scripts"
+        if scripts_dir.exists():
+            for path in scripts_dir.glob("*.py"):
+                files.append((f"scripts/{path.name}", path))
+
+        combined = "\n".join(
+            path.read_text(encoding="utf-8", errors="replace")
+            for _, path in files
+        )
+        has_user_config = any(cue in combined for cue in USER_CONFIG_CUES)
+        skill_md = self.dir / "SKILL.md"
+        compatibility = ""
+        if skill_md.exists():
+            fm, _ = parse_frontmatter(skill_md.read_text(encoding="utf-8", errors="replace"))
+            compatibility = str(fm.get("compatibility", ""))
+        author_only = bool(
+            re.search(
+                r"author-only|internal only|LovStudio internal|Mark/LovStudio private",
+                compatibility,
+                re.I,
+            )
+        )
+
+        for rel, path in files:
+            text = path.read_text(encoding="utf-8", errors="replace")
+            if "LOCAL_PATH_PATTERNS" in text and "def check_portability" in text:
+                continue
+            for code, pattern, label in LOCAL_PATH_PATTERNS:
+                if not has_required_local_path(text, pattern):
+                    continue
+                if code == "LOCAL_CLAUDE_PATH" and rel == "README.md" and "git clone" in text:
+                    severity = "info"
+                    hint = "Install examples may mention ~/.claude, but runtime examples should use SKILL_DIR or CLAUDE_SKILLS_DIR"
+                elif author_only:
+                    severity = "info"
+                    hint = "Author-only skill: keep local paths centralized in one configuration section"
+                elif has_user_config:
+                    severity = "info"
+                    hint = "User config exists; verify this path is only a fallback/example and not required"
+                else:
+                    severity = "warn"
+                    hint = (
+                        "Move user-specific paths to CLI flags, env vars, or "
+                        "references/user-config.md; do not require this local path"
+                    )
+                self.add(
+                    severity,
+                    code,
+                    f"{rel} references local/client-specific path '{label}'",
+                    hint,
+                    file=rel,
+                )
+
     def check_readme(self):
         path = self.dir / "README.md"
         if not path.exists():
@@ -246,12 +413,20 @@ class Linter:
                 "Add ![Version](https://img.shields.io/badge/version-X.Y.Z-CC785C) near the top",
                 file="README.md",
             )
-        if "npx skills add lovstudio/skills" not in text:
+        has_install = any(
+            token in text
+            for token in (
+                "npx skills add",
+                "git clone https://github.com/lovstudio",
+                "/plugin install",
+            )
+        )
+        if not has_install:
             self.add(
                 "warn",
                 "README_NO_INSTALL",
                 "README.md missing install command",
-                "Add install block: `npx skills add lovstudio/skills --skill lovstudio:<name>`",
+                "Add an install block using npx skills add or git clone into ${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}/lovstudio-<name>",
                 file="README.md",
             )
 
@@ -317,6 +492,7 @@ class Linter:
         self.check_readme()
         self.check_changelog()
         self.check_scripts()
+        self.check_portability()
         return self.findings
 
 
@@ -343,8 +519,36 @@ def main():
     ap = argparse.ArgumentParser(description="Audit a lovstudio skill")
     ap.add_argument("name", nargs="?", help="Skill name (with or without lovstudio- prefix)")
     ap.add_argument("--path", help="Absolute path to skill directory (overrides name)")
+    ap.add_argument("--all", action="store_true", help="Audit every SKILL.md below the detected root")
+    ap.add_argument("--root", help="Root directory for --all (defaults to detected skills root)")
     ap.add_argument("--json", action="store_true", help="Output findings as JSON")
     args = ap.parse_args()
+
+    if args.all:
+        root = Path(args.root).resolve() if args.root else find_repo_root(Path.cwd())
+        reports = []
+        for skill_dir in discover_skill_dirs(root):
+            linter = Linter(skill_dir)
+            reports.append({"skill": skill_dir.name, "path": str(skill_dir), "findings": linter.run()})
+        if args.json:
+            print(json.dumps({"root": str(root), "reports": reports}, ensure_ascii=False, indent=2))
+        else:
+            total = {"error": 0, "warn": 0, "info": 0}
+            for report in reports:
+                counts = {sev: len([f for f in report["findings"] if f["severity"] == sev]) for sev in SEVERITIES}
+                for sev in SEVERITIES:
+                    total[sev] += counts[sev]
+                print(
+                    f"{report['skill']}: "
+                    f"{counts['error']} errors, {counts['warn']} warnings, {counts['info']} info"
+                )
+            print(
+                f"\nSummary: {len(reports)} skills, "
+                f"{total['error']} errors, {total['warn']} warnings, {total['info']} info"
+            )
+        if any(f["severity"] == "error" for r in reports for f in r["findings"]):
+            sys.exit(2)
+        return
 
     if not args.name and not args.path:
         ap.error("provide a skill name or --path")

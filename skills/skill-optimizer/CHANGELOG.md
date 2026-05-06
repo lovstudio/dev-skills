@@ -3,6 +3,30 @@
 All notable changes to this skill are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · Versioning: [SemVer](https://semver.org/)
 
+## [0.6.0] - 2026-05-07
+
+### Added
+
+- recognize LOVSTUDIO_SKILLS config namespace
+- recognize LOVSTUDIO_MAINTAIN_PARTNERS skill-specific config cues
+- treat AGENT_SKILL and PARTNERS env names as legacy migration cues
+
+## [0.5.0] - 2026-05-07
+
+### Added
+
+- recognize generic AGENT_SKILL config cues
+- keep LOVSTUDIO_* only as legacy compatibility cues
+
+## [0.4.0] - 2026-05-06
+
+### Added
+
+- add repo-wide portability audit
+- flag hard-coded local paths and legacy skill names
+- support --all --root scans across skill directories
+- ignore negative examples such as "do not hard-code /Users/mark" when checking required local paths
+
 ## [0.3.0] - 2026-04-16
 
 ### Added
@@ -26,4 +50,3 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · Versioning: 
 - initial release: lint + auto-bump + changelog pipeline
 - lint_skill.py audits frontmatter, README badge, scripts, structure
 - bump_version.py maintains README badge, SKILL.md version, CHANGELOG.md
-
