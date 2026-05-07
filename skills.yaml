@@ -80,7 +80,7 @@ skills:
   name_zh: GitHub 投稿 PR
   paid: false
   category: Dev Tools
-  version: 0.1.0
+  version: 0.1.1
   description: Contribute clean, professional PRs to upstream GitHub repos — fork,
     branch, commit, push, open PR, with smart splitting.
   tagline_en: Ship a clean PR to any upstream GitHub repo — fork, branch, push, and
@@ -113,6 +113,7 @@ skills:
   name_zh: 重置 Obsidian 缓存
   paid: false
   category: Dev Tools
+  version: 1.0.1
   description: 重置 Obsidian 缓存，解决卡在 Loading cache 的问题。
   tagline_en: Reset Obsidian's cache when it gets stuck on "Loading cache".
   tagline_zh: Obsidian 卡在 Loading cache 时，一键重置缓存救场。

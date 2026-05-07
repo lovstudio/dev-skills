@@ -1,5 +1,7 @@
 # lovstudio:obsidian-reset-cache
 
+![Version](https://img.shields.io/badge/version-1.0.1-CC785C)
+
 Reset Obsidian cache to fix "Loading cache..." hang issue.
 
 Part of [lovstudio/skills](https://github.com/lovstudio/skills) — by [lovstudio.ai](https://lovstudio.ai)
@@ -7,7 +9,7 @@ Part of [lovstudio/skills](https://github.com/lovstudio/skills) — by [lovstudi
 ## Install
 
 ```bash
-npx skills add lovstudio/skills --skill lovstudio:obsidian-reset-cache
+npx lovstudio skills add obsidian-reset-cache -g -y
 ```
 
 No dependencies required (shell commands only).

@@ -1,6 +1,6 @@
 # lovstudio:gh-contribute
 
-![Version](https://img.shields.io/badge/version-0.1.0-CC785C)
+![Version](https://img.shields.io/badge/version-0.1.1-CC785C)
 
 Contribute a clean, professional PR to someone else's GitHub repo — fork, branch,
 commit, push, open PR. Auto-splits unrelated changes into separate PRs.
@@ -10,7 +10,7 @@ Part of [lovstudio skills](https://github.com/lovstudio/skills) — by [lovstudi
 ## Install
 
 ```bash
-git clone https://github.com/lovstudio/gh-contribute-skill ~/.claude/skills/lovstudio-gh-contribute
+npx lovstudio skills add gh-contribute -g -y
 ```
 
 Requires: [`gh` CLI](https://cli.github.com/) (authenticated via `gh auth login`) and `git`.

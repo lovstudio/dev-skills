@@ -5,12 +5,14 @@ tagline: "重置 Obsidian 缓存，解决卡在 Loading cache 的问题。"
 description: >
   重置 Obsidian 缓存，解决卡在 "Loading cache..." 的问题。
   当用户说 "obsidian 卡住"、"loading cache"、"obsidian 打不开"、"重置 obsidian 缓存" 时触发。
+  Trigger when the user mentions Obsidian startup hangs, cache reset, or
+  "Loading cache".
 license: MIT
 compatibility: >
   macOS only. Obsidian stores cache in ~/Library/Application Support/obsidian/.
 metadata:
   author: lovstudio
-  version: "1.0.0"
+  version: "1.0.1"
   tags: obsidian, cache, troubleshooting
 ---
 

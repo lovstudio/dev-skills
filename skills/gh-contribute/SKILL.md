@@ -12,7 +12,7 @@ compatibility: >
   Targets GitHub repositories only. Cross-platform: macOS, Windows, Linux.
 metadata:
   author: lovstudio
-  version: "0.1.0"
+  version: "0.1.1"
   tags: [github, pr, contribute, fork, open-source]
 ---
 
