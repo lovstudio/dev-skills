@@ -14,7 +14,7 @@ compatibility: >
   Cloudflare DNS auto-config requires CLOUDFLARE_API_KEY env var.
 metadata:
   author: lovstudio
-  version: "2.0.1"
+  version: "2.0.2"
   tags: deploy vercel cloudflare dns frontend
 ---
 
@@ -70,6 +70,10 @@ For Vite/CRA (SPA) projects, create `vercel.json` if missing:
 **Skip for Next.js** — it handles routing natively.
 
 ### Step 3: Deploy to Vercel
+
+Before running a production deployment, use `AskUserQuestion` if the target
+project, production/non-production mode, or custom domain is unclear. If the
+user already explicitly requested production deployment for this project, proceed.
 
 ```bash
 # Check CLI

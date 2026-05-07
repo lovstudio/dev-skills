@@ -12,7 +12,7 @@ compatibility: >
   macOS only. Obsidian stores cache in ~/Library/Application Support/obsidian/.
 metadata:
   author: lovstudio
-  version: "1.0.1"
+  version: "1.0.2"
   tags: obsidian, cache, troubleshooting
 ---
 
@@ -35,8 +35,11 @@ pgrep -x Obsidian && echo "Obsidian 正在运行，请先关闭" || echo "OK: Ob
 ```
 
 如果 Obsidian 正在运行，提示用户先关闭。
+如果用户没有明确确认已关闭 Obsidian，使用 `AskUserQuestion` 确认后再继续。
 
 ### Step 2: 清除 IndexedDB 缓存
+
+执行前再次确认目标是 Obsidian IndexedDB 缓存，而不是 vault、插件配置或笔记。
 
 ```bash
 rm -rf ~/Library/Application\ Support/obsidian/IndexedDB/

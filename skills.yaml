@@ -49,7 +49,7 @@ skills:
   name_zh: 部署到 Vercel
   paid: false
   category: Dev Tools
-  version: 2.0.1
+  version: 2.0.2
   description: Deploy frontend to Vercel with auto Cloudflare DNS + custom domain
     setup.
   tagline_en: Ship a frontend to Vercel with custom domain and Cloudflare DNS wired
@@ -113,7 +113,7 @@ skills:
   name_zh: 重置 Obsidian 缓存
   paid: false
   category: Dev Tools
-  version: 1.0.1
+  version: 1.0.2
   description: 重置 Obsidian 缓存，解决卡在 Loading cache 的问题。
   tagline_en: Reset Obsidian's cache when it gets stuck on "Loading cache".
   tagline_zh: Obsidian 卡在 Loading cache 时，一键重置缓存救场。
