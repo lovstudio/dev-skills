@@ -5,7 +5,7 @@ skills:
   name_zh: 技能脚手架
   paid: false
   category: Meta
-  version: 2.6.1
+  version: 2.7.0
   description: Scaffold lovstudio skills as independent repos or bundled dev-skills
     entries.
   tagline_en: Scaffold a new Claude Code skill as an independent repo or dev-skills
