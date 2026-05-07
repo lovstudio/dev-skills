@@ -1,5 +1,7 @@
 # lovstudio:gh-tidy
 
+![Version](https://img.shields.io/badge/version-0.1.1-CC785C)
+
 Interactive GitHub repo triage — clean up issues, PRs, stale branches, and orphan labels in one pass.
 
 ## Install

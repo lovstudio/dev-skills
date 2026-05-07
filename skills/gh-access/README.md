@@ -1,5 +1,7 @@
 # lovstudio:gh-access
 
+![Version](https://img.shields.io/badge/version-0.1.1-CC785C)
+
 Grant, revoke, and audit collaborator access on **private** GitHub repos — by
 GitHub username **or** email address — with read-only as the safe default.
 

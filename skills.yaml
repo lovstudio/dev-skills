@@ -28,6 +28,7 @@ skills:
   name_zh: 上下文体检
   paid: false
   category: Dev Tools
+  version: 0.2.1
   description: Context hygiene checker. Suggests /fork or /btw when context is polluted.
   tagline_en: Watch your Claude Code context for pollution and suggest when to fork
     or reset.
@@ -48,6 +49,7 @@ skills:
   name_zh: 部署到 Vercel
   paid: false
   category: Dev Tools
+  version: 2.0.1
   description: Deploy frontend to Vercel with auto Cloudflare DNS + custom domain
     setup.
   tagline_en: Ship a frontend to Vercel with custom domain and Cloudflare DNS wired
@@ -67,6 +69,7 @@ skills:
   name_zh: GitHub 协作者管理
   paid: false
   category: Dev Tools
+  version: 0.1.1
   description: Grant / revoke / list collaborator access on private GitHub repos by
     username or email. Read-only by default.
   tagline_en: Grant, revoke, or audit collaborator access on private GitHub repos
@@ -88,6 +91,7 @@ skills:
   name_zh: GitHub 仓库整理
   paid: false
   category: Dev Tools
+  version: 0.1.1
   description: Triage & clean up GitHub issues, PRs, branches, and labels in one pass.
   tagline_en: Triage and clean up GitHub issues, PRs, branches, and labels in a single
     pass.

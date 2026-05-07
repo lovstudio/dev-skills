@@ -14,7 +14,7 @@ compatibility: >
   Cloudflare DNS auto-config requires CLOUDFLARE_API_KEY env var.
 metadata:
   author: lovstudio
-  version: "2.0.0"
+  version: "2.0.1"
   tags: deploy vercel cloudflare dns frontend
 ---
 
