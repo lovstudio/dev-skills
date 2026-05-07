@@ -13,12 +13,12 @@ description: >
   surfaced as one-click suggestions.
 license: MIT
 compatibility: >
-  Claude Code-oriented instruction skill. Agent home defaults to
-  `${LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME:-$HOME/.claude}` and can be overridden
-  for compatible runtimes.
+  Claude Code-oriented instruction skill. Agent home must resolve from
+  `LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME`, the shared LovStudio skills profile, or
+  a one-time user answer; do not assume a fixed runtime directory.
 metadata:
   author: lovstudio
-  version: "0.2.1"
+  version: "0.3.0"
   tags: context memory claude-code
 ---
 
@@ -99,8 +99,10 @@ Parse the instruction and route to the right action class:
 
 ## Action: Write Project Memory (auto-execute)
 
-Directory: `${LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME:-$HOME/.claude}/projects/<project-slug>/memory/`
-(already exists; do not mkdir).
+Directory: `<resolved-agent-home>/projects/<project-slug>/memory/`.
+Resolve `<resolved-agent-home>` from the User Configuration section before
+writing. The memory directory should already exist; do not create a new
+runtime layout silently.
 
 Procedure:
 1. Pick filename: `<type>_<topic>.md` (e.g. `feedback_output_paths.md`).
@@ -112,7 +114,7 @@ Procedure:
 
 ## Action: Edit Global CLAUDE.md (confirm-first)
 
-Target: `${LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME:-$HOME/.claude}/CLAUDE.md`.
+Target: `<resolved-agent-home>/CLAUDE.md`.
 
 Procedure:
 1. Read the file.
@@ -167,5 +169,13 @@ edits (show final path), and any derived artifacts.
 
 ## User Configuration
 
-Use `LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME` to override the agent home directory.
-When unset, the skill uses `$HOME/.claude` for Claude Code compatibility.
+Resolve agent paths in this order:
+
+1. `LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME`.
+2. Shared profile `${LOVSTUDIO_SKILLS_PROFILE:-$HOME/.lovstudio/skills/profile.json}`
+   keys: `agent.home`, `claude.home`, or `runtime.agent_home`.
+3. Ask the user once for the agent home directory and use that value for the
+   current operation.
+
+For alternate runtimes, set `LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME` explicitly or
+add the relevant profile key.

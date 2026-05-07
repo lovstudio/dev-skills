@@ -28,7 +28,7 @@ skills:
   name_zh: 上下文体检
   paid: false
   category: Dev Tools
-  version: 0.2.1
+  version: 0.3.0
   description: Context hygiene checker. Suggests /fork or /btw when context is polluted.
   tagline_en: Watch your Claude Code context for pollution and suggest when to fork
     or reset.

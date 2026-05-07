@@ -1,6 +1,6 @@
 # AutoContext
 
-![Version](https://img.shields.io/badge/version-0.2.1-CC785C)
+![Version](https://img.shields.io/badge/version-0.3.0-CC785C)
 
 Context operator for Claude Code sessions — not just a health check.
 
@@ -10,7 +10,7 @@ Three capability layers, routed by action sensitivity:
 
 - **Auto-execute**: writes project memory when it spots unpersisted
   feedback/preferences; updates `MEMORY.md` index.
-- **Confirm-first**: edits `~/.claude/CLAUDE.md` or project `CLAUDE.md`
+- **Confirm-first**: edits the configured global instructions file or project `CLAUDE.md`
   with a shown diff and explicit "yes" before applying.
 - **Suggest-only**: harness commands like `/fork`, `/compact`, `/btw` —
   surfaced as exact-paste strings.
@@ -20,7 +20,7 @@ You (turn 31):  "从今以后所有输出都要带路径"
                  ↑ AutoContext writes feedback memory automatically
 
 You (turn 45):  "/lovstudio-auto-context 记到全局"
-                 ↑ Shows diff of proposed ~/.claude/CLAUDE.md edit, waits for yes
+                 ↑ Shows diff of proposed global instructions edit, waits for yes
 
 You (turn 80):  transcript size crosses threshold
                  ↑ Suggests: paste `/fork` (harness owns this one)
@@ -54,13 +54,15 @@ exact command for you to paste.
 
 ## User Configuration
 
-Set `LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME` to override the agent home directory.
-When unset, the skill uses `$HOME/.claude` for Claude Code compatibility.
+Set `LOVSTUDIO_AUTO_CONTEXT_AGENT_HOME` or configure
+`${LOVSTUDIO_SKILLS_PROFILE:-$HOME/.lovstudio/skills/profile.json}` with
+`agent.home`, `claude.home`, or `runtime.agent_home`. If none is available, the
+skill asks once before editing global files.
 
 ## Version
 
-0.2.0 — adds confirm-first editing of global/project CLAUDE.md and
-auto-write of feedback memory. See [CHANGELOG.md](CHANGELOG.md).
+0.3.0 — resolves agent home through env/profile/user input instead of a fixed
+runtime directory. See [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

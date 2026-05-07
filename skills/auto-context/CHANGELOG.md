@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0] - 2026-05-07
+
+### Added
+
+- resolve agent home through env or profile
+- remove fixed runtime directory default from AutoContext docs
+- document profile keys for compatible agent runtimes
+
 ## [0.2.1] - 2026-05-07
 
 ### Fixed
