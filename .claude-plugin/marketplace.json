@@ -22,7 +22,7 @@
     {
       "name": "dev-tools",
       "source": "./",
-      "description": "Dev Tools — 10 free skills bundled together.",
+      "description": "Dev Tools — 11 free skills bundled together.",
       "category": "Dev Tools",
       "skills": [
         "./skills/auto-context",
@@ -33,6 +33,7 @@
         "./skills/gh-contribute",
         "./skills/gh-tidy",
         "./skills/install-tanstack-query",
+        "./skills/release-via-cicd",
         "./skills/obsidian-reset-cache",
         "./skills/project-port"
       ],

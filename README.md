@@ -30,7 +30,7 @@
 ## 技能列表
 
 <!-- COUNT:START -->
-> **12 个技能** — 12 个免费 + 0 个付费。
+> **13 个技能** — 13 个免费 + 0 个付费。
 <!-- COUNT:END -->
 
 <!-- SKILLS:START -->
@@ -50,6 +50,7 @@
 | ![Free](https://img.shields.io/badge/Free-green) | [`install-tanstack-query`](https://github.com/lovstudio/dev-skills/tree/main/skills/install-tanstack-query) | [TanStack Query 初始化](https://github.com/lovstudio/dev-skills/tree/main/skills/install-tanstack-query) | 初始化 TanStack Query，并把分散的请求状态收敛到统一 query keys 和 hooks。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`obsidian-reset-cache`](https://github.com/lovstudio/obsidian-reset-cache-skill) | [重置 Obsidian 缓存](https://github.com/lovstudio/obsidian-reset-cache-skill) | Obsidian 卡在 Loading cache 时，一键重置缓存救场。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`project-port`](https://github.com/lovstudio/project-port-skill) | [项目端口分配](https://github.com/lovstudio/project-port-skill) | 给每个项目分配一个稳定且唯一的开发端口，彻底告别端口撞车。 |
+| ![Free](https://img.shields.io/badge/Free-green) | [`release-via-cicd`](https://github.com/lovstudio/release-via-cicd-skill) | [CI/CD 发布](https://github.com/lovstudio/release-via-cicd-skill) | 配置发布流水线、发布新版本，并验证 Tauri/macOS 签名与 notarization 产物。 |
 <!-- SKILLS:END -->
 
 <sub>上表由 [`scripts/render-readme.py`](scripts/render-readme.py) 从 [`skills.yaml`](skills.yaml) 自动生成。请编辑 `skills.yaml`，不要手动改表格。</sub>

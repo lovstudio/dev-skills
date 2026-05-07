@@ -30,7 +30,7 @@ Each skill still lives in its own `github.com/lovstudio/{name}-skill` repo. This
 ## Skills
 
 <!-- COUNT:START -->
-> **12 skills** — 12 Free + 0 Paid.
+> **13 skills** — 13 Free + 0 Paid.
 <!-- COUNT:END -->
 
 <!-- SKILLS:START -->
@@ -50,6 +50,7 @@ Each skill still lives in its own `github.com/lovstudio/{name}-skill` repo. This
 | ![Free](https://img.shields.io/badge/Free-green) | [`install-tanstack-query`](https://github.com/lovstudio/dev-skills/tree/main/skills/install-tanstack-query) | Initialize TanStack Query and migrate request state into shared query keys and hooks. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`obsidian-reset-cache`](https://github.com/lovstudio/obsidian-reset-cache-skill) | Reset Obsidian's cache when it gets stuck on "Loading cache". |
 | ![Free](https://img.shields.io/badge/Free-green) | [`project-port`](https://github.com/lovstudio/project-port-skill) | Assign each project a stable, unique dev port so services stop colliding. |
+| ![Free](https://img.shields.io/badge/Free-green) | [`release-via-cicd`](https://github.com/lovstudio/release-via-cicd-skill) | Configure release workflows, publish versions, and verify signed Tauri app artifacts. |
 <!-- SKILLS:END -->
 
 <sub>The table above is auto-generated from [`skills.yaml`](skills.yaml) by [`scripts/render-readme.py`](scripts/render-readme.py). Edit `skills.yaml`, not this table.</sub>
