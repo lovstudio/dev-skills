@@ -17,7 +17,7 @@ skills:
   name_zh: 技能优化器
   paid: false
   category: Meta
-  version: 0.6.1
+  version: 0.6.2
   description: Audit + auto-fix an existing skill, bump semver, and append a CHANGELOG
     entry.
   tagline_en: Audit an existing skill, auto-fix issues, and bump its version in one

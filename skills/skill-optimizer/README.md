@@ -1,10 +1,10 @@
 # lovstudio:skill-optimizer
 
-![Version](https://img.shields.io/badge/version-0.6.1-CC785C)
+![Version](https://img.shields.io/badge/version-0.6.2-CC785C)
 
 自动优化 lovstudio skill — 审计规范、应用修复、bump 版本、追加 changelog。
 现在会额外检查 Agent Skills 命名兼容性和本地环境耦合，例如
-`/Users/mark`、`~/lovstudio`、固定 `~/.claude` runtime 路径，以及缺失的用户初始化层。
+个人绝对路径、私有 LovStudio workspace 假设、固定 agent runtime 路径，以及缺失的用户初始化层。
 
 Part of [lovstudio/skills](https://github.com/lovstudio/skills) — by [lovstudio.ai](https://lovstudio.ai)
 
@@ -96,7 +96,7 @@ python3 scripts/bump_version.py any2pdf --type patch -m "..." --dry-run
 | Scripts use argparse | warn | CLI without argparse |
 | SKILL.md body length | warn | > 500 lines — should split to `references/` |
 | TODO placeholders | error | Uninitialized template content |
-| Local path portability | warn/info | `/Users/mark`, `~/lovstudio`, fixed `~/.claude`, missing user config |
+| Local path portability | warn/info | personal paths, private workspace assumptions, fixed runtime paths, missing user config |
 | CJK handling for doc skills | info | Document skills without visible CJK code paths |
 
 ## Version Bump Rules

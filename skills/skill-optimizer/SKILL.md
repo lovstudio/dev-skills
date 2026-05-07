@@ -8,8 +8,8 @@ description: >
   version and append a CHANGELOG entry. Checks SKILL.md frontmatter/trigger
   quality, script CLI hygiene, directory naming, README badge, progressive
   disclosure structure, Agent Skills-compatible naming, and portability issues
-  such as hard-coded `/Users/mark`, `~/lovstudio`, fixed `~/.claude` runtime
-  paths, or missing user configuration. Prioritizes issues raised in the
+  such as hard-coded personal workspace paths, private LovStudio workspace
+  assumptions, fixed agent runtime paths, or missing user configuration. Prioritizes issues raised in the
   current conversation (e.g. bugs the user just hit) over a generic sweep. Use
   when the user asks to "optimize", "refine", "audit", or "polish" an existing
   skill, or when they say "bump version", "update changelog", or "fix this
@@ -21,7 +21,7 @@ compatibility: >
   Must be run inside the lovstudio-skills repo (auto-detects repo root).
 metadata:
   author: lovstudio
-  version: "0.6.1"
+  version: "0.6.2"
   tags: meta skill-maintenance versioning changelog lint
 ---
 
@@ -89,8 +89,8 @@ prioritized fix list. Guidelines:
   root cause — don't paper over it.
 - **Progressive disclosure**: if SKILL.md body > 500 lines, split the largest
   section to `references/<topic>.md`.
-- **User initialization**: if the skill references `/Users/mark`,
-  `~/lovstudio`, private brand assets, design guides, or output roots, add a
+- **User initialization**: if the skill references personal workspace paths,
+  private brand assets, design guides, or output roots, add a
   `references/user-config.md` profile/env contract and replace required local
   paths with CLI flags, environment variables, or profile lookups.
 - **Don't write tests or docs that weren't asked for.** The CHANGELOG entry IS
@@ -152,19 +152,20 @@ The diff speaks for itself.
 
 ### Step 7: Commit, push & sync all locations
 
-Skills live in three locations that must stay in sync:
+Skills may live in a source repo plus one distribution catalog. Keep all
+published locations in sync:
 
 ```
-source (edit here):  ~/projects/lovstudio-skills/        → lovstudio/skills
-claude reads from:   ~/.claude/skills/*                   → symlinks to source
-distribution repo:   ~/projects/lovstudio-pro-skills/     → lovstudio/pro-skills
+source repo:          lovstudio/<name>-skill or lovstudio/dev-skills
+general catalog:      lovstudio/general-skills, for public/paid general skills
+dev-skills catalog:   lovstudio/dev-skills, for bundled meta/dev tools
 ```
 
 **7a. Commit & push to source repo:**
 
 ```bash
-cd ~/projects/lovstudio-skills
-git add skills/lovstudio-<name>/
+cd <source-checkout>
+git add <changed files>
 git commit -m "fix(<name>): <one-line summary>"
 git push
 ```
@@ -172,22 +173,20 @@ git push
 - Commit message follows repo convention: `fix|feat|docs(<skill-name>): <summary>`
 - Use `fix` for patch, `feat` for minor, `feat!` for major
 
-**7b. Sync to pro-skills distribution repo:**
+**7b. Sync to the relevant distribution repo:**
 
-The two repos have independent git histories (not forkable), so sync via
-file copy:
+Use the catalog repo's own sync scripts, then render and validate metadata:
 
 ```bash
-SRC=~/projects/lovstudio-skills/skills/lovstudio-<name>
-DST=~/projects/lovstudio-pro-skills/skills/lovstudio-<name>
-rsync -av --delete "$SRC/" "$DST/"
-cd ~/projects/lovstudio-pro-skills
-git add skills/lovstudio-<name>/
-git commit -m "sync(<name>): <version> from lovstudio/skills"
+cd <general-skills-or-dev-skills-checkout>
+python3 scripts/sync-skills.py
+python3 scripts/render-marketplace.py
+python3 scripts/render-readme.py
+python3 scripts/validate_deps.py
+git add <manifest and synced skill paths>
+git commit -m "chore: sync <name> skill"
 git push origin main
 ```
-
-`~/.claude/skills/` is already up-to-date via symlinks — no action needed.
 
 **If any step fails**, report the sync state to the user rather than silently
 skipping. A partial sync (source updated but pro-skills stale) is the exact
