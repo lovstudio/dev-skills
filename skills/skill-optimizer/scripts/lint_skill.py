@@ -476,8 +476,24 @@ class Linter:
                     "",
                     file=rel,
                 )
-            # CJK-relevant skills should handle mixed text
-            if "pdf" in self.name or "docx" in self.name or "deck" in self.name:
+            # CJK-relevant text-rendering scripts should handle mixed text.
+            # Image-only helpers inside document skills (logo/QR compositing,
+            # PDF raster stitching, etc.) do not need font fallback logic.
+            renders_text = any(
+                marker in text.lower()
+                for marker in (
+                    "add_run(",
+                    "add_paragraph(",
+                    "draw.text",
+                    "imagefont",
+                    "reportlab",
+                    "fpdf",
+                    "python-pptx",
+                    "pptx",
+                    "docx",
+                )
+            )
+            if renders_text and ("pdf" in self.name or "docx" in self.name or "deck" in self.name):
                 if "cjk" not in text.lower() and "chinese" not in text.lower() and "中文" not in text:
                     self.add(
                         "info",
