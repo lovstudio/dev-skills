@@ -108,6 +108,17 @@ skills:
   tagline_en: Initialize TanStack Query and migrate request state into shared query
     keys and hooks.
   tagline_zh: 初始化 TanStack Query，并把分散的请求状态收敛到统一 query keys 和 hooks。
+- name: release-via-cicd
+  repo: lovstudio/release-via-cicd-skill
+  name_zh: CI/CD 发布
+  paid: false
+  category: Dev Tools
+  version: 8.5.0
+  description: Configure CI/CD and publish new versions for Node, Tauri, Vite, shell,
+    and GitHub Release projects with macOS signing/notarization verification.
+  tagline_en: Configure release workflows, publish versions, and verify signed Tauri
+    app artifacts.
+  tagline_zh: 配置发布流水线、发布新版本，并验证 Tauri/macOS 签名与 notarization 产物。
 - name: obsidian-reset-cache
   repo: lovstudio/obsidian-reset-cache-skill
   name_zh: 重置 Obsidian 缓存
