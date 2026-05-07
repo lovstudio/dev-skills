@@ -1,6 +1,6 @@
 # lovstudio:gh-access
 
-![Version](https://img.shields.io/badge/version-0.1.1-CC785C)
+![Version](https://img.shields.io/badge/version-0.1.2-CC785C)
 
 Grant, revoke, and audit collaborator access on **private** GitHub repos — by
 GitHub username **or** email address — with read-only as the safe default.
@@ -18,7 +18,7 @@ Or clone directly:
 
 ```bash
 git clone https://github.com/lovstudio/gh-access-skill \
-          ~/.claude/skills/lovstudio-gh-access
+          "${LOVSTUDIO_SKILLS_INSTALL_DIR:?Set LOVSTUDIO_SKILLS_INSTALL_DIR}/lovstudio-gh-access"
 ```
 
 ## Prerequisites

@@ -69,7 +69,7 @@ skills:
   name_zh: GitHub 协作者管理
   paid: false
   category: Dev Tools
-  version: 0.1.1
+  version: 0.1.2
   description: Grant / revoke / list collaborator access on private GitHub repos by
     username or email. Read-only by default.
   tagline_en: Grant, revoke, or audit collaborator access on private GitHub repos

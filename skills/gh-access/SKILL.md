@@ -18,7 +18,7 @@ compatibility: >
   (for org-owned repos, the caller must be a repo admin or org owner).
 metadata:
   author: lovstudio
-  version: "0.1.1"
+  version: "0.1.2"
   tags: github collaborator access invite private-repo permissions
 ---
 
