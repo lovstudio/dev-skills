@@ -119,6 +119,30 @@ skills:
   tagline_en: Configure release workflows, publish versions, and verify signed Tauri
     app artifacts.
   tagline_zh: 配置发布流水线、发布新版本，并验证 Tauri/macOS 签名与 notarization 产物。
+- name: optimize-tauri-backend
+  repo: lovstudio/dev-skills
+  skill_path: skills/optimize-tauri-backend
+  name_zh: Tauri 后端优化
+  paid: false
+  category: Dev Tools
+  version: 0.1.0
+  description: Optimize Tauri backend architecture, command surfaces, IPC streams,
+    and Rust development ergonomics.
+  tagline_en: Reduce Tauri Rust restart pain by modularizing the backend, shrinking
+    command surfaces, and hardening long IPC streams.
+  tagline_zh: 优化 Tauri 后端结构、命令边界和长 IPC 生命周期，降低 Rust 重启带来的开发摩擦。
+- name: app-generator
+  repo: lovstudio/dev-skills
+  skill_path: skills/app-generator
+  name_zh: App 生成器
+  paid: false
+  category: Dev Tools
+  version: 0.1.0
+  description: Generate or standardize Lovstudio cross-platform apps with Tauri,
+    React, shadcn/ui, TanStack Query, CI/CD, auto update, and lovinsp.
+  tagline_en: Generate Lovstudio-grade Tauri apps with brand, UI, data, release,
+    updater, and developer tooling wired in.
+  tagline_zh: 生成符合 Lovstudio 标准的跨端 App，内置品牌、UI、数据层、发布、自动更新和开发辅助。
 - name: obsidian-reset-cache
   repo: lovstudio/obsidian-reset-cache-skill
   name_zh: 重置 Obsidian 缓存
@@ -137,3 +161,15 @@ skills:
   description: Generate stable unique dev port (3000–8999) from project name.
   tagline_en: Assign each project a stable, unique dev port so services stop colliding.
   tagline_zh: 给每个项目分配一个稳定且唯一的开发端口，彻底告别端口撞车。
+- name: mobile-adapt
+  repo: lovstudio/dev-skills
+  skill_path: skills/mobile-adapt
+  name_zh: 移动端适配
+  paid: false
+  category: Dev Tools
+  version: 0.1.0
+  description: Scan and fix mobile adaptation issues — overflow, safe area, 100vh,
+    responsive layout, multi-level navigation, touch targets.
+  tagline_en: Scan a web project for mobile issues and fix them — overflow, safe area,
+    viewport units, responsive layouts, and page navigation.
+  tagline_zh: 扫描并修复 Web 项目的移动端适配问题——溢出、安全区、视口单位、响应式布局和多级导航。

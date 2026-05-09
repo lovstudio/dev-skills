@@ -22,9 +22,10 @@
     {
       "name": "dev-tools",
       "source": "./",
-      "description": "Dev Tools — 11 free skills bundled together.",
+      "description": "Dev Tools — 14 free skills bundled together.",
       "category": "Dev Tools",
       "skills": [
+        "./skills/app-generator",
         "./skills/auto-context",
         "./skills/cc-migrate-session",
         "./skills/deploy-to-vercel",
@@ -33,9 +34,11 @@
         "./skills/gh-contribute",
         "./skills/gh-tidy",
         "./skills/install-tanstack-query",
-        "./skills/release-via-cicd",
+        "./skills/mobile-adapt",
         "./skills/obsidian-reset-cache",
-        "./skills/project-port"
+        "./skills/optimize-tauri-backend",
+        "./skills/project-port",
+        "./skills/release-via-cicd"
       ],
       "strict": false
     }
