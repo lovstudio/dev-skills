@@ -118,7 +118,7 @@ def status(ok: bool) -> str:
     return "ok" if ok else "missing"
 
 
-def audit(root: Path) -> dict:
+def audit(root: Path, app_type: str = "auto") -> dict:
     root = root.resolve()
     package = load_package_json(root)
     deps = dependencies(package)
@@ -133,7 +133,17 @@ def audit(root: Path) -> dict:
         ],
     )
     workflows = find_files(root, [".github/workflows/*.yml", ".github/workflows/*.yaml"])
-    css_files = find_files(root, ["src/index.css", "src/App.css", "app/globals.css", "src/styles/*.css"])
+    css_files = find_files(
+        root,
+        [
+            "src/index.css",
+            "src/App.css",
+            "app/globals.css",
+            "src/app/globals.css",
+            "styles/globals.css",
+            "src/styles/*.css",
+        ],
+    )
     build_config_files = find_files(
         root,
         [
@@ -144,6 +154,7 @@ def audit(root: Path) -> dict:
             "webpack.config.js",
             "next.config.ts",
             "next.config.js",
+            "next.config.mjs",
             "nuxt.config.ts",
             "nuxt.config.js",
         ],
@@ -153,9 +164,14 @@ def audit(root: Path) -> dict:
     has_tauri = src_tauri.exists() or "@tauri-apps/api" in deps or "@tauri-apps/cli" in deps
     has_react = "react" in deps
     has_vite = file_exists(root, ["vite.config.ts", "vite.config.js", "vite.config.mts"]) or "vite" in deps
+    has_next = file_exists(root, ["next.config.ts", "next.config.js", "next.config.mjs"]) or "next" in deps
+    target_app_type = "tauri" if app_type == "auto" and has_tauri else app_type
+    if target_app_type == "auto":
+        target_app_type = "web"
+    include_tauri = target_app_type == "tauri"
     has_shadcn = (root / "components.json").exists()
     has_tanstack = "@tanstack/react-query" in deps
-    has_lucin = "lucide-react" in deps
+    has_lucide = "lucide-react" in deps
     has_lovinsp_dependency = "lovinsp" in deps
     lovinsp_configured = contains_text(build_config_files, ["lovinspplugin", "@lovinsp/", "lovinsp"])
     has_lovinsp = has_lovinsp_dependency and lovinsp_configured
@@ -163,6 +179,19 @@ def audit(root: Path) -> dict:
     has_icons = file_exists(root, ["src-tauri/icons/icon.icns", "src-tauri/icons/icon.ico"])
     has_ci = any(re.search(r"(check|ci|test|build)", p.name, re.I) for p in workflows)
     has_release = any(re.search(r"(release|tauri)", p.name, re.I) for p in workflows)
+    has_web_deploy = (
+        any(re.search(r"(deploy|vercel|netlify|pages|cloudflare|wrangler)", p.name, re.I) for p in workflows)
+        or file_exists(
+            root,
+            [
+                "vercel.json",
+                "netlify.toml",
+                "wrangler.toml",
+                ".github/workflows/deploy*.yml",
+                ".github/workflows/deploy*.yaml",
+            ],
+        )
+    )
     has_updater = (
         "@tauri-apps/plugin-updater" in deps
         or (src_tauri.exists() and search_text(src_tauri, ["plugin-updater", "tauri_plugin_updater", "updater"]))
@@ -194,21 +223,14 @@ def audit(root: Path) -> dict:
             "Package manifest",
             status(bool(package)),
             "package.json found" if package else "package.json not found",
-            "Create a React/Vite package before app-layer setup.",
+            "Create a React web package before app-layer setup, using Vite, Next.js, or Tauri based on the selected app type.",
         ),
         Check(
             "react-vite",
-            "React + Vite baseline",
-            status(has_react and has_vite),
-            f"react={has_react}, vite={has_vite}",
-            "Use a React TypeScript Vite app unless the target project already has a stronger local convention.",
-        ),
-        Check(
-            "tauri",
-            "Tauri baseline",
-            status(has_tauri and bool(tauri_conf)),
-            f"src-tauri={src_tauri.exists()}, config_files={len(tauri_conf)}",
-            "Run Tauri init and configure title, identifier, windows, bundle metadata, and capabilities.",
+            "React web baseline",
+            status(has_react and (has_vite or has_next)),
+            f"react={has_react}, vite={has_vite}, next={has_next}",
+            "Use Vite React for app-like workflows or Next.js for SEO/SSR/content routing unless the target project already has a stronger local convention.",
         ),
         Check(
             "shadcn",
@@ -222,7 +244,7 @@ def audit(root: Path) -> dict:
             "Lovstudio Warm Academic UI",
             status(has_warm_academic),
             "theme tokens or Lovstudio references detected" if has_warm_academic else "theme tokens not detected",
-            "Read /Users/mark/lovstudio/design/design-guide.md and use semantic Tailwind classes.",
+            "Read the Warm Academic design guide from local workspace config and use semantic Tailwind classes.",
         ),
         Check(
             "tanstack-query",
@@ -233,16 +255,16 @@ def audit(root: Path) -> dict:
         ),
         Check(
             "icons",
-            "Target-specific app logo and Tauri icons",
-            status(has_logo and (has_icons or not has_tauri)),
-            f"source_logo={has_logo}, tauri_icons={has_icons}",
-            "For new apps, run lovstudio:gen-logo to create assets/logo* and public/logo*, then generate Tauri icons from that target-specific logo.",
+            "Target-specific app logo and icons",
+            status(has_logo and (has_icons or not include_tauri)),
+            f"source_logo={has_logo}, tauri_icons={has_icons}, app_type={target_app_type}",
+            "For new apps, run lovstudio:gen-logo to create assets/logo* and public/logo*, then generate favicons/PWA icons or Tauri icons based on app type.",
         ),
         Check(
             "lucide",
             "Lucide icons",
-            status(has_lucin),
-            "lucide-react dependency found" if has_lucin else "lucide-react missing",
+            status(has_lucide),
+            "lucide-react dependency found" if has_lucide else "lucide-react missing",
             "Use lucide-react for toolbar and action icons.",
         ),
         Check(
@@ -259,24 +281,48 @@ def audit(root: Path) -> dict:
             f"workflow_files={len(workflows)}",
             "Add a GitHub Actions check workflow for install, typecheck, lint/build where available.",
         ),
-        Check(
-            "release",
-            "Tauri release workflow",
-            status(has_release),
-            f"workflow_files={len(workflows)}",
-            "Add a Tauri release workflow that builds artifacts and attaches them to GitHub Releases.",
-        ),
-        Check(
-            "updater",
-            "Auto update",
-            status(has_updater and (not has_tauri or updater_pubkey)),
-            f"updater={has_updater}, pubkey={updater_pubkey}",
-            "Wire @tauri-apps/plugin-updater / tauri_plugin_updater and include plugins.updater.pubkey, using a placeholder until the real signer public key exists.",
-        ),
     ]
+    if include_tauri:
+        checks.extend(
+            [
+                Check(
+                    "tauri",
+                    "Tauri baseline",
+                    status(has_tauri and bool(tauri_conf)),
+                    f"src-tauri={src_tauri.exists()}, config_files={len(tauri_conf)}",
+                    "Run Tauri init and configure title, identifier, windows, bundle metadata, and capabilities.",
+                ),
+                Check(
+                    "release",
+                    "Tauri release workflow",
+                    status(has_release),
+                    f"workflow_files={len(workflows)}",
+                    "Add a Tauri release workflow that builds artifacts and attaches them to GitHub Releases.",
+                ),
+                Check(
+                    "updater",
+                    "Auto update",
+                    status(has_updater and updater_pubkey),
+                    f"updater={has_updater}, pubkey={updater_pubkey}",
+                    "Wire @tauri-apps/plugin-updater / tauri_plugin_updater and include plugins.updater.pubkey, using a placeholder until the real signer public key exists.",
+                ),
+            ]
+        )
+    else:
+        checks.append(
+            Check(
+                "web-deploy",
+                "Web deploy surface",
+                status(has_web_deploy),
+                f"workflow_files={len(workflows)}, deploy_config={has_web_deploy}",
+                "Add a deploy workflow or config for the selected target, such as Vercel, Netlify, Cloudflare Pages, GitHub Pages, or documented static hosting.",
+            )
+        )
 
     return {
         "root": str(root),
+        "app_type": target_app_type,
+        "requested_app_type": app_type,
         "summary": {
             "ok": sum(1 for check in checks if check.status == "ok"),
             "missing": sum(1 for check in checks if check.status != "ok"),
@@ -290,6 +336,7 @@ def render_markdown(report: dict) -> str:
         "# Lovstudio App Audit",
         "",
         f"Root: `{report['root']}`",
+        f"App type: `{report['app_type']}` (requested: `{report['requested_app_type']}`)",
         "",
         f"Checks: {report['summary']['ok']} ok, {report['summary']['missing']} missing",
         "",
@@ -313,6 +360,7 @@ def render_markdown(report: dict) -> str:
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Audit a project against the Lovstudio app baseline.")
     parser.add_argument("--root", default=".", help="Target app root to inspect.")
+    parser.add_argument("--app-type", choices=("auto", "web", "tauri"), default="auto", help="Audit profile to apply.")
     parser.add_argument("--format", choices=("markdown", "json"), default="markdown", help="Output format.")
     parser.add_argument("--output", help="Optional path to write the report.")
     return parser.parse_args(argv)
@@ -328,7 +376,7 @@ def main(argv: list[str]) -> int:
         print(f"error: root is not a directory: {root}", file=sys.stderr)
         return 2
 
-    report = audit(root)
+    report = audit(root, args.app_type)
     if args.format == "json":
         output = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     else:

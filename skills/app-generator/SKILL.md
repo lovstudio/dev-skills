@@ -1,40 +1,44 @@
 ---
 name: lovstudio-app-generator
 description: >
-  Generate or standardize Lovstudio cross-platform apps, especially Tauri +
+  Generate or standardize Lovstudio apps, choosing web-only, PWA, or Tauri
+  desktop case-by-case. Covers React/Vite or Next.js web apps plus Tauri +
   React + shadcn/ui + TanStack Query projects with Lovstudio branding, CI/CD,
-  auto update, and lovinsp. Use when the user asks to create a Lovstudio app,
-  scaffold a Tauri app, initialize an app shell, apply Lovstudio app standards,
-  or mentions "App生成器", "新建 Lovstudio App", "生成跨端 App",
-  "create Lovstudio app", "scaffold Tauri app", or "Lovstudio app generator".
+  deploy/release, optional auto update, and lovinsp. Use when the user asks to
+  create a Lovstudio app, web app, or Tauri app, initialize an app shell, apply
+  Lovstudio app standards, or mentions "App生成器", "新建 Lovstudio Web App",
+  "只创建 web", "生成跨端 App", "create Lovstudio app", or "Lovstudio app generator".
 license: MIT
 compatibility: >
   Requires Python 3.8+ for the project audit helper. Designed for React,
-  TypeScript, Vite, Tauri, shadcn/ui, TanStack Query, GitHub Actions, and
-  Lovstudio Warm Academic branded apps. New apps must generate a
-  target-specific logo through `lovstudio:gen-logo` before the Tauri icon
-  pipeline is run.
+  TypeScript, Vite, Next.js, optional Tauri, shadcn/ui, TanStack Query, GitHub
+  Actions, web deploys, and Lovstudio Warm Academic branded apps. New apps must
+  generate a target-specific logo through `lovstudio:gen-logo`; Tauri apps
+  must run the Tauri icon pipeline from that logo.
 metadata:
   author: lovstudio
-  version: "0.2.0"
-  tags: lovstudio app-generator tauri react shadcn tanstack-query cicd updater lovinsp
+  version: "0.3.0"
+  tags: lovstudio app-generator web vite nextjs tauri react shadcn tanstack-query cicd updater lovinsp
 ---
 
 # app-generator — Lovstudio App 生成器
 
-Use this skill to create or upgrade a Lovstudio-grade cross-platform app. The
-default architecture is Tauri + React + TypeScript + shadcn/ui + TanStack
-Query, with Lovstudio brand assets, Warm Academic UI, CI/CD, auto update, and
-lovinsp click-to-code support.
+Use this skill to create or upgrade a Lovstudio-grade app. Choose the app type
+from the brief instead of forcing desktop packaging: use web-only when the
+workflow is browser-native, and use Tauri when native desktop capabilities or
+desktop distribution are required. Common stacks are React + TypeScript +
+Vite, Next.js, or Tauri + React, with shadcn/ui, Lovstudio brand assets, Warm
+Academic UI, CI/CD or deploy wiring, and lovinsp click-to-code support.
 
 ## When to Use
 
-- The user asks to generate a new Lovstudio app or cross-platform app.
+- The user asks to generate a new Lovstudio app, web app, PWA, desktop app, or
+  cross-platform app.
 - The user has an existing frontend/Tauri project and wants it brought up to
   Lovstudio app standards.
-- The user mentions Tauri, shadcn, React Query / TanStack Query, auto update,
-  CI/CD, app logo, Lovstudio logo, Warm Academic UI, or lovinsp as part of app
-  setup.
+- The user mentions web-only, Vite, Next.js, PWA, Tauri, shadcn, React Query /
+  TanStack Query, deploy, auto update, CI/CD, app logo, Lovstudio logo, Warm
+  Academic UI, or lovinsp as part of app setup.
 - The project is a LovStudio, Lovpen, Lovcode, Lovmind, Lovshot, Lovsider,
   Lovsigil, or Lovtarot app.
 
@@ -56,10 +60,11 @@ Required fields:
 | Project slug | Derived from app name | Lowercase kebab-case |
 | Brand scope | `Lovstudio` | Ask if ambiguous between Lovstudio / LovPen / personal brand |
 | Target mode | `new app` | `new app` or `upgrade existing app` |
-| Platforms | `macOS first, Windows/Linux ready` | Tauri desktop unless user says web-only |
+| App type | Case-by-case | `web-only`, `PWA`, `Tauri desktop`, or another fit from the brief |
+| Platforms | Case-by-case | Web browser/mobile responsive unless native desktop is justified |
 | Core screens | Ask user | 2-5 concrete screens or workflows |
-| Backend/API | Ask user if needed | Tauri commands, REST, Supabase, local files, etc. |
-| Distribution | `GitHub Releases + Tauri updater` | Ask if using a different channel |
+| Backend/API | Ask user if needed | REST, Supabase, local files, Tauri commands, static data, etc. |
+| Distribution | Case-by-case | Web deploy for web-only; GitHub Releases + updater for Tauri |
 
 If the user asks for a real implementation and enough information is present,
 make conservative assumptions and proceed.
@@ -68,11 +73,12 @@ Suggested options to collect interactively:
 
 | Question | Recommended choice |
 |---|---|
-| Target mode | `New Tauri app` |
+| Target mode | `New app` |
+| App type | `Decide from requirements` |
 | Brand scope | `Lovstudio` |
 | UI baseline | `Warm Academic + shadcn/ui` |
-| Data layer | `TanStack Query` |
-| Release channel | `GitHub Releases + Tauri updater` |
+| Data layer | `TanStack Query when server state exists` |
+| Release channel | `Web deploy or GitHub Releases based on app type` |
 
 ### Step 2: Read Local Context
 
@@ -83,7 +89,7 @@ pwd
 find .. -name AGENTS.md -print
 find .. -name CLAUDE.md -print
 ls
-find . -maxdepth 2 -type f \( -name package.json -o -name vite.config.ts -o -name tauri.conf.json -o -name tauri.conf.json5 -o -name Cargo.toml \) -print
+find . -maxdepth 2 -type f \( -name package.json -o -name vite.config.ts -o -name next.config.ts -o -name next.config.js -o -name tauri.conf.json -o -name tauri.conf.json5 -o -name Cargo.toml \) -print
 ```
 
 Honor any project-level instructions. If the target lives under a symlinked
@@ -94,17 +100,77 @@ workspace, follow that project's own AGENTS.md / CLAUDE.md.
 Run the helper from the target project root:
 
 ```bash
-python3 ~/.claude/skills/lovstudio-app-generator/scripts/audit_app_project.py --root . --format markdown
+python3 "${LOVSTUDIO_APP_GENERATOR_SKILL_DIR:-$HOME/.claude/skills/lovstudio-app-generator}/scripts/audit_app_project.py" --root . --app-type auto --format markdown
 ```
 
-Use the output as the implementation checklist. For new projects, the audit
-will mostly report missing pieces; that is expected.
+Use the output as the implementation checklist. For new projects, decide the
+app type first and pass `--app-type web` or `--app-type tauri`; the audit will
+mostly report missing pieces, which is expected.
 
 ### Step 4: Choose the Implementation Path
 
+#### App Type Decision
+
+Pick the smallest app type that genuinely fits the brief:
+
+- **Web-only app**: default when the product is a browser workflow, SaaS/admin
+  surface, content or media tool, public site with logged-in tools, or anything
+  that can deploy cleanly to Vercel/Netlify/Cloudflare/GitHub Pages.
+- **PWA**: use when the app is still web-first but benefits from installability,
+  offline shell, push notifications, or mobile home-screen usage.
+- **Tauri desktop app**: use when native desktop value is explicit: local file
+  access beyond browser capabilities, tray/menu/global shortcuts, long-running
+  background tasks, native OS integration, offline-first packaged use, or
+  GitHub Releases distribution with auto update.
+- **Framework choice**: prefer Vite React for app-like single-page workflows,
+  Next.js for SEO/SSR/content routing/API routes, and static HTML only for very
+  small one-off deliverables.
+
+Do not add Tauri simply because this skill historically defaulted to Tauri.
+If the user says "只创建 web" or the requirements do not need native desktop
+capabilities, create a web app.
+
+#### New Web App
+
+For an app-like browser workflow, default to Vite + React + TypeScript:
+
+```bash
+pnpm create vite@latest <project-slug> -- --template react-ts
+cd <project-slug>
+pnpm add @tanstack/react-query lucide-react
+pnpm add -D typescript
+```
+
+For SEO-heavy, public, content-routed, or SSR/API-route requirements, use
+Next.js instead and keep the same Lovstudio layers:
+
+```bash
+pnpm create next-app@latest <project-slug> --ts --tailwind --eslint --app --src-dir
+cd <project-slug>
+pnpm add @tanstack/react-query lucide-react
+```
+
+Then apply the Lovstudio layers in this order:
+
+1. Project identity: package name, app title, README, and app-specific
+   CLAUDE.md / AGENTS.md.
+2. Warm Academic UI: shadcn/ui, semantic tokens, typography, and layout.
+3. Server state: TanStack Query provider and query/mutation helpers when the
+   app has server state; avoid unnecessary TanStack Query for purely local
+   static tools.
+4. Brand assets: generate a target-specific app logo with
+   `lovstudio:gen-logo`, publish the chosen version into `assets/` and
+   `public/`, and generate favicons / PWA icons if needed.
+5. Lovinsp: click-to-code integration.
+6. CI/CD and deploy: typecheck, lint/build where available, plus the selected
+   web deploy target or documented manual deploy path.
+7. Verification: typecheck, build, dev server, and browser screenshot or
+   interaction check where practical.
+
 #### New Tauri App
 
-Default stack:
+Use this path only when the app type decision requires native desktop
+capabilities or desktop distribution. Default stack:
 
 ```bash
 pnpm create vite@latest <project-slug> -- --template react-ts
@@ -134,11 +200,14 @@ Then apply the Lovstudio layers in this order:
 
 Do not rebuild the project from scratch. Patch the smallest surface needed:
 
-1. Keep the existing package manager, router, folder layout, aliases, and style
+1. Determine whether the existing app should remain web-only, become a PWA, or
+   stay/become Tauri before applying the audit checklist.
+2. Keep the existing package manager, router, folder layout, aliases, and style
    conventions unless they conflict with Lovstudio requirements.
-2. Add missing Lovstudio layers from the audit.
-3. Preserve user code and unrelated changes.
-4. Prefer incremental commits/checkpoints when the app is already substantial.
+3. Add missing Lovstudio layers from the audit; do not add Tauri to a web-only
+   app unless the brief requires native desktop capabilities.
+4. Preserve user code and unrelated changes.
+5. Prefer incremental commits/checkpoints when the app is already substantial.
 
 ### Step 5: Apply Brand and UI Standards
 
@@ -150,12 +219,15 @@ After the project identity and README describe the target clearly, invoke the
    not a literal reading of its name.
 2. Publish the chosen draft to `assets/logo.png`, `assets/logo.svg`,
    `public/logo.png`, and `public/logo.svg`.
-3. Before feeding the generated logo into the Tauri icon pipeline, ensure the
-   icon source has transparent safe area. Do not use a 512x512 edge-to-edge
-   filled icon as the macOS app icon source; it appears oversized in Dock,
-   Launchpad, and Finder. Prefer roughly 40-56px transparent padding on a
-   512x512 canvas, or a content bounding box around 80-85% of the canvas.
-4. Use that padded generated logo as the source for
+3. For web-only apps, generate favicons and PWA icons from the target-specific
+   logo as needed; do not run Tauri icon tooling.
+4. For Tauri apps, before feeding the generated logo into the Tauri icon
+   pipeline, ensure the icon source has transparent safe area. Do not use a
+   512x512 edge-to-edge filled icon as the macOS app icon source; it appears
+   oversized in Dock, Launchpad, and Finder. Prefer roughly 40-56px transparent
+   padding on a 512x512 canvas, or a content bounding box around 80-85% of the
+   canvas.
+5. Use that padded generated logo as the source for
    `lovstudio:install-tauri-logo` and any favicon/tray-icon generation.
 
 For upgrades, keep an existing product logo unless the user asks to refresh it;
@@ -190,13 +262,13 @@ Rules:
 
 When shadcn/ui is needed, use the existing `lovstudio:install-shadcn-ui` skill
 as the detailed reference. When TanStack Query is needed, use
-`lovstudio:install-tanstack-query`. When app icons are needed, use
+`lovstudio:install-tanstack-query`. For Tauri app icons, use
 `lovstudio:install-tauri-logo`; for new apps, run `lovstudio:gen-logo` first
-and feed the generated logo into the icon pipeline.
+and feed the generated logo into the relevant favicon/PWA/Tauri icon pipeline.
 
 ### Step 6: Tauri App Baseline
 
-For Tauri apps, check these areas:
+Only for Tauri desktop apps, check these areas:
 
 | Area | Expected |
 |---|---|
@@ -208,9 +280,17 @@ For Tauri apps, check these areas:
 | Icons | generated through Tauri icon pipeline from the target-specific logo produced by `lovstudio:gen-logo` |
 | Dev server | stable project port, preferably via `lovstudio-project-port` |
 
-### Step 7: CI/CD and Auto Update
+### Step 7: CI/CD, Deploy, and Auto Update
 
-Default GitHub Actions surface:
+Default GitHub Actions surface for web-only apps:
+
+- `check.yml`: install, typecheck, lint/build if present.
+- Deploy wiring for the selected target: Vercel, Netlify, Cloudflare Pages,
+  GitHub Pages, self-hosted static output, or a clearly documented manual
+  deploy path.
+- Environment variable placeholders only when the app actually needs them.
+
+Default GitHub Actions surface for Tauri apps:
 
 - `check.yml`: install, typecheck, lint/build if present.
 - `release.yml`: Tauri build for target platforms, draft or publish GitHub
@@ -245,6 +325,13 @@ that the package is installed. In dev mode, verify the served module contains
 curl -s http://127.0.0.1:<port>/src/main.tsx | rg "lovinsp-component|lovinsp v"
 ```
 
+For web-only apps, start the dev server and provide the local URL when the user
+needs to try the app:
+
+```bash
+pnpm dev --host 127.0.0.1
+```
+
 For Tauri apps, prefer launching dev mode through a persistent session when the
 user wants to keep it running after the turn:
 
@@ -260,6 +347,7 @@ Run the lightest reliable checks that the target repo supports:
 ```bash
 pnpm exec tsc --noEmit --pretty false
 pnpm build
+# Tauri only:
 pnpm tauri build --debug
 ```
 
@@ -269,18 +357,30 @@ verify frontend behavior, start it and give the user the local URL.
 For UI changes, use browser or screenshot verification when practical. For
 Tauri-native behavior, report what was and was not verified.
 
+## User Configuration
+
+If local paths differ, prefer these environment variables rather than
+hard-coding personal paths:
+
+| Variable | Default / Usage |
+|---|---|
+| `LOVSTUDIO_APP_GENERATOR_SKILL_DIR` | Installed `lovstudio-app-generator` skill directory |
+| `LOVSTUDIO_SKILLS_DESIGN_GUIDE` | Warm Academic design guide path |
+| `LOVSTUDIO_SKILLS_BRAND_PROFILE` | Lovstudio brand asset root or profile |
+
 ## CLI Reference
 
 | Argument | Default | Description |
 |----------|---------|-------------|
 | `--root` | `.` | Target app root to inspect |
+| `--app-type` | `auto` | `auto`, `web`, or `tauri`; controls which checks apply |
 | `--format` | `markdown` | `markdown` or `json` |
 | `--output` | stdout | Optional path to write the report |
 
 ## Dependencies
 
 ```bash
-python3 ~/.claude/skills/lovstudio-app-generator/scripts/audit_app_project.py --help
+python3 "${LOVSTUDIO_APP_GENERATOR_SKILL_DIR:-$HOME/.claude/skills/lovstudio-app-generator}/scripts/audit_app_project.py" --help
 ```
 
 No Python packages are required.
@@ -290,7 +390,8 @@ No Python packages are required.
 Report:
 
 - App path and stack chosen.
-- Lovstudio layers added or confirmed: brand, UI, Tauri, TanStack Query,
-  lovinsp, CI/CD, updater.
+- App type decision: web-only / PWA / Tauri, and why that fit the brief.
+- Lovstudio layers added or confirmed: brand, UI, data layer, lovinsp, CI/CD,
+  deploy/release, and updater only when applicable.
 - Commands/checks run and their result.
 - Any remaining secrets, signing steps, or manual app-store/release actions.
