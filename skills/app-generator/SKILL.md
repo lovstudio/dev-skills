@@ -16,7 +16,7 @@ compatibility: >
   pipeline is run.
 metadata:
   author: lovstudio
-  version: "0.1.0"
+  version: "0.2.0"
   tags: lovstudio app-generator tauri react shadcn tanstack-query cicd updater lovinsp
 ---
 
@@ -122,7 +122,8 @@ Then apply the Lovstudio layers in this order:
 3. Server state: TanStack Query provider, query keys, and Tauri invoke wrappers.
 4. Brand assets: generate a target-specific app logo with
    `lovstudio:gen-logo`, publish the chosen version into `assets/` and
-   `public/`, then run the Tauri icon pipeline from that generated logo.
+   `public/`, prepare a macOS-safe padded icon source, then run the Tauri icon
+   pipeline from that generated logo.
 5. Lovinsp: click-to-code integration.
 6. CI/CD: typecheck, lint/build where available, Tauri release workflow.
 7. Auto update: Tauri updater plugin, signing keys/env placeholders, release
@@ -149,8 +150,13 @@ After the project identity and README describe the target clearly, invoke the
    not a literal reading of its name.
 2. Publish the chosen draft to `assets/logo.png`, `assets/logo.svg`,
    `public/logo.png`, and `public/logo.svg`.
-3. Use that generated logo as the source for `lovstudio:install-tauri-logo` and
-   any favicon/tray-icon generation.
+3. Before feeding the generated logo into the Tauri icon pipeline, ensure the
+   icon source has transparent safe area. Do not use a 512x512 edge-to-edge
+   filled icon as the macOS app icon source; it appears oversized in Dock,
+   Launchpad, and Finder. Prefer roughly 40-56px transparent padding on a
+   512x512 canvas, or a content bounding box around 80-85% of the canvas.
+4. Use that padded generated logo as the source for
+   `lovstudio:install-tauri-logo` and any favicon/tray-icon generation.
 
 For upgrades, keep an existing product logo unless the user asks to refresh it;
 if the app has no logo, use `lovstudio:gen-logo` before generating icons.
@@ -168,6 +174,11 @@ Rules:
 
 - Treat the canonical Lovstudio logo as brand reference or fallback only, not as
   the default app icon for new apps.
+- For Tauri/macOS icons, verify the generated app icon is visually aligned with
+  normal macOS app icons. If ImageMagick is available, a quick sanity check is:
+  `magick src-tauri/icons/icon.png -alpha extract -trim -format '%wx%h%O\n' info:`;
+  for a 512x512 source, content around `400x400` to `440x440` with positive
+  offsets is usually safer than `512x512+0+0`.
 - Use semantic Tailwind classes such as `bg-background`, `text-foreground`,
   `bg-primary`, `border-border`; do not hard-code brand hex values in UI
   components.
@@ -206,6 +217,11 @@ Default GitHub Actions surface:
   Release, attach artifacts.
 - Tauri updater wiring: plugin dependency, updater config, signing key env
   placeholders, and documented release process.
+- For Tauri v2, `plugins.updater.pubkey` is required at runtime. Do not leave
+  it out even during early scaffolding: a missing `pubkey` causes the app to
+  panic during updater plugin initialization. Use a clear placeholder such as
+  `PLACEHOLDER_REPLACE_WITH_TAURI_SIGNER_PUBLIC_KEY` until the real public key
+  is generated with `pnpm tauri signer generate`.
 
 Do not invent secrets. Use placeholder names and document where the user must
 set them:
@@ -219,6 +235,23 @@ set them:
 Integrate lovinsp for frontend development unless the project is not browser/UI
 based. Prefer the existing `lovstudio:install-lovinsp` workflow and keep it
 idempotent.
+
+For Vite apps, confirm the Vite config imports and registers
+`lovinspPlugin({ bundler: "vite" })` before the framework plugin, not merely
+that the package is installed. In dev mode, verify the served module contains
+`lovinsp-component` or `[lovinsp v...]`:
+
+```bash
+curl -s http://127.0.0.1:<port>/src/main.tsx | rg "lovinsp-component|lovinsp v"
+```
+
+For Tauri apps, prefer launching dev mode through a persistent session when the
+user wants to keep it running after the turn:
+
+```bash
+tmux new-session -d -s <slug>-dev -c "$PWD" 'pnpm tauri dev'
+tmux capture-pane -pt <slug>-dev -S -120
+```
 
 ### Step 9: Verification
 

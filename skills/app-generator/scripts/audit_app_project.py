@@ -47,6 +47,13 @@ def read_text(path: Path) -> str:
         return ""
 
 
+def load_json_file(path: Path) -> dict:
+    try:
+        return json.loads(read_text(path))
+    except json.JSONDecodeError:
+        return {}
+
+
 def load_package_json(root: Path) -> dict:
     package_path = root / "package.json"
     if not package_path.exists():
@@ -149,7 +156,9 @@ def audit(root: Path) -> dict:
     has_shadcn = (root / "components.json").exists()
     has_tanstack = "@tanstack/react-query" in deps
     has_lucin = "lucide-react" in deps
-    has_lovinsp = "lovinsp" in deps or contains_text(build_config_files, ["lovinspplugin", "@lovinsp/", "lovinsp"])
+    has_lovinsp_dependency = "lovinsp" in deps
+    lovinsp_configured = contains_text(build_config_files, ["lovinspplugin", "@lovinsp/", "lovinsp"])
+    has_lovinsp = has_lovinsp_dependency and lovinsp_configured
     has_logo = file_exists(root, ["assets/logo.png", "assets/logo.svg", "public/logo.png", "public/logo.svg"])
     has_icons = file_exists(root, ["src-tauri/icons/icon.icns", "src-tauri/icons/icon.ico"])
     has_ci = any(re.search(r"(check|ci|test|build)", p.name, re.I) for p in workflows)
@@ -158,6 +167,19 @@ def audit(root: Path) -> dict:
         "@tauri-apps/plugin-updater" in deps
         or (src_tauri.exists() and search_text(src_tauri, ["plugin-updater", "tauri_plugin_updater", "updater"]))
     )
+    updater_pubkey = False
+    for conf in tauri_conf:
+        if conf.suffix.lower() == ".json":
+            config = load_json_file(conf)
+            pubkey = (
+                config.get("plugins", {})
+                .get("updater", {})
+                .get("pubkey", "")
+            )
+            updater_pubkey = updater_pubkey or bool(str(pubkey).strip())
+        else:
+            text = read_text(conf)
+            updater_pubkey = updater_pubkey or bool(re.search(r"pubkey\s*[:=]\s*['\"][^'\"]+", text))
     frontend_roots = [path for path in (root / "src", root / "app", root / "pages") if path.exists()]
     has_query_provider = has_tanstack and any(search_text(path, ["queryclientprovider"]) for path in frontend_roots)
     has_warm_academic = any(
@@ -227,8 +249,8 @@ def audit(root: Path) -> dict:
             "lovinsp",
             "Lovinsp click-to-code",
             status(has_lovinsp),
-            "lovinsp detected" if has_lovinsp else "lovinsp missing",
-            "Install lovinsp idempotently so designers/developers can jump from DOM to source.",
+            f"dependency={has_lovinsp_dependency}, configured={lovinsp_configured}",
+            "Install lovinsp and register lovinspPlugin before the framework plugin in the build config.",
         ),
         Check(
             "ci",
@@ -247,9 +269,9 @@ def audit(root: Path) -> dict:
         Check(
             "updater",
             "Auto update",
-            status(has_updater),
-            "updater detected" if has_updater else "updater not detected",
-            "Wire @tauri-apps/plugin-updater / tauri_plugin_updater and signing env placeholders.",
+            status(has_updater and (not has_tauri or updater_pubkey)),
+            f"updater={has_updater}, pubkey={updater_pubkey}",
+            "Wire @tauri-apps/plugin-updater / tauri_plugin_updater and include plugins.updater.pubkey, using a placeholder until the real signer public key exists.",
         ),
     ]
 

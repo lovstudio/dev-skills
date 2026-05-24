@@ -1,6 +1,6 @@
 # lovstudio-app-generator
 
-![Version](https://img.shields.io/badge/version-0.1.0-CC785C)
+![Version](https://img.shields.io/badge/version-0.2.0-CC785C)
 
 Generate or standardize Lovstudio cross-platform apps with Tauri, React,
 shadcn/ui, TanStack Query, Lovstudio branding, CI/CD, auto update, and lovinsp.
