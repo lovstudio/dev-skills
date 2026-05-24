@@ -40,7 +40,7 @@ Each skill still lives in its own `github.com/lovstudio/{name}-skill` repo. This
 | ![Free](https://img.shields.io/badge/Free-green) | [`skill-creator`](https://github.com/lovstudio/skill-creator-skill) | Scaffold a new Claude Code skill as an independent repo or dev-skills bundle entry. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`skill-optimizer`](https://github.com/lovstudio/skill-optimizer-skill) | Audit an existing skill, auto-fix issues, and bump its version in one pass. |
 | **Dev Tools** | | |
-| ![Free](https://img.shields.io/badge/Free-green) | [`app-generator`](https://github.com/lovstudio/dev-skills/tree/main/skills/app-generator) | Generate Lovstudio-grade Tauri apps with brand, UI, data, release, updater, and developer tooling wired in. |
+| ![Free](https://img.shields.io/badge/Free-green) | [`app-generator`](https://github.com/lovstudio/dev-skills/tree/main/skills/app-generator) | Generate Lovstudio-grade web, PWA, or Tauri apps with brand, UI, data, deploy/release, and developer tooling wired in. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`auto-context`](https://github.com/lovstudio/auto-context-skill) | Watch your Claude Code context for pollution and suggest when to fork or reset. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`cc-migrate-session`](https://github.com/lovstudio/cc-migrate-session/tree/main/skill/lovstudio-cc-mv) | Keep your Claude Code session history working after you move a project folder. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`deploy-to-vercel`](https://github.com/lovstudio/deploy-to-vercel-skill) | Ship a frontend to Vercel with custom domain and Cloudflare DNS wired up automatically. |
