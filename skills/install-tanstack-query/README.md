@@ -1,4 +1,4 @@
-# lovstudio:install-tanstack-query
+# lovstudio-install-tanstack-query
 
 ![Version](https://img.shields.io/badge/version-0.1.0-CC785C)
 
@@ -25,13 +25,13 @@ Or through Claude Code plugin marketplace:
 Ask your coding agent:
 
 ```text
-Use lovstudio:install-tanstack-query to initialize TanStack Query in this app.
+Use lovstudio-install-tanstack-query to initialize TanStack Query in this app.
 ```
 
 or:
 
 ```text
-Use lovstudio:install-tanstack-query to refactor request state into shared query keys and hooks.
+Use lovstudio-install-tanstack-query to refactor request state into shared query keys and hooks.
 ```
 
 ## What It Does
