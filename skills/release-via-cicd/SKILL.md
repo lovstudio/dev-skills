@@ -1,5 +1,5 @@
 ---
-name: lovstudio:release-via-cicd
+name: lovstudio-release-via-cicd
 disable-model-invocation: true
 description: >
   Configure CI/CD and publish new versions for Node, Tauri, Vite, shell, and

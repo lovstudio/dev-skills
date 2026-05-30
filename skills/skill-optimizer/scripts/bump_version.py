@@ -43,7 +43,7 @@ def find_repo_root(start: Path) -> Path:
 def resolve_skill_dir(name: str, path: str | None) -> Path:
     if path:
         return Path(path).resolve()
-    name = name.removeprefix("lovstudio-").removeprefix("lovstudio:")
+    name = name.removeprefix("lovstudio-")
     root = find_repo_root(Path.cwd())
     return (root / "skills" / f"lovstudio-{name}").resolve()
 

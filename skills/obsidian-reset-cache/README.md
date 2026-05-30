@@ -1,4 +1,4 @@
-# lovstudio:obsidian-reset-cache
+# lovstudio-obsidian-reset-cache
 
 ![Version](https://img.shields.io/badge/version-1.0.2-CC785C)
 

@@ -95,7 +95,7 @@ def resolve_skill_dir(name: str, path: str | None) -> Path:
     if path:
         return Path(path).resolve()
     raw = name
-    name = name.removeprefix("lovstudio-").removeprefix("lovstudio:")
+    name = name.removeprefix("lovstudio-")
     if name.endswith("-skill"):
         name = name[: -len("-skill")]
     root = find_repo_root(Path.cwd())
@@ -177,7 +177,6 @@ class Linter:
         short = short.removeprefix("lovstudio-")
         self.name = short
         self.expected_standard_name = f"lovstudio-{short}"
-        self.expected_legacy_name = f"lovstudio:{short}"
         self.findings: list[dict] = []
 
     def add(self, severity: str, code: str, message: str, fix_hint: str = "", file: str = ""):
@@ -234,15 +233,7 @@ class Linter:
                 )
 
         name = fm.get("name", "")
-        if name == self.expected_legacy_name:
-            self.add(
-                "warn",
-                "FM_LEGACY_NAME",
-                f"frontmatter name '{name}' uses legacy colon naming",
-                f"Migrate to name: {self.expected_standard_name} when updating the skill",
-                file="SKILL.md",
-            )
-        elif name and not STANDARD_NAME_RE.match(name):
+        if name and not STANDARD_NAME_RE.match(name):
             self.add(
                 "error",
                 "FM_NAME_INVALID",
@@ -255,7 +246,7 @@ class Linter:
                 "warn",
                 "FM_NAME_MISMATCH",
                 f"frontmatter name '{name}' does not match standard expected name '{self.expected_standard_name}'",
-                f"Set name: {self.expected_standard_name} or document why this is author-only/legacy",
+                f"Set name: {self.expected_standard_name} or document why this is author-only",
                 file="SKILL.md",
             )
 

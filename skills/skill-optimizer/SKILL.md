@@ -50,7 +50,7 @@ name and (b) any optimization notes mentioned in the current conversation.**
 
 From the user's message, extract:
 
-1. **Target skill name** — e.g. `any2pdf`, `lovstudio-any2pdf`, or `lovstudio:any2pdf`.
+1. **Target skill name** — e.g. `any2pdf`, `lovstudio-any2pdf`, or `any2pdf-skill`.
    Normalize to the bare name (strip prefix). If the user did not name a skill
    explicitly, infer it from recent conversation context (the skill they were
    just working on). If still ambiguous, ask one targeted question.

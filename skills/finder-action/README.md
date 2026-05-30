@@ -1,4 +1,4 @@
-# lovstudio:finder-action
+# lovstudio-finder-action
 
 ![Version](https://img.shields.io/badge/version-0.3.0-CC785C)
 
@@ -9,7 +9,7 @@ Part of [lovstudio/skills](https://github.com/lovstudio/skills) &mdash; by [lovs
 ## Install
 
 ```bash
-npx skills add lovstudio/skills --skill lovstudio:finder-action
+npx skills add lovstudio/skills --skill lovstudio-finder-action
 ```
 
 Requires: macOS 14+, Xcode (for Mode B), `brew install xcodegen` (for Mode B)
@@ -17,8 +17,8 @@ Requires: macOS 14+, Xcode (for Mode B), `brew install xcodegen` (for Mode B)
 ## Usage
 
 ```
-/lovstudio:finder-action pdf2png .pdf 将PDF转PNG
-/lovstudio:finder-action 新建md文件 空白处右键创建markdown
+/lovstudio-finder-action pdf2png .pdf 将PDF转PNG
+/lovstudio-finder-action 新建md文件 空白处右键创建markdown
 ```
 
 ## Modes

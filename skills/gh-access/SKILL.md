@@ -22,7 +22,7 @@ metadata:
   tags: github collaborator access invite private-repo permissions
 ---
 
-# lovstudio:gh-access
+# lovstudio-gh-access
 
 Grant, revoke, and audit collaborator access on private GitHub repos — by
 username **or** email, with read-only as the safe default.

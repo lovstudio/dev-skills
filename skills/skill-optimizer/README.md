@@ -1,4 +1,4 @@
-# lovstudio:skill-optimizer
+# lovstudio-skill-optimizer
 
 ![Version](https://img.shields.io/badge/version-0.6.3-CC785C)
 
@@ -11,7 +11,7 @@ Part of [lovstudio/skills](https://github.com/lovstudio/skills) — by [lovstudi
 ## Install
 
 ```bash
-npx skills add lovstudio/skills --skill lovstudio:skill-optimizer
+npx skills add lovstudio/skills --skill lovstudio-skill-optimizer
 ```
 
 Requires: Python 3.8+ (stdlib only, no `pip install`)
@@ -39,10 +39,10 @@ raised in the current conversation, supplemented by a generic lint pass.
 ### In Claude Code
 
 ```
-/lovstudio:skill-optimizer any2pdf
+/lovstudio-skill-optimizer any2pdf
 
 # or with explicit focus:
-/lovstudio:skill-optimizer any2pdf — the --theme flag trigger phrase is wrong
+/lovstudio-skill-optimizer any2pdf — the --theme flag trigger phrase is wrong
 ```
 
 Claude will:
@@ -83,10 +83,10 @@ python3 scripts/bump_version.py any2pdf --type patch -m "..." --dry-run
 | Check | Severity | What it catches |
 |-------|----------|-----------------|
 | Directory prefix `lovstudio-` | error | Wrong dir naming |
-| Agent Skills-compatible `name` | error/warn | Invalid names or legacy `lovstudio:<name>` |
+| Agent Skills-compatible `name` | error/warn | Invalid names or legacy `lovstudio-<name>` |
 | `SKILL.md` / `README.md` present | error | Missing core files |
 | Frontmatter required fields | error | Missing `name` / `description` / `license` / `compatibility` / `metadata` |
-| `name` matches directory | error | `lovstudio:foo` vs `lovstudio-bar` drift |
+| `name` matches directory | error | `lovstudio-foo` vs `lovstudio-bar` drift |
 | Description has trigger cues | warn | Missing "Use when..." or "trigger when user mentions..." |
 | Description length | warn | < 80 chars likely insufficient |
 | `metadata.version` semver format | warn | Non-`x.y.z` versions |

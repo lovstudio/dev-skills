@@ -1,4 +1,4 @@
-# lovstudio:deploy-to-vercel
+# lovstudio-deploy-to-vercel
 
 ![Version](https://img.shields.io/badge/version-2.0.2-CC785C)
 
@@ -9,7 +9,7 @@ Part of [lovstudio/skills](https://github.com/lovstudio/skills) — by [lovstudi
 ## Install
 
 ```bash
-npx skills add lovstudio/skills --skill lovstudio:deploy-to-vercel
+npx skills add lovstudio/skills --skill lovstudio-deploy-to-vercel
 ```
 
 Requires: `vercel` CLI, `curl`, `python3`

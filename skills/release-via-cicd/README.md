@@ -1,4 +1,4 @@
-# lovstudio:release-via-cicd
+# lovstudio-release-via-cicd
 
 ![Version](https://img.shields.io/badge/version-8.5.0-CC785C)
 
@@ -9,13 +9,13 @@ Migrated from `~/.claude/commands/lovstudio/release-via-cicd.md`. Behavior prese
 ## Install
 
 ```bash
-npx skills add lovstudio/skills --skill lovstudio:release-via-cicd
+npx skills add lovstudio/skills --skill lovstudio-release-via-cicd
 ```
 
 ## Invocation
 
 ```
-/lovstudio:release-via-cicd [arguments]
+/lovstudio-release-via-cicd [arguments]
 ```
 
 ## Status
