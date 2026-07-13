@@ -174,3 +174,15 @@ skills:
   tagline_en: Scan a web project for mobile issues and fix them — overflow, safe area,
     viewport units, responsive layouts, and page navigation.
   tagline_zh: 扫描并修复 Web 项目的移动端适配问题——溢出、安全区、视口单位、响应式布局和多级导航。
+- name: clash-tun-doctor
+  repo: lovstudio/dev-skills
+  skill_path: skills/clash-tun-doctor
+  name_zh: Clash TUN 网络医生
+  paid: false
+  category: Dev Tools
+  version: 0.1.0
+  description: Diagnose and reversibly repair application connectivity failures caused
+    by Clash Verge Rev TUN rules, stale runtime state, proxy timeouts, or unusable IPv6 paths.
+  tagline_en: Diagnose Clash TUN failures from runtime evidence, apply reversible fixes,
+    and verify the real application path.
+  tagline_zh: 从最终运行态和日志诊断 Clash TUN 故障，执行可回滚修复并验证真实应用链路。

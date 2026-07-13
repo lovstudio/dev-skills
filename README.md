@@ -30,7 +30,7 @@
 ## 技能列表
 
 <!-- COUNT:START -->
-> **16 个技能** — 16 个免费 + 0 个付费。
+> **17 个技能** — 17 个免费 + 0 个付费。
 <!-- COUNT:END -->
 
 <!-- SKILLS:START -->
@@ -43,6 +43,7 @@
 | ![Free](https://img.shields.io/badge/Free-green) | [`app-generator`](https://github.com/lovstudio/dev-skills/tree/main/skills/app-generator) | [App 生成器](https://github.com/lovstudio/dev-skills/tree/main/skills/app-generator) | 按需求生成 Lovstudio 级 web、PWA 或 Tauri App，内置品牌、UI、数据层、部署/发布和开发辅助。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`auto-context`](https://github.com/lovstudio/auto-context-skill) | [上下文体检](https://github.com/lovstudio/auto-context-skill) | 监测 Claude Code 上下文是否被污染，适时提示你 /fork 或 /btw。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`cc-migrate-session`](https://github.com/lovstudio/cc-migrate-session/tree/main/skill/lovstudio-cc-mv) | [会话迁移](https://github.com/lovstudio/cc-migrate-session/tree/main/skill/lovstudio-cc-mv) | 项目目录搬家后，让 Claude Code 的历史会话还能正常 `--resume`。 |
+| ![Free](https://img.shields.io/badge/Free-green) | [`clash-tun-doctor`](https://github.com/lovstudio/dev-skills/tree/main/skills/clash-tun-doctor) | [Clash TUN 网络医生](https://github.com/lovstudio/dev-skills/tree/main/skills/clash-tun-doctor) | 从最终运行态和日志诊断 Clash TUN 故障，执行可回滚修复并验证真实应用链路。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`deploy-to-vercel`](https://github.com/lovstudio/deploy-to-vercel-skill) | [部署到 Vercel](https://github.com/lovstudio/deploy-to-vercel-skill) | 一键把前端部署到 Vercel，自动配好 Cloudflare DNS 和自定义域名。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`finder-action`](https://github.com/lovstudio/finder-action-skill) | [访达右键动作](https://github.com/lovstudio/finder-action-skill) | 几分钟给 macOS 访达右键菜单加一个你自己的动作。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`gh-access`](https://github.com/lovstudio/gh-access-skill) | [GitHub 协作者管理](https://github.com/lovstudio/gh-access-skill) | 一条命令给私有 GitHub 仓库加减协作者权限，或盘点现有访问清单。 |

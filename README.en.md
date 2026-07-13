@@ -30,7 +30,7 @@ Each skill still lives in its own `github.com/lovstudio/{name}-skill` repo. This
 ## Skills
 
 <!-- COUNT:START -->
-> **16 skills** — 16 Free + 0 Paid.
+> **17 skills** — 17 Free + 0 Paid.
 <!-- COUNT:END -->
 
 <!-- SKILLS:START -->
@@ -43,6 +43,7 @@ Each skill still lives in its own `github.com/lovstudio/{name}-skill` repo. This
 | ![Free](https://img.shields.io/badge/Free-green) | [`app-generator`](https://github.com/lovstudio/dev-skills/tree/main/skills/app-generator) | Generate Lovstudio-grade web, PWA, or Tauri apps with brand, UI, data, deploy/release, and developer tooling wired in. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`auto-context`](https://github.com/lovstudio/auto-context-skill) | Watch your Claude Code context for pollution and suggest when to fork or reset. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`cc-migrate-session`](https://github.com/lovstudio/cc-migrate-session/tree/main/skill/lovstudio-cc-mv) | Keep your Claude Code session history working after you move a project folder. |
+| ![Free](https://img.shields.io/badge/Free-green) | [`clash-tun-doctor`](https://github.com/lovstudio/dev-skills/tree/main/skills/clash-tun-doctor) | Diagnose Clash TUN failures from runtime evidence, apply reversible fixes, and verify the real application path. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`deploy-to-vercel`](https://github.com/lovstudio/deploy-to-vercel-skill) | Ship a frontend to Vercel with custom domain and Cloudflare DNS wired up automatically. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`finder-action`](https://github.com/lovstudio/finder-action-skill) | Add a custom right-click action to macOS Finder in minutes. |
 | ![Free](https://img.shields.io/badge/Free-green) | [`gh-access`](https://github.com/lovstudio/gh-access-skill) | Grant, revoke, or audit collaborator access on private GitHub repos in one command. |

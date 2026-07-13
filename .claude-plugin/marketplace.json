@@ -22,7 +22,7 @@
     {
       "name": "dev-tools",
       "source": "./",
-      "description": "Dev Tools — 14 free skills bundled together.",
+      "description": "Dev Tools — 15 free skills bundled together.",
       "category": "Dev Tools",
       "skills": [
         "./skills/auto-context",
@@ -38,7 +38,8 @@
         "./skills/app-generator",
         "./skills/obsidian-reset-cache",
         "./skills/project-port",
-        "./skills/mobile-adapt"
+        "./skills/mobile-adapt",
+        "./skills/clash-tun-doctor"
       ],
       "strict": false
     }
