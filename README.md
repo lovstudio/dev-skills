@@ -40,7 +40,7 @@
 | | 英文名 | 中文名 | 描述 |
 |---|---|---|---|
 | **元技能** | | | |
-| ![Free](https://img.shields.io/badge/Free-green) | [`skill-creator`](https://github.com/lovstudio/skill-creator-skill) | [技能脚手架](https://github.com/lovstudio/skill-creator-skill) | 一条命令生成规范的 Claude Code 技能骨架，支持独立仓库或 dev-skills 聚合分发。 |
+| ![Free](https://img.shields.io/badge/Free-green) | [`skill-creator`](https://github.com/lovstudio/skill-creator-skill) | [技能脚手架](https://github.com/lovstudio/skill-creator-skill) | 一条命令生成独立版本仓库，并通过 Release 自动同步到聚合分发仓库。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`skill-optimizer`](https://github.com/lovstudio/skill-optimizer-skill) | [技能优化器](https://github.com/lovstudio/skill-optimizer-skill) | 一键体检并修复现有技能，自动升版本号并追加 CHANGELOG。 |
 | **开发工具** | | | |
 | ![Free](https://img.shields.io/badge/Free-green) | [`app-generator`](https://github.com/lovstudio/app-generator-skill) | [App 生成器](https://github.com/lovstudio/app-generator-skill) | 按需求生成 Lovstudio 级 web、PWA 或 Tauri App，内置品牌、UI、数据层、部署/发布和开发辅助。 |

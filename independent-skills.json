@@ -1,9 +1,20 @@
 {
   "version": 1,
   "skills": [
+    {"name": "skill-creator", "repo": "lovstudio/skill-creator-skill"},
+    {"name": "skill-optimizer", "repo": "lovstudio/skill-optimizer-skill"},
+    {"name": "auto-context", "repo": "lovstudio/auto-context-skill"},
+    {"name": "deploy-to-vercel", "repo": "lovstudio/deploy-to-vercel-skill"},
+    {"name": "finder-action", "repo": "lovstudio/finder-action-skill"},
+    {"name": "gh-access", "repo": "lovstudio/gh-access-skill"},
+    {"name": "gh-contribute", "repo": "lovstudio/gh-contribute-skill"},
+    {"name": "gh-tidy", "repo": "lovstudio/gh-tidy-skill"},
     {"name": "install-tanstack-query", "repo": "lovstudio/install-tanstack-query-skill"},
+    {"name": "release-via-cicd", "repo": "lovstudio/release-via-cicd-skill"},
     {"name": "optimize-tauri-backend", "repo": "lovstudio/optimize-tauri-backend-skill"},
     {"name": "app-generator", "repo": "lovstudio/app-generator-skill"},
+    {"name": "obsidian-reset-cache", "repo": "lovstudio/obsidian-reset-cache-skill"},
+    {"name": "project-port", "repo": "lovstudio/project-port-skill"},
     {"name": "mobile-adapt", "repo": "lovstudio/mobile-adapt-skill"},
     {"name": "clash-tun-doctor", "repo": "lovstudio/clash-tun-doctor-skill"}
   ]

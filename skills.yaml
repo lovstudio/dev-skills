@@ -5,13 +5,11 @@ skills:
   name_zh: 技能脚手架
   paid: false
   category: Meta
-  version: 2.7.0
-  description: Scaffold lovstudio skills as independent repos or bundled dev-skills
-    entries.
-  tagline_en: Scaffold a new Claude Code skill as an independent repo or dev-skills
-    bundle entry.
-  tagline_zh: 一条命令生成规范的 Claude Code 技能骨架，支持独立仓库或 dev-skills
-    聚合分发。
+  version: 2.8.0
+  description: Scaffold independently versioned lovstudio skill repositories.
+  tagline_en: Scaffold a new skill as an independent source repo with release-driven
+    aggregate distribution.
+  tagline_zh: 一条命令生成独立版本仓库，并通过 Release 自动同步到聚合分发仓库。
 - name: skill-optimizer
   repo: lovstudio/skill-optimizer-skill
   name_zh: 技能优化器
@@ -60,6 +58,7 @@ skills:
   name_zh: 访达右键动作
   paid: false
   category: Dev Tools
+  version: 0.3.0
   description: Generate Mac Finder right-click menu actions. Quick Action or Finder
     Sync Extension.
   tagline_en: Add a custom right-click action to macOS Finder in minutes.

@@ -13,7 +13,8 @@ import re
 import shutil
 import tarfile
 import tempfile
-from typing import Dict, Iterable, List, Tuple
+import time
+from typing import Dict, Iterable, List, Optional, Tuple
 import urllib.error
 import urllib.request
 
@@ -23,6 +24,22 @@ MANIFEST = ROOT / "independent-skills.json"
 IGNORED_NAMES = {".git", ".github", "__pycache__", ".DS_Store"}
 
 
+def open_with_retry(request: urllib.request.Request, timeout: int):
+    last_error: Optional[Exception] = None
+    for attempt in range(4):
+        try:
+            return urllib.request.urlopen(request, timeout=timeout)
+        except urllib.error.HTTPError as exc:
+            if exc.code < 500 and exc.code != 429:
+                raise
+            last_error = exc
+        except urllib.error.URLError as exc:
+            last_error = exc
+        if attempt < 3:
+            time.sleep(2**attempt)
+    raise RuntimeError(f"GitHub request failed after retries: {request.full_url}") from last_error
+
+
 def request_json(url: str) -> Dict[str, object]:
     headers = {"Accept": "application/vnd.github+json", "User-Agent": "lovstudio-dev-skills-sync"}
     token = os.environ.get("GITHUB_TOKEN")
@@ -30,19 +47,19 @@ def request_json(url: str) -> Dict[str, object]:
         headers["Authorization"] = f"Bearer {token}"
     request = urllib.request.Request(url, headers=headers)
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
+        with open_with_retry(request, timeout=30) as response:
             return json.load(response)
     except urllib.error.HTTPError as exc:
         raise RuntimeError(f"GitHub API failed for {url}: HTTP {exc.code}") from exc
 
 
 def download(url: str) -> bytes:
-    headers = {"User-Agent": "lovstudio-dev-skills-sync"}
+    headers = {"Accept": "application/vnd.github+json", "User-Agent": "lovstudio-dev-skills-sync"}
     token = os.environ.get("GITHUB_TOKEN")
     if token:
         headers["Authorization"] = f"Bearer {token}"
     request = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(request, timeout=60) as response:
+    with open_with_retry(request, timeout=60) as response:
         return response.read()
 
 
@@ -121,10 +138,12 @@ def manifest_entries() -> List[Dict[str, str]]:
     return list(payload["skills"])
 
 
-def sync(check: bool) -> int:
+def sync(check: bool, selected_names: Optional[List[str]] = None) -> int:
     drift: List[str] = []
     for entry in manifest_entries():
         name, repo = entry["name"], entry["repo"]
+        if selected_names and name not in selected_names:
+            continue
         tag, tarball_url = latest_release(repo)
         version = tag[1:] if tag.startswith("v") else tag
         with tempfile.TemporaryDirectory(prefix=f"sync-{name}-") as tmp:
@@ -148,8 +167,14 @@ def sync(check: bool) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("sync", "check"))
+    parser.add_argument(
+        "--name",
+        action="append",
+        dest="names",
+        help="Sync or check only this skill name. May be repeated.",
+    )
     args = parser.parse_args()
-    return sync(check=args.command == "check")
+    return sync(check=args.command == "check", selected_names=args.names)
 
 
 if __name__ == "__main__":
