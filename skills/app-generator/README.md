@@ -7,9 +7,15 @@ desktop case-by-case, with React/Vite or Next.js, shadcn/ui, TanStack Query
 when useful, Lovstudio branding, CI/CD/deploy, optional auto update, and
 lovinsp.
 
-Part of [lovstudio dev-skills](https://github.com/lovstudio/dev-skills) — by [lovstudio.ai](https://lovstudio.ai)
+Independent source repository, also distributed through [lovstudio dev-skills](https://github.com/lovstudio/dev-skills) — by [lovstudio.ai](https://lovstudio.ai)
 
 ## Install
+
+```bash
+npx skills add lovstudio/app-generator-skill
+```
+
+The aggregate bundle remains available:
 
 ```bash
 npx skills add lovstudio/dev-skills
@@ -69,14 +75,14 @@ Prefer environment variables when local paths differ:
 | `LOVSTUDIO_SKILLS_DESIGN_GUIDE` | Warm Academic design guide path |
 | `LOVSTUDIO_SKILLS_BRAND_PROFILE` | Lovstudio brand asset root or profile |
 
-## Brand Defaults
+## Brand Configuration
 
-| Asset | Path |
-|---|---|
-| Lovstudio square logo folder | `/Users/mark/lovstudio/brand/Lovstudio - logo - square` |
-| Lovstudio logo PNG | `/Users/mark/lovstudio/brand/Lovstudio - logo - square/Lovstudio-logo.png` |
-| Lovstudio logo SVG | `/Users/mark/lovstudio/brand/Lovstudio - logo - square/Lovstudio-logo.svg` |
-| Warm Academic design guide | `/Users/mark/lovstudio/design/design-guide.md` |
+No personal path is built into this repository. Resolve brand assets through
+explicit paths, `LOVSTUDIO_SKILLS_BRAND_PROFILE`,
+`LOVSTUDIO_SKILLS_DESIGN_GUIDE`, or the shared profile at
+`${LOVSTUDIO_SKILLS_PROFILE:-$HOME/.lovstudio/skills/profile.json}`.
+
+See `references/user-config.md` for the complete resolution order.
 
 ## Audit Helper
 

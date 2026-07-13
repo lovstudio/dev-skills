@@ -97,8 +97,7 @@ skills:
     pass.
   tagline_zh: 一次过清理 GitHub 上的 issue、PR、分支和标签，让仓库重新整洁。
 - name: install-tanstack-query
-  repo: lovstudio/dev-skills
-  skill_path: skills/install-tanstack-query
+  repo: lovstudio/install-tanstack-query-skill
   name_zh: TanStack Query 初始化
   paid: false
   category: Dev Tools
@@ -120,8 +119,7 @@ skills:
     app artifacts.
   tagline_zh: 配置发布流水线、发布新版本，并验证 Tauri/macOS 签名与 notarization 产物。
 - name: optimize-tauri-backend
-  repo: lovstudio/dev-skills
-  skill_path: skills/optimize-tauri-backend
+  repo: lovstudio/optimize-tauri-backend-skill
   name_zh: Tauri 后端优化
   paid: false
   category: Dev Tools
@@ -132,8 +130,7 @@ skills:
     command surfaces, and hardening long IPC streams.
   tagline_zh: 优化 Tauri 后端结构、命令边界和长 IPC 生命周期，降低 Rust 重启带来的开发摩擦。
 - name: app-generator
-  repo: lovstudio/dev-skills
-  skill_path: skills/app-generator
+  repo: lovstudio/app-generator-skill
   name_zh: App 生成器
   paid: false
   category: Dev Tools
@@ -163,8 +160,7 @@ skills:
   tagline_en: Assign each project a stable, unique dev port so services stop colliding.
   tagline_zh: 给每个项目分配一个稳定且唯一的开发端口，彻底告别端口撞车。
 - name: mobile-adapt
-  repo: lovstudio/dev-skills
-  skill_path: skills/mobile-adapt
+  repo: lovstudio/mobile-adapt-skill
   name_zh: 移动端适配
   paid: false
   category: Dev Tools
@@ -175,8 +171,7 @@ skills:
     viewport units, responsive layouts, and page navigation.
   tagline_zh: 扫描并修复 Web 项目的移动端适配问题——溢出、安全区、视口单位、响应式布局和多级导航。
 - name: clash-tun-doctor
-  repo: lovstudio/dev-skills
-  skill_path: skills/clash-tun-doctor
+  repo: lovstudio/clash-tun-doctor-skill
   name_zh: Clash TUN 网络医生
   paid: false
   category: Dev Tools

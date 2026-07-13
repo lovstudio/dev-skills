@@ -1,0 +1,74 @@
+name: Reusable skill validation
+
+on:
+  workflow_call:
+    inputs:
+      skill_name:
+        required: true
+        type: string
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install validator dependency
+        run: python -m pip install --disable-pip-version-check pyyaml
+      - name: Validate skill contract
+        env:
+          EXPECTED_SKILL_NAME: ${{ inputs.skill_name }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          import re
+          import yaml
+
+          root = Path.cwd()
+          skill_path = root / "SKILL.md"
+          readme_path = root / "README.md"
+          if not skill_path.exists() or not readme_path.exists():
+              raise SystemExit("SKILL.md and README.md are required")
+
+          text = skill_path.read_text(encoding="utf-8")
+          match = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+          if not match:
+              raise SystemExit("SKILL.md frontmatter is missing or malformed")
+          frontmatter = yaml.safe_load(match.group(1))
+          expected = os.environ["EXPECTED_SKILL_NAME"]
+          if frontmatter.get("name") != expected:
+              raise SystemExit(f"Expected name {expected!r}, got {frontmatter.get('name')!r}")
+          for key in ("description", "license", "metadata"):
+              if not frontmatter.get(key):
+                  raise SystemExit(f"Missing frontmatter field: {key}")
+
+          version = str(frontmatter.get("metadata", {}).get("version", ""))
+          readme = readme_path.read_text(encoding="utf-8")
+          if f"version-{version}-" not in readme:
+              raise SystemExit("README version badge does not match SKILL.md metadata.version")
+
+          offenders = []
+          for path in root.rglob("*"):
+              if not path.is_file() or ".git" in path.parts:
+                  continue
+              try:
+                  body = path.read_text(encoding="utf-8")
+              except UnicodeDecodeError:
+                  continue
+              if "/Users/" in body:
+                  offenders.append(str(path.relative_to(root)))
+          if offenders:
+              raise SystemExit("Author-specific paths found: " + ", ".join(offenders))
+          print(f"validated {expected} v{version}")
+          PY
+      - name: Compile Python helpers
+        run: |
+          if [ -d scripts ]; then
+            python -m compileall -q scripts
+            find scripts -maxdepth 1 -name '*.py' -print0 | while IFS= read -r -d '' script; do
+              python "$script" --help >/dev/null
+            done
+          fi

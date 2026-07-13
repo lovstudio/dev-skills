@@ -10,6 +10,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · Versioning: 
 - add web-only app generation path
 - add app-type audit profile for auto, web, and tauri checks
 - document case-by-case framework selection for Vite, Next.js, PWA, and Tauri
+- publish the skill from an independent source repository
+- replace author-specific brand paths with portable user configuration
 
 ## [0.2.0] - 2026-05-24
 
@@ -18,4 +20,3 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) · Versioning: 
 - capture Tauri updater, lovinsp dev, and macOS icon lessons
 - audit helper now checks updater pubkey and lovinsp plugin configuration
 - brand rules now require padded Tauri icon sources for macOS visual alignment
-

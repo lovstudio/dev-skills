@@ -4,9 +4,15 @@
 
 Scan and fix mobile adaptation issues in web projects: viewport, overflow, safe area, responsive layouts, 100vh pitfalls, touch targets, and multi-level page navigation.
 
-Part of [lovstudio dev-skills](https://github.com/lovstudio/dev-skills) — by [lovstudio.ai](https://lovstudio.ai)
+Independent source repository, also distributed through [lovstudio dev-skills](https://github.com/lovstudio/dev-skills) — by [lovstudio.ai](https://lovstudio.ai)
 
 ## Install
+
+```bash
+npx skills add lovstudio/mobile-adapt-skill
+```
+
+The aggregate bundle remains available:
 
 ```bash
 npx skills add lovstudio/dev-skills

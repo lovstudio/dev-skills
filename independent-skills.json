@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": [
+    {"name": "install-tanstack-query", "repo": "lovstudio/install-tanstack-query-skill"},
+    {"name": "optimize-tauri-backend", "repo": "lovstudio/optimize-tauri-backend-skill"},
+    {"name": "app-generator", "repo": "lovstudio/app-generator-skill"},
+    {"name": "mobile-adapt", "repo": "lovstudio/mobile-adapt-skill"},
+    {"name": "clash-tun-doctor", "repo": "lovstudio/clash-tun-doctor-skill"}
+  ]
+}

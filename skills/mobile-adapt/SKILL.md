@@ -35,18 +35,21 @@ configuration, overflow prevention, safe area handling, responsive breakpoints,
 
 **You MUST follow these steps in order.**
 
+Resolve `SKILL_DIR` from the installed skill context before running the helper.
+For manual execution, set it to the directory containing this `SKILL.md`.
+
 ### Step 1: Scan the Project
 
 Run the scanner to identify issues:
 
 ```bash
-python3 ~/.claude/skills/lovstudio-mobile-adapt/scripts/scan_mobile_issues.py <project-path>
+python3 "$SKILL_DIR/scripts/scan_mobile_issues.py" <project-path>
 ```
 
 For JSON output (easier to process programmatically):
 
 ```bash
-python3 ~/.claude/skills/lovstudio-mobile-adapt/scripts/scan_mobile_issues.py <project-path> --format json
+python3 "$SKILL_DIR/scripts/scan_mobile_issues.py" <project-path> --format json
 ```
 
 Review the output. The scanner checks:

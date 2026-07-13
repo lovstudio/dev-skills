@@ -44,6 +44,9 @@ Academic UI, CI/CD or deploy wiring, and lovinsp click-to-code support.
 
 ## Workflow (MANDATORY)
 
+Resolve `SKILL_DIR` from the installed skill context before running helpers.
+For manual execution, set it to the directory containing this `SKILL.md`.
+
 **You MUST follow these steps in order:**
 
 ### Step 1: Clarify the App Brief
@@ -100,7 +103,7 @@ workspace, follow that project's own AGENTS.md / CLAUDE.md.
 Run the helper from the target project root:
 
 ```bash
-python3 "${LOVSTUDIO_APP_GENERATOR_SKILL_DIR:-$HOME/.claude/skills/lovstudio-app-generator}/scripts/audit_app_project.py" --root . --app-type auto --format markdown
+python3 "$SKILL_DIR/scripts/audit_app_project.py" --root . --app-type auto --format markdown
 ```
 
 Use the output as the implementation checklist. For new projects, decide the
@@ -233,14 +236,14 @@ After the project identity and README describe the target clearly, invoke the
 For upgrades, keep an existing product logo unless the user asks to refresh it;
 if the app has no logo, use `lovstudio-gen-logo` before generating icons.
 
-Canonical assets:
+Resolve canonical assets without assuming a private machine layout:
 
-| Asset | Path |
-|---|---|
-| Lovstudio square logo folder | `/Users/mark/lovstudio/brand/Lovstudio - logo - square` |
-| Lovstudio PNG logo | `/Users/mark/lovstudio/brand/Lovstudio - logo - square/Lovstudio-logo.png` |
-| Lovstudio SVG logo | `/Users/mark/lovstudio/brand/Lovstudio - logo - square/Lovstudio-logo.svg` |
-| Warm Academic guide | `/Users/mark/lovstudio/design/design-guide.md` |
+1. Explicit paths supplied by the user.
+2. `LOVSTUDIO_SKILLS_BRAND_PROFILE` and `LOVSTUDIO_SKILLS_DESIGN_GUIDE`.
+3. `${LOVSTUDIO_SKILLS_PROFILE:-$HOME/.lovstudio/skills/profile.json}`.
+4. Ask once when a required asset is still missing.
+
+See `references/user-config.md` for the portable configuration contract.
 
 Rules:
 
@@ -380,7 +383,7 @@ hard-coding personal paths:
 ## Dependencies
 
 ```bash
-python3 "${LOVSTUDIO_APP_GENERATOR_SKILL_DIR:-$HOME/.claude/skills/lovstudio-app-generator}/scripts/audit_app_project.py" --help
+python3 "$SKILL_DIR/scripts/audit_app_project.py" --help
 ```
 
 No Python packages are required.
