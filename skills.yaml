@@ -5,7 +5,7 @@ skills:
   name_zh: 技能脚手架
   paid: false
   category: Meta
-  version: 2.8.0
+  version: 2.9.0
   description: Scaffold independently versioned lovstudio skill repositories.
   tagline_en: Scaffold a new skill as an independent source repo with release-driven
     aggregate distribution.
