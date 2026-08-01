@@ -1,25 +1,5 @@
 # Changelog
 
-## 4.0.0
-
-- Make local source creation, validation, and local installation the complete
-  default workflow.
-- Move remote repositories, catalogs, marketplace packaging, uploads, and live
-  verification to the separate `lovstudio-skill-publish` capability.
-- Infer user configuration from persistent workspace, brand, identity, output,
-  locale, and provider needs instead of asking users to choose a mode.
-- Remove the LovStudio-internal configuration branch; every source is portable
-  and LovStudio is represented through ordinary profile values.
-- Add opt-in `--user-config` and local `--install-dir` scaffold controls.
-
-## 3.1.0
-
-- Infer implementation type and Single Skill versus Skill Kit composition from
-  product requirements instead of asking users to choose technical machinery.
-- Reserve interactive questions for unresolved product, commercial,
-  distribution, and user-facing configuration decisions.
-- Prefer contextual prefill and sensible defaults before interactive prompts.
-
 ## 3.0.0
 
 - Separate portable source frontmatter from platform distribution metadata.
