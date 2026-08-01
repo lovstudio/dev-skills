@@ -140,6 +140,33 @@ skills:
   tagline_en: Generate Lovstudio-grade web, PWA, or Tauri apps with brand, UI,
     data, deploy/release, and developer tooling wired in.
   tagline_zh: 按需求生成 Lovstudio 级 web、PWA 或 Tauri App，内置品牌、UI、数据层、部署/发布和开发辅助。
+- name: electron-delta-updater
+  repo: lovstudio/electron-delta-updater-skill
+  name_zh: Electron 增量更新
+  paid: false
+  category: Dev Tools
+  version: 0.1.0
+  description: Build and verify Electron delta updates with Sparkle, appcasts, signing, and release evidence.
+  tagline_en: Build verified Electron delta updates with Sparkle, appcasts, signing, and installation proof.
+  tagline_zh: 为 Electron 应用建立可验证的增量自动更新，覆盖 Sparkle、appcast、签名与真实安装验证。
+- name: electron-app-relaunch
+  repo: lovstudio/electron-app-relaunch-skill
+  name_zh: Electron 应用重启
+  paid: false
+  category: Dev Tools
+  version: 0.1.0
+  description: Implement verified full Electron app relaunch across menus, development, and update handoff.
+  tagline_en: Add a real Electron relaunch while keeping renderer reload and update handoff separate.
+  tagline_zh: 为 Electron 实现真正的完整应用重启，并清晰区分界面刷新与更新交接。
+- name: install-ai
+  repo: lovstudio/install-ai-skill
+  name_zh: AI 功能初始化
+  paid: false
+  category: Dev Tools
+  version: 0.1.0
+  description: Add production-ready AI features with Agent Client, MaaS routing, model intent, and optional UI.
+  tagline_en: Add an App AI feature with Agent Client, MaaS routing, model intent, and optional UI.
+  tagline_zh: 为 App 初始化可上线的 AI 功能，支持 Agent Client、MaaS、模型偏好和配套 UI。
 - name: obsidian-reset-cache
   repo: lovstudio/obsidian-reset-cache-skill
   name_zh: 重置 Obsidian 缓存
