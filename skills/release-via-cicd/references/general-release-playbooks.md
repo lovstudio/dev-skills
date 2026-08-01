@@ -228,6 +228,71 @@ while true; do
 done
 ```
 
+## Post-release Mirror Separation
+
+Treat regional and community mirrors as derived distribution surfaces. Keep them outside the primary release DAG:
+
+```text
+draft release -> build/sign/notarize -> upload canonical assets -> publish release
+                                                               -> dispatch mirror workflow
+```
+
+Never upload a mirror from platform build jobs and never make `publish-release` depend on mirror completion. Dispatch a separate workflow after the canonical release becomes public:
+
+```yaml
+permissions:
+  actions: write
+  contents: write
+
+jobs:
+  publish-release:
+    steps:
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release edit "$RELEASE_TAG" -R "$GITHUB_REPOSITORY" --draft=false --latest
+
+      - name: Dispatch regional mirror post-CI
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh workflow run release-mirror.yml -R "$GITHUB_REPOSITORY" -f tag="$RELEASE_TAG"; then
+            echo "::warning::Mirror dispatch failed; the canonical release remains successful."
+          fi
+```
+
+Make the mirror workflow manually retryable and source every file from the immutable published tag:
+
+```yaml
+name: Release Post-CI (Mirror)
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+permissions:
+  contents: read
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+      - name: Download canonical assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p release
+          gh release download "${{ inputs.tag }}" -R "$GITHUB_REPOSITORY" --dir release --clobber
+      - name: Upload mirror
+        run: ./scripts/upload-mirror.sh release
+```
+
+For large multi-platform releases, fan the post-CI workflow out by platform. Download and upload only that platform's assets in each job, set `fail-fast: false`, and keep mirror retries independent from the canonical release.
+
+Wait for and verify the canonical workflow first. Monitor the mirror workflow separately; report its failure without redefining the already-published canonical Release as failed.
+
 ## README And Vercel Audits
 
 After workflow success, compare the released version with README versions:
