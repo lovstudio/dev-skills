@@ -22,7 +22,7 @@
     {
       "name": "dev-tools",
       "source": "./",
-      "description": "Dev Tools — 15 free skills bundled together.",
+      "description": "Dev Tools — 18 free skills bundled together.",
       "category": "Dev Tools",
       "skills": [
         "./skills/auto-context",
@@ -36,6 +36,9 @@
         "./skills/release-via-cicd",
         "./skills/optimize-tauri-backend",
         "./skills/app-generator",
+        "./skills/electron-delta-updater",
+        "./skills/electron-app-relaunch",
+        "./skills/install-ai",
         "./skills/obsidian-reset-cache",
         "./skills/project-port",
         "./skills/mobile-adapt",
