@@ -167,6 +167,24 @@ skills:
   description: Add production-ready AI features with Agent Client, MaaS routing, model intent, and optional UI.
   tagline_en: Add an App AI feature with Agent Client, MaaS routing, model intent, and optional UI.
   tagline_zh: 为 App 初始化可上线的 AI 功能，支持 Agent Client、MaaS、模型偏好和配套 UI。
+- name: distill-to-skill
+  repo: lovstudio/distill-to-skill-skill
+  name_zh: Skill 经验蒸馏
+  paid: false
+  category: Dev Tools
+  version: 0.2.0
+  description: Distill proven project experience into reusable, testable Agent Skill blueprints.
+  tagline_en: Turn delivery history into a clear, reusable Skill blueprint with boundaries and acceptance checks.
+  tagline_zh: 将项目经验蒸馏为边界清晰、可创建且可验收的 Skill 蓝图。
+- name: skill-publisher
+  repo: lovstudio/skill-publisher-skill
+  name_zh: Skill 发布器
+  paid: false
+  category: Dev Tools
+  version: 0.2.2
+  description: Publish validated Skills to LovStudio, WorkBuddy, and SkillPay with evidence per channel.
+  tagline_en: Publish a validated Skill across channels while keeping each release state independently verifiable.
+  tagline_zh: 将已验证的 Skill 多渠道发布，并分别保留每个渠道的可核验状态。
 - name: obsidian-reset-cache
   repo: lovstudio/obsidian-reset-cache-skill
   name_zh: 重置 Obsidian 缓存

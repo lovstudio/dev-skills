@@ -33,7 +33,7 @@
 `skills/` 目录是按各仓库最新 GitHub Release 自动同步的安装镜像。
 
 <!-- COUNT:START -->
-> **20 个技能** — 20 个免费 + 0 个付费。
+> **22 个技能** — 22 个免费 + 0 个付费。
 <!-- COUNT:END -->
 
 <!-- SKILLS:START -->
@@ -48,6 +48,7 @@
 | ![Free](https://img.shields.io/badge/Free-green) | [`cc-migrate-session`](https://github.com/lovstudio/cc-migrate-session/tree/main/skill/lovstudio-cc-mv) | [会话迁移](https://github.com/lovstudio/cc-migrate-session/tree/main/skill/lovstudio-cc-mv) | 项目目录搬家后，让 Claude Code 的历史会话还能正常 `--resume`。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`clash-tun-doctor`](https://github.com/lovstudio/clash-tun-doctor-skill) | [Clash TUN 网络医生](https://github.com/lovstudio/clash-tun-doctor-skill) | 从最终运行态和日志诊断 Clash TUN 故障，执行可回滚修复并验证真实应用链路。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`deploy-to-vercel`](https://github.com/lovstudio/deploy-to-vercel-skill) | [部署到 Vercel](https://github.com/lovstudio/deploy-to-vercel-skill) | 一键把前端部署到 Vercel，自动配好 Cloudflare DNS 和自定义域名。 |
+| ![Free](https://img.shields.io/badge/Free-green) | [`distill-to-skill`](https://github.com/lovstudio/distill-to-skill-skill) | [Skill 经验蒸馏](https://github.com/lovstudio/distill-to-skill-skill) | 将项目经验蒸馏为边界清晰、可创建且可验收的 Skill 蓝图。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`electron-app-relaunch`](https://github.com/lovstudio/electron-app-relaunch-skill) | [Electron 应用重启](https://github.com/lovstudio/electron-app-relaunch-skill) | 为 Electron 实现真正的完整应用重启，并清晰区分界面刷新与更新交接。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`electron-delta-updater`](https://github.com/lovstudio/electron-delta-updater-skill) | [Electron 增量更新](https://github.com/lovstudio/electron-delta-updater-skill) | 为 Electron 应用建立可验证的增量自动更新，覆盖 Sparkle、appcast、签名与真实安装验证。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`finder-action`](https://github.com/lovstudio/finder-action-skill) | [访达右键动作](https://github.com/lovstudio/finder-action-skill) | 几分钟给 macOS 访达右键菜单加一个你自己的动作。 |
@@ -61,6 +62,7 @@
 | ![Free](https://img.shields.io/badge/Free-green) | [`optimize-tauri-backend`](https://github.com/lovstudio/optimize-tauri-backend-skill) | [Tauri 后端优化](https://github.com/lovstudio/optimize-tauri-backend-skill) | 优化 Tauri 后端结构、命令边界和长 IPC 生命周期，降低 Rust 重启带来的开发摩擦。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`project-port`](https://github.com/lovstudio/project-port-skill) | [项目端口分配](https://github.com/lovstudio/project-port-skill) | 给每个项目分配一个稳定且唯一的开发端口，彻底告别端口撞车。 |
 | ![Free](https://img.shields.io/badge/Free-green) | [`release-via-cicd`](https://github.com/lovstudio/release-via-cicd-skill) | [CI/CD 发布](https://github.com/lovstudio/release-via-cicd-skill) | 配置发布流水线、发布新版本，并验证 Tauri/macOS 签名与 notarization 产物。 |
+| ![Free](https://img.shields.io/badge/Free-green) | [`skill-publisher`](https://github.com/lovstudio/skill-publisher-skill) | [Skill 发布器](https://github.com/lovstudio/skill-publisher-skill) | 将已验证的 Skill 多渠道发布，并分别保留每个渠道的可核验状态。 |
 <!-- SKILLS:END -->
 
 <sub>上表由 [`scripts/render-readme.py`](scripts/render-readme.py) 从 [`skills.yaml`](skills.yaml) 自动生成。请编辑 `skills.yaml`，不要手动改表格。</sub>
