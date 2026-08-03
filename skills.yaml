@@ -167,12 +167,12 @@ skills:
   description: Add production-ready AI features with Agent Client, MaaS routing, model intent, and optional UI.
   tagline_en: Add an App AI feature with Agent Client, MaaS routing, model intent, and optional UI.
   tagline_zh: 为 App 初始化可上线的 AI 功能，支持 Agent Client、MaaS、模型偏好和配套 UI。
-- name: distill-to-skill
-  repo: lovstudio/distill-to-skill-skill
+- name: skill-distiller
+  repo: lovstudio/skill-distiller-skill
   name_zh: Skill 经验蒸馏
   paid: false
   category: Dev Tools
-  version: 0.2.0
+  version: 0.3.0
   description: Distill proven project experience into reusable, testable Agent Skill blueprints.
   tagline_en: Turn delivery history into a clear, reusable Skill blueprint with boundaries and acceptance checks.
   tagline_zh: 将项目经验蒸馏为边界清晰、可创建且可验收的 Skill 蓝图。

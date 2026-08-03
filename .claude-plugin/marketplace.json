@@ -39,7 +39,7 @@
         "./skills/electron-delta-updater",
         "./skills/electron-app-relaunch",
         "./skills/install-ai",
-        "./skills/distill-to-skill",
+        "./skills/skill-distiller",
         "./skills/skill-publisher",
         "./skills/obsidian-reset-cache",
         "./skills/project-port",

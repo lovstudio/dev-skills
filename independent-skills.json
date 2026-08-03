@@ -20,7 +20,7 @@
     {"name": "project-port", "repo": "lovstudio/project-port-skill"},
     {"name": "mobile-adapt", "repo": "lovstudio/mobile-adapt-skill"},
     {"name": "clash-tun-doctor", "repo": "lovstudio/clash-tun-doctor-skill"},
-    {"name": "distill-to-skill", "repo": "lovstudio/distill-to-skill-skill"},
+    {"name": "skill-distiller", "repo": "lovstudio/skill-distiller-skill"},
     {"name": "skill-publisher", "repo": "lovstudio/skill-publisher-skill"}
   ]
 }
