@@ -14,7 +14,7 @@ compatibility: >
   certificate and notarization credentials.
 metadata:
   author: lovstudio
-  version: "8.5.0"
+  version: "8.6.0"
   migrated_from: ~/.claude/commands/lovstudio/release-via-cicd.md
   tags: release cicd github-actions tauri macos-signing notarization changesets
 ---
@@ -166,6 +166,7 @@ EOF
 ✓/✗ [npm] NPM_TOKEN secret
 ✓/✗ CHANGELOG.md 存在且格式正确（## x.y.z 格式）
 ✓/✗ [Tauri] Cargo.toml 版本同步
+✓/✗ 区域/国内镜像由独立 post-CI workflow 同步，不在主发布 DAG 中
 ```
 
 ### 自动修复
@@ -213,6 +214,14 @@ fi
 - 发布时从 `CHANGELOG.md` 提取对应版本内容作为 release notes
 - Fallback: CHANGELOG.md 无内容时用 GitHub 自动生成
 - 避免 `generate_release_notes` 在多 job 重复
+
+### 区域镜像必须后置
+
+- 主发布 DAG 只负责构建、签名/公证、上传权威发布源并公开 Release。
+- 国内、区域或社区镜像必须由公开 Release 之后单独调度的 post-CI workflow 同步；禁止把镜像上传放进平台构建 job，也禁止让 `publish-release` 依赖镜像 job。
+- post-CI workflow 必须按不可变 tag 从权威发布源重新下载资产，再上传镜像，确保镜像内容与已发布资产一致。
+- 调度失败只输出 warning；镜像 workflow 允许独立失败和重试，不得回滚或阻塞主 Release。
+- 主工作流成功后先报告权威 Release 成功，再独立监控并验证镜像状态。模板见 `references/general-release-playbooks.md`。
 
 ---
 
@@ -466,6 +475,6 @@ gh pr merge ... --squash --delete-branch  # ci-auto
 ## References
 
 - Tauri/macOS signing/notarization/Windows fallback: `references/tauri-release-workflow.md`
-- Shell, Vite, monorepo templates, workflow monitoring, README/Vercel audits, issue automation, and failure recovery: `references/general-release-playbooks.md`
+- Shell, Vite, monorepo templates, post-release mirror separation, workflow monitoring, README/Vercel audits, issue automation, and failure recovery: `references/general-release-playbooks.md`
 
 When a referenced template conflicts with this `SKILL.md`, follow the stricter rule: maintain `CHANGELOG.md`, preserve package manager choice, do not print secrets, wait for workflow completion with retry, and verify final release assets before reporting success.
