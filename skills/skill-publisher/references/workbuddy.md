@@ -1,4 +1,4 @@
-# Tencent WorkBuddy Distribution Standard
+# WorkBuddy（CodeBuddy 开放平台）发布标准
 
 This adapter builds a self-contained Connector ZIP from portable local source.
 Platform metadata, icon, staging directory, and archives stay outside source.
@@ -54,6 +54,13 @@ the staged package, and rejects broken references, private paths, placeholders,
 caches, compiled Python artifacts, missing metadata, or missing modules.
 
 ## Evidence
+
+## CodeBuddy 上架
+
+1. 打开 `https://www.codebuddy.cn/open/console/dashboard`，选择“上架新 Skill”。
+2. 上传 builder 输出的 `*-individual/<skill-name>.zip`；聚合 Connector ZIP 不用于单项上架。
+3. 等待“解析成功”，填写中英文展示名与用户价值描述，提交审核。
+4. 记录审核中、已上架或已驳回状态；微信群审核沟通不等同于公开上架证据。
 
 Record source version and commit when available, source and package validation,
 ZIP paths and SHA-256 checksums, archive listing, module count, metadata, and icon
