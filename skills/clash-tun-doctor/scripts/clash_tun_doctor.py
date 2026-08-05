@@ -15,11 +15,20 @@ import socket
 import subprocess
 import sys
 import time
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 
 
 APP_BUNDLE = "Clash Verge"
 DEFAULT_SOCKET = Path("/tmp/verge/verge-mihomo.sock")
+CONNECTION_LOG_RE = re.compile(
+    r"\[(?:TCP|UDP)\]\s+\S+\((?P<process>[^)]*)\)\s+-->\s+"
+    r"(?P<host>[^:\s]+):\d+\s+match\s+(?P<rule>.+?)\s+using\s+(?P<proxy>.+?)\"?$"
+)
+HOSTNAME_RE = re.compile(
+    r"(?=.{1,253}\.?$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+"
+    r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.?$",
+    re.IGNORECASE,
+)
 WECHAT_RULES = [
     "PROCESS-NAME,WeChat,DIRECT",
     "PROCESS-NAME,WeChatAppEx,DIRECT",
@@ -44,17 +53,24 @@ class UnixHTTPConnection(http.client.HTTPConnection):
         self.sock = sock
 
 
-def api_json(socket_path: Path, path: str, method: str = "GET") -> Optional[Dict[str, Any]]:
+def api_json(
+    socket_path: Path,
+    path: str,
+    method: str = "GET",
+    body: Optional[Dict[str, Any]] = None,
+) -> Optional[Dict[str, Any]]:
     if not socket_path.exists():
         return None
     connection = UnixHTTPConnection(socket_path)
     try:
-        connection.request(method, path)
+        payload = None if body is None else json.dumps(body).encode("utf-8")
+        headers = {} if payload is None else {"Content-Type": "application/json"}
+        connection.request(method, path, body=payload, headers=headers)
         response = connection.getresponse()
-        payload = response.read()
+        response_payload = response.read()
         if not 200 <= response.status < 300:
             return None
-        return json.loads(payload.decode("utf-8")) if payload else {}
+        return json.loads(response_payload.decode("utf-8")) if response_payload else {}
     except (OSError, ValueError, json.JSONDecodeError):
         return None
     finally:
@@ -119,7 +135,49 @@ def current_rules_file(data_dir: Path) -> Optional[Path]:
 
 
 def service_log(data_dir: Path) -> Path:
-    return data_dir / "logs/service/service_latest.log"
+    candidates = [
+        data_dir / "service-logs/service/service_latest.log",
+        data_dir / "logs/service/service_latest.log",
+    ]
+    return next((path for path in candidates if path.exists()), candidates[0])
+
+
+def recent_service_logs(data_dir: Path, max_files: int = 8) -> List[Path]:
+    roots = [
+        data_dir / "service-logs/service",
+        data_dir / "logs/service",
+    ]
+    candidates: List[Path] = []
+    for root in roots:
+        if not root.exists():
+            continue
+        latest = root / "service_latest.log"
+        if latest.exists():
+            candidates.append(latest)
+        candidates.extend(
+            sorted(
+                (
+                    path
+                    for path in root.glob("service_*.log")
+                    if path.name != "service_latest.log"
+                ),
+                key=lambda path: path.stat().st_mtime,
+                reverse=True,
+            )
+        )
+        if candidates:
+            break
+    output: List[Path] = []
+    seen: Set[Path] = set()
+    for path in candidates:
+        resolved = path.resolve()
+        if resolved in seen:
+            continue
+        seen.add(resolved)
+        output.append(path)
+        if len(output) >= max_files:
+            break
+    return output
 
 
 def filtered_connections(payload: Optional[Dict[str, Any]], app: str) -> List[Dict[str, Any]]:
@@ -181,6 +239,237 @@ def recent_log_findings(log_text: str, app: str, limit: int = 4000) -> Dict[str,
     }
 
 
+def normalize_host(value: str) -> Optional[str]:
+    host = value.strip().lower().rstrip(".")
+    return host if HOSTNAME_RE.fullmatch(host) else None
+
+
+def compile_filter(value: str) -> re.Pattern[str]:
+    try:
+        return re.compile(value, re.IGNORECASE)
+    except re.error as error:
+        raise SystemExit(f"Invalid --app regular expression: {error}") from error
+
+
+def persistent_prepend_rules(text: str) -> List[str]:
+    lines = text.splitlines()
+    start = next(
+        (index for index, line in enumerate(lines) if re.match(r"^prepend:\s*(?:#.*)?$", line)),
+        None,
+    )
+    if start is None:
+        return []
+    output: List[str] = []
+    for line in lines[start + 1 :]:
+        if line.strip() and not line.startswith((" ", "\t", "#")):
+            break
+        match = re.match(r"^\s*-\s*(.+?)\s*$", line)
+        if not match:
+            continue
+        raw = match.group(1)
+        try:
+            value = json.loads(raw)
+        except json.JSONDecodeError:
+            value = raw.strip("\"'")
+        if isinstance(value, str):
+            output.append(value)
+    return output
+
+
+def merge_prepend(text: str, rules: Iterable[str]) -> str:
+    requested = list(dict.fromkeys(rules))
+    existing = set(persistent_prepend_rules(text))
+    missing = [rule for rule in requested if rule not in existing]
+    if not missing:
+        return text
+
+    lines = text.splitlines(keepends=True)
+    empty_inline = next(
+        (
+            index
+            for index, line in enumerate(lines)
+            if re.match(r"^prepend:\s*\[\]\s*(?:#.*)?$", line.rstrip("\n"))
+        ),
+        None,
+    )
+    rendered = [f'  - {json.dumps(rule, ensure_ascii=False)}\n' for rule in missing]
+    if empty_inline is not None:
+        return "".join(lines[:empty_inline] + ["prepend:\n"] + rendered + lines[empty_inline + 1 :])
+
+    start = next(
+        (
+            index
+            for index, line in enumerate(lines)
+            if re.match(r"^prepend:\s*(?:#.*)?$", line.rstrip("\n"))
+        ),
+        None,
+    )
+    if start is None:
+        prefix = ["prepend:\n"] + rendered
+        if text and not text.startswith("\n"):
+            prefix.append("\n")
+        return "".join(prefix) + text.lstrip("\n")
+    return "".join(lines[: start + 1] + rendered + lines[start + 1 :])
+
+
+def merge_generated_rules(text: str, rules: Iterable[str]) -> str:
+    requested = list(dict.fromkeys(rules))
+    existing = {
+        match.group(1).strip()
+        for match in re.finditer(r"(?m)^-\s+(.+?)\s*$", text)
+    }
+    missing = [rule for rule in requested if rule not in existing]
+    if not missing:
+        return text
+    lines = text.splitlines(keepends=True)
+    start = next(
+        (index for index, line in enumerate(lines) if re.match(r"^rules:\s*$", line.rstrip("\n"))),
+        None,
+    )
+    if start is None:
+        raise SystemExit("Generated Clash config has no top-level rules section.")
+    rendered = [f"- {rule}\n" for rule in missing]
+    return "".join(lines[: start + 1] + rendered + lines[start + 1 :])
+
+
+def _add_direct_observation(
+    records: Dict[str, Dict[str, Any]],
+    host_value: str,
+    source: str,
+    rule: Optional[str] = None,
+    proxy: Optional[str] = None,
+) -> None:
+    host = normalize_host(host_value)
+    if host is None:
+        return
+    record = records.setdefault(
+        host,
+        {"host": host, "occurrences": 0, "sources": set(), "observed_routes": set()},
+    )
+    record["occurrences"] += 1
+    record["sources"].add(source)
+    if rule or proxy:
+        record["observed_routes"].add((rule or "", proxy or ""))
+
+
+def route_is_direct(proxy: str) -> bool:
+    return proxy.strip().upper() == "DIRECT"
+
+
+def discover_direct_list(
+    data_dir: Path,
+    socket_path: Path,
+    app: str,
+    explicit_hosts: Iterable[str] = (),
+    log_limit: int = 4000,
+) -> Dict[str, Any]:
+    pattern = compile_filter(app)
+    records: Dict[str, Dict[str, Any]] = {}
+    for host in explicit_hosts:
+        normalized = normalize_host(host)
+        if normalized is None:
+            raise SystemExit(f"Invalid --host value: {host}")
+        _add_direct_observation(records, normalized, "explicit")
+
+    connections_payload = api_json(socket_path, "/connections") or {}
+    for connection in connections_payload.get("connections", []):
+        metadata = connection.get("metadata", {})
+        host = str(metadata.get("host") or "")
+        process = str(metadata.get("process") or "")
+        if not pattern.search(f"{process} {host}"):
+            continue
+        chains = connection.get("chains") or []
+        proxy = " > ".join(map(str, chains))
+        _add_direct_observation(
+            records,
+            host,
+            "runtime-connection",
+            str(connection.get("rule") or ""),
+            proxy,
+        )
+
+    log_paths = recent_service_logs(data_dir)
+    seen_log_lines: Set[str] = set()
+    for log_path in log_paths:
+        for line in read_text(log_path).splitlines()[-log_limit:]:
+            if line in seen_log_lines:
+                continue
+            seen_log_lines.add(line)
+            match = CONNECTION_LOG_RE.search(line)
+            if not match:
+                continue
+            host = match.group("host")
+            process = match.group("process")
+            if not pattern.search(f"{process} {host}"):
+                continue
+            _add_direct_observation(
+                records,
+                host,
+                "service-log",
+                match.group("rule").strip(),
+                match.group("proxy").strip().rstrip('"'),
+            )
+
+    runtime_rules = api_json(socket_path, "/rules") or {}
+    exact_runtime_rules: Dict[str, Dict[str, Any]] = {}
+    for rule in runtime_rules.get("rules", []):
+        host = normalize_host(str(rule.get("payload") or ""))
+        if host is not None and str(rule.get("type") or "").lower() == "domain":
+            exact_runtime_rules[host] = {
+                "type": rule.get("type"),
+                "payload": rule.get("payload"),
+                "proxy": rule.get("proxy"),
+            }
+
+    rules_path = current_rules_file(data_dir)
+    persisted = set(persistent_prepend_rules(read_text(rules_path))) if rules_path else set()
+    observed_items = []
+    for host in sorted(records):
+        record = records[host]
+        rule = f"DOMAIN,{host},DIRECT"
+        current = exact_runtime_rules.get(host)
+        routes = [
+            {"rule": route, "proxy": proxy}
+            for route, proxy in sorted(record["observed_routes"])
+        ]
+        non_direct_observed = any(
+            route["proxy"] and not route_is_direct(route["proxy"])
+            for route in routes
+        )
+        item = {
+            "host": host,
+            "rule": rule,
+            "explicit_direct": rule in persisted,
+            "runtime_direct": bool(current and current.get("proxy") == "DIRECT"),
+            "runtime_rule": current,
+            "non_direct_observed": non_direct_observed,
+            "occurrences": record["occurrences"],
+            "sources": sorted(record["sources"]),
+            "observed_routes": routes,
+        }
+        observed_items.append(item)
+    items = [
+        item
+        for item in observed_items
+        if item["explicit_direct"]
+        or item["runtime_direct"]
+        or item["non_direct_observed"]
+        or "explicit" in item["sources"]
+    ]
+    rules = [item["rule"] for item in items]
+    return {
+        "filter": app,
+        "service_logs": [str(path) for path in log_paths],
+        "rules_file": None if rules_path is None else str(rules_path),
+        "items": items,
+        "rules": rules,
+        "missing_rules": [item["rule"] for item in items if not item["explicit_direct"]],
+        "ignored_direct_hosts": [
+            item["host"] for item in observed_items if item not in items
+        ],
+    }
+
+
 def diagnose(data_dir: Path, socket_path: Path, app: str) -> Dict[str, Any]:
     app_config = read_text(data_dir / "config.yaml")
     generated = read_text(data_dir / "clash-verge.yaml")
@@ -206,26 +495,6 @@ def replace_top_level_ipv6(text: str) -> str:
         return pattern.sub("ipv6: false", text, count=1)
     suffix = "" if text.endswith("\n") else "\n"
     return text + suffix + "ipv6: false\n"
-
-
-def replace_prepend(text: str, rules: Iterable[str]) -> str:
-    block = ["prepend:\n"] + [
-        f'  - {json.dumps(rule, ensure_ascii=False)}\n' for rule in rules
-    ]
-    lines = text.splitlines(keepends=True)
-    start = next((index for index, line in enumerate(lines) if line.startswith("prepend:")), None)
-    if start is None:
-        return "".join(block) + text.lstrip("\n")
-    end = start + 1
-    while end < len(lines):
-        line = lines[end]
-        if line.strip() and not line.startswith((" ", "\t", "#")):
-            break
-        end += 1
-    suffix = lines[end:]
-    if suffix and block[-1].endswith("\n"):
-        block.append("\n")
-    return "".join(lines[:start] + block + suffix)
 
 
 def stop_clash() -> None:
@@ -272,6 +541,107 @@ def wait_for_runtime(socket_path: Path, timeout: float = 15.0) -> Optional[Dict[
     return None
 
 
+def verify_direct_hosts(socket_path: Path, hosts: Iterable[str], timeout: float = 5.0) -> bool:
+    required = {host.lower() for host in hosts}
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        payload = api_json(socket_path, "/rules") or {}
+        direct = {
+            str(rule.get("payload") or "").lower()
+            for rule in payload.get("rules", [])
+            if str(rule.get("type") or "").lower() == "domain"
+            and rule.get("proxy") == "DIRECT"
+        }
+        if required.issubset(direct):
+            return True
+        time.sleep(0.25)
+    return False
+
+
+def write_direct_list(path_value: str, rules: Iterable[str]) -> Path:
+    path = Path(os.path.expandvars(os.path.expanduser(path_value))).resolve()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    rendered = "payload:\n" + "".join(f"  - {rule}\n" for rule in rules)
+    path.write_text(rendered, encoding="utf-8")
+    return path
+
+
+def apply_direct_list(
+    data_dir: Path,
+    socket_path: Path,
+    discovery: Dict[str, Any],
+    reload_runtime: bool,
+) -> Tuple[int, Dict[str, Any]]:
+    rules = discovery["rules"]
+    if not rules:
+        return 2, {
+            "ok": False,
+            "reason": "No matching host evidence found.",
+            "discovery": discovery,
+        }
+    rules_path = current_rules_file(data_dir)
+    if rules_path is None:
+        raise SystemExit("Cannot resolve current profile rule file from profiles.yaml.")
+    generated_path = data_dir / "clash-verge.yaml"
+    if not generated_path.exists():
+        raise SystemExit(f"Missing generated Clash config: {generated_path}")
+
+    rules_new = merge_prepend(read_text(rules_path), rules)
+    generated_new = merge_generated_rules(read_text(generated_path), rules)
+    changed_files = []
+    if rules_new != read_text(rules_path):
+        changed_files.append(rules_path)
+    if generated_new != read_text(generated_path):
+        changed_files.append(generated_path)
+
+    backup = backup_files(data_dir, changed_files) if changed_files else None
+    if rules_path in changed_files:
+        rules_path.write_text(rules_new, encoding="utf-8")
+    if generated_path in changed_files:
+        generated_path.write_text(generated_new, encoding="utf-8")
+
+    reloaded: Optional[bool] = None
+    verified: Optional[bool] = None
+    if reload_runtime:
+        reloaded = api_json(
+            socket_path,
+            "/configs?force=true",
+            method="PUT",
+            body={"path": str(generated_path)},
+        ) is not None
+        verified = reloaded and verify_direct_hosts(
+            socket_path,
+            [item["host"] for item in discovery["items"]],
+        )
+
+    result = {
+        "ok": verified if reload_runtime else True,
+        "backup": None if backup is None else str(backup),
+        "changed_files": [str(path) for path in changed_files],
+        "runtime_reloaded": reloaded,
+        "runtime_verified": verified,
+        "discovery": discovery,
+    }
+    return (0 if result["ok"] else 2), result
+
+
+def print_direct_list(result: Dict[str, Any]) -> None:
+    print(f"DIRECT target list: {len(result['rules'])} host(s); filter={result['filter']}")
+    for item in result["items"]:
+        status = "DIRECT" if item["runtime_direct"] else "candidate"
+        persisted = "saved" if item["explicit_direct"] else "missing"
+        print(
+            f"- {item['host']} [{status}, {persisted}, evidence={item['occurrences']}]"
+        )
+    print("Rules:")
+    for rule in result["rules"]:
+        print(f"  {rule}")
+    if result["missing_rules"]:
+        print("Missing explicit DIRECT rules:")
+        for rule in result["missing_rules"]:
+            print(f"  {rule}")
+
+
 def repair_plan(data_dir: Path) -> Tuple[Path, Path, str, str]:
     config_path = data_dir / "config.yaml"
     rules_path = current_rules_file(data_dir)
@@ -283,7 +653,7 @@ def repair_plan(data_dir: Path) -> Tuple[Path, Path, str, str]:
         config_path,
         rules_path,
         replace_top_level_ipv6(read_text(config_path)),
-        replace_prepend(read_text(rules_path), WECHAT_RULES),
+        merge_prepend(read_text(rules_path), WECHAT_RULES),
     )
 
 
@@ -368,6 +738,39 @@ def parser() -> argparse.ArgumentParser:
     diagnose_parser.add_argument("--app", default="wechat", help="Application/process/host filter")
     diagnose_parser.add_argument("--json", action="store_true", help="Emit JSON")
 
+    direct_parser = subparsers.add_parser(
+        "direct-list",
+        help="Discover, export, or apply a reusable DIRECT target list",
+    )
+    direct_parser.add_argument(
+        "--app",
+        default="wechat",
+        help="Regular expression matched against process and host evidence",
+    )
+    direct_parser.add_argument(
+        "--host",
+        action="append",
+        default=[],
+        help="Include an explicit hostname; repeat for multiple hosts",
+    )
+    direct_parser.add_argument(
+        "--log-limit",
+        type=int,
+        default=4000,
+        help="Number of recent service-log lines to inspect",
+    )
+    direct_parser.add_argument(
+        "--output",
+        help="Write a Mihomo classical rule-provider YAML list",
+    )
+    direct_parser.add_argument("--apply", action="store_true", help="Persist and hot-load the list")
+    direct_parser.add_argument(
+        "--no-reload",
+        action="store_true",
+        help="Persist without hot-loading the generated config",
+    )
+    direct_parser.add_argument("--json", action="store_true", help="Emit JSON")
+
     fix_parser = subparsers.add_parser("fix-wechat", help="Preview or apply WeChat direct/IPv4 repair")
     fix_parser.add_argument("--apply", action="store_true", help="Apply changes")
     fix_parser.add_argument("--no-restart", action="store_true", help="Do not restart Clash Verge")
@@ -389,6 +792,30 @@ def main() -> int:
             print(json.dumps(result, ensure_ascii=False, indent=2))
         else:
             print_human(result)
+        return 0
+    if args.command == "direct-list":
+        result = discover_direct_list(
+            data_dir,
+            socket_path,
+            args.app,
+            explicit_hosts=args.host,
+            log_limit=args.log_limit,
+        )
+        if args.output:
+            result["output"] = str(write_direct_list(args.output, result["rules"]))
+        if args.apply:
+            exit_code, applied = apply_direct_list(
+                data_dir,
+                socket_path,
+                result,
+                reload_runtime=not args.no_reload,
+            )
+            print(json.dumps(applied, ensure_ascii=False, indent=2))
+            return exit_code
+        if args.json:
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+        else:
+            print_direct_list(result)
         return 0
     if args.command == "fix-wechat":
         return fix_wechat(data_dir, socket_path, args.apply, not args.no_restart)
