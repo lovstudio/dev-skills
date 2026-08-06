@@ -7,7 +7,7 @@ description: >
 license: MIT
 metadata:
   author: lovstudio
-  version: "0.3.0"
+  version: "0.2.2"
   tags:
     - skill-publisher
     - release
@@ -48,7 +48,8 @@ execute each adapter independently, and report evidence per channel.
 Supported adapters in this version:
 
 - **LovStudio** — source repository, release, catalog, cache refresh, and live page.
-- **WorkBuddy（CodeBuddy 开放平台）** — 生成独立 Skill ZIP，并在控制台上传、解析、填写上架信息和提交审核。
+- **Tencent WorkBuddy** — validated Connector ZIP and optional personal-library
+  import. A successful local import is distinct from a public marketplace listing.
 - **Alipay SkillPay** — validated product ZIP, explicit CNY price, upload, parse,
   submission, and observable review state.
 
@@ -109,7 +110,7 @@ release, catalog, cache refresh, and live verification workflow. Publication is
 complete only when the expected version and release-specific content are visible
 on the live detail page.
 
-### Step 5: Publish WorkBuddy through CodeBuddy
+### Step 5: Package or import WorkBuddy
 
 Read `references/workbuddy.md` completely. Keep connector metadata and icon in a
 publisher profile outside source, then run:
@@ -122,10 +123,9 @@ python3 "$SKILL_DIR/scripts/build_workbuddy.py" SOURCE \
 ```
 
 Record source validation, package validation, archive listing, checksum, module
-count, and output paths. Then follow `references/workbuddy.md`: upload each
-individual ZIP to `https://www.codebuddy.cn/open/console/dashboard`, wait for
-“解析成功”, fill user-facing Chinese/English listing fields, and submit it.
-Record the review state separately from public listing evidence.
+count, and output paths. If import is requested, continue until WorkBuddy shows
+the Skill in the installed list. Report a public listing only when the public
+marketplace itself provides that evidence.
 
 ### Step 6: Submit Alipay SkillPay
 
