@@ -1,6 +1,6 @@
 # lovstudio-skill-publisher
 
-![Version](https://img.shields.io/badge/version-0.2.2-CC785C)
+![Version](https://img.shields.io/badge/version-0.3.0-CC785C)
 
 把已经验证并安装在本地的 Skill 发布到一个或多个独立渠道，同时保持平台元数据和发行产物不污染源代码。
 
