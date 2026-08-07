@@ -1,6 +1,8 @@
 version: 1
 skills:
 - name: skill-creator
+  skillpay_product_id: "P0806000200846064"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQ-w"
   repo: lovstudio/skill-creator-skill
   name_zh: 技能脚手架
   paid: false
@@ -11,6 +13,8 @@ skills:
     aggregate distribution.
   tagline_zh: 一条命令生成独立版本仓库，并通过 Release 自动同步到聚合分发仓库。
 - name: skill-optimizer
+  skillpay_product_id: "P0806000200846065"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQsb"
   repo: lovstudio/skill-optimizer-skill
   name_zh: 技能优化器
   paid: false
@@ -22,6 +26,8 @@ skills:
     pass.
   tagline_zh: 一键体检并修复现有技能，自动升版本号并追加 CHANGELOG。
 - name: auto-context
+  skillpay_product_id: "P0806000200846061"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqVP8"
   repo: lovstudio/auto-context-skill
   name_zh: 上下文体检
   paid: false
@@ -32,6 +38,8 @@ skills:
     or reset.
   tagline_zh: 监测 Claude Code 上下文是否被污染，适时提示你 /fork 或 /btw。
 - name: cc-migrate-session
+  skillpay_product_id: "P0806000200847221"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqVP6"
   repo: lovstudio/cc-migrate-session
   name_zh: 会话迁移
   paid: false
@@ -43,6 +51,8 @@ skills:
     folder.
   tagline_zh: 项目目录搬家后，让 Claude Code 的历史会话还能正常 `--resume`。
 - name: deploy-to-vercel
+  skillpay_product_id: "P0806000200847222"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqVP2"
   repo: lovstudio/deploy-to-vercel-skill
   name_zh: 部署到 Vercel
   paid: false
@@ -54,6 +64,8 @@ skills:
     up automatically.
   tagline_zh: 一键把前端部署到 Vercel，自动配好 Cloudflare DNS 和自定义域名。
 - name: finder-action
+  skillpay_product_id: "P0806000200847223"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqVP0"
   repo: lovstudio/finder-action-skill
   name_zh: 访达右键动作
   paid: false
@@ -64,6 +76,8 @@ skills:
   tagline_en: Add a custom right-click action to macOS Finder in minutes.
   tagline_zh: 几分钟给 macOS 访达右键菜单加一个你自己的动作。
 - name: gh-access
+  skillpay_product_id: "P0806000200844926"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQsh"
   repo: lovstudio/gh-access-skill
   name_zh: GitHub 协作者管理
   paid: false
@@ -75,6 +89,8 @@ skills:
     in one command.
   tagline_zh: 一条命令给私有 GitHub 仓库加减协作者权限，或盘点现有访问清单。
 - name: gh-contribute
+  skillpay_product_id: "P0806000200843453"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQ-m"
   repo: lovstudio/gh-contribute-skill
   name_zh: GitHub 投稿 PR
   paid: false
@@ -86,6 +102,8 @@ skills:
     open PR for you.
   tagline_zh: 给任意上游 GitHub 仓库提一份干净的 PR——fork、分支、推送、开 PR 一站搞定。
 - name: gh-tidy
+  skillpay_product_id: "P0806000200846062"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQ-2"
   repo: lovstudio/gh-tidy-skill
   name_zh: GitHub 仓库整理
   paid: false
@@ -96,6 +114,8 @@ skills:
     pass.
   tagline_zh: 一次过清理 GitHub 上的 issue、PR、分支和标签，让仓库重新整洁。
 - name: install-tanstack-query
+  skillpay_product_id: "P0806000200846063"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQsV"
   repo: lovstudio/install-tanstack-query-skill
   name_zh: TanStack Query 初始化
   paid: false
@@ -107,6 +127,8 @@ skills:
     keys and hooks.
   tagline_zh: 初始化 TanStack Query，并把分散的请求状态收敛到统一 query keys 和 hooks。
 - name: release-via-cicd
+  skillpay_product_id: "P0806000200847225"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQ-4"
   repo: lovstudio/release-via-cicd-skill
   name_zh: CI/CD 发布
   paid: false
@@ -118,6 +140,8 @@ skills:
     app artifacts.
   tagline_zh: 配置发布流水线、发布新版本，并验证 Tauri/macOS 签名与 notarization 产物。
 - name: optimize-tauri-backend
+  skillpay_product_id: "P0806000200847224"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQsX"
   repo: lovstudio/optimize-tauri-backend-skill
   name_zh: Tauri 后端优化
   paid: false
@@ -129,6 +153,8 @@ skills:
     command surfaces, and hardening long IPC streams.
   tagline_zh: 优化 Tauri 后端结构、命令边界和长 IPC 生命周期，降低 Rust 重启带来的开发摩擦。
 - name: app-generator
+  skillpay_product_id: "P0806000200843451"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqVP-"
   repo: lovstudio/app-generator-skill
   name_zh: App 生成器
   paid: false
@@ -141,6 +167,8 @@ skills:
     data, deploy/release, and developer tooling wired in.
   tagline_zh: 按需求生成 Lovstudio 级 web、PWA 或 Tauri App，内置品牌、UI、数据层、部署/发布和开发辅助。
 - name: electron-delta-updater
+  skillpay_product_id: "P0806000200846070"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQsq"
   repo: lovstudio/electron-delta-updater-skill
   name_zh: Electron 增量更新
   paid: false
@@ -150,6 +178,8 @@ skills:
   tagline_en: Build verified Electron delta updates with Sparkle, appcasts, signing, and installation proof.
   tagline_zh: 为 Electron 应用建立可验证的增量自动更新，覆盖 Sparkle、appcast、签名与真实安装验证。
 - name: electron-app-relaunch
+  skillpay_product_id: "P0806000200847229"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqWfZ"
   repo: lovstudio/electron-app-relaunch-skill
   name_zh: Electron 应用重启
   paid: false
@@ -159,6 +189,8 @@ skills:
   tagline_en: Add a real Electron relaunch while keeping renderer reload and update handoff separate.
   tagline_zh: 为 Electron 实现真正的完整应用重启，并清晰区分界面刷新与更新交接。
 - name: install-ai
+  skillpay_product_id: "P0806000200843464"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqWfb"
   repo: lovstudio/install-ai-skill
   name_zh: AI 功能初始化
   paid: false
@@ -168,6 +200,8 @@ skills:
   tagline_en: Add an App AI feature with Agent Client, MaaS routing, model intent, and optional UI.
   tagline_zh: 为 App 初始化可上线的 AI 功能，支持 Agent Client、MaaS、模型偏好和配套 UI。
 - name: skill-distiller
+  skillpay_product_id: "P0806000200866866"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqZJs"
   repo: lovstudio/skill-distiller-skill
   name_zh: Skill 经验蒸馏
   paid: false
@@ -177,6 +211,8 @@ skills:
   tagline_en: Turn delivery history into a clear, reusable Skill blueprint with boundaries and acceptance checks.
   tagline_zh: 将项目经验蒸馏为边界清晰、可创建且可验收的 Skill 蓝图。
 - name: skill-publisher
+  skillpay_product_id: "P0806000200863857"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqavG"
   repo: lovstudio/skill-publisher-skill
   name_zh: Skill 发布器
   paid: false
@@ -186,6 +222,8 @@ skills:
   tagline_en: Publish a validated Skill across channels while keeping each release state independently verifiable.
   tagline_zh: 将已验证的 Skill 多渠道发布，并分别保留每个渠道的可核验状态。
 - name: obsidian-reset-cache
+  skillpay_product_id: "P0806000200843455"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQ-q"
   repo: lovstudio/obsidian-reset-cache-skill
   name_zh: 重置 Obsidian 缓存
   paid: false
@@ -195,6 +233,8 @@ skills:
   tagline_en: Reset Obsidian's cache when it gets stuck on "Loading cache".
   tagline_zh: Obsidian 卡在 Loading cache 时，一键重置缓存救场。
 - name: project-port
+  skillpay_product_id: "P0806000200844927"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQ-o"
   repo: lovstudio/project-port-skill
   name_zh: 项目端口分配
   paid: false
@@ -204,6 +244,8 @@ skills:
   tagline_en: Assign each project a stable, unique dev port so services stop colliding.
   tagline_zh: 给每个项目分配一个稳定且唯一的开发端口，彻底告别端口撞车。
 - name: mobile-adapt
+  skillpay_product_id: "P0806000200843454"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqQ-k"
   repo: lovstudio/mobile-adapt-skill
   name_zh: 移动端适配
   paid: false
@@ -215,6 +257,8 @@ skills:
     viewport units, responsive layouts, and page navigation.
   tagline_zh: 扫描并修复 Web 项目的移动端适配问题——溢出、安全区、视口单位、响应式布局和多级导航。
 - name: clash-tun-doctor
+  skillpay_product_id: "P0806000200843452"
+  skillpay_purchase_url: "https://aipayapi.alipay.com/skillpay/ct?c=BHayB9Om2xSC3Q2LqVP4"
   repo: lovstudio/clash-tun-doctor-skill
   name_zh: Clash TUN 网络医生
   paid: false
