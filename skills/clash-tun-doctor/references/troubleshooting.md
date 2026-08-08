@@ -12,23 +12,6 @@ connections, and recent logs. Source subscription settings alone are not proof.
 | Subscription says `ipv6: false`, runtime says `true` | Higher-precedence Clash Verge global config overrides the profile | Inspect the application `config.yaml` and generated `clash-verge.yaml` |
 | YAML editor reports `did not find expected key` | Invalid list indentation or malformed merge syntax | Restore the last valid file, then use a structured prepend list and parse before reload |
 
-## Evidence-backed DIRECT list
-
-For a site whose page, CDN, API, or telemetry hosts split across multiple Clash
-rules, collect the list from runtime connections and recent rotated service
-logs:
-
-```bash
-python3 scripts/clash_tun_doctor.py direct-list \
-  --app TARGET_FILTER \
-  --host PRIMARY_HOST
-```
-
-The generated list keeps explicit hosts and hosts observed through a non-DIRECT
-route. Evidence seen only through `DIRECT` stays outside the explicit list.
-Review `missing_rules`, then add `--apply` to merge, back up, hot-load, and
-verify the rules without quitting Clash Verge.
-
 ## Proven WeChat repair
 
 Keep WeChat direct and disable unusable IPv6 resolution/routing:
