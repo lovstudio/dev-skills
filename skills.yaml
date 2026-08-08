@@ -217,7 +217,7 @@ skills:
   name_zh: Skill 发布器
   paid: false
   category: Dev Tools
-  version: 0.2.2
+  version: 0.3.0
   description: Publish validated Skills to LovStudio, WorkBuddy, and SkillPay with evidence per channel.
   tagline_en: Publish a validated Skill across channels while keeping each release state independently verifiable.
   tagline_zh: 将已验证的 Skill 多渠道发布，并分别保留每个渠道的可核验状态。
