@@ -1,5 +1,5 @@
 ---
-name: lovstudio-auto-context
+name: sgc-auto-context
 category: Dev Tools
 tagline: "Context hygiene operator. Evaluates, writes memory, edits CLAUDE.md, suggests /fork or /compact."
 description: >
@@ -57,14 +57,14 @@ Rules:
 - Never auto-fork/auto-compact (can't anyway — harness-only).
 - Don't mention "AutoContext" unless asked.
 
-## Manual Mode (`/lovstudio-auto-context [args]`)
+## Manual Mode (`/sgc-auto-context [args]`)
 
 Two call shapes:
 
 ### A. Bare call — health report + opportunistic memory write
 
 ```
-/lovstudio-auto-context
+/sgc-auto-context
 ```
 
 1. **Measure** — estimate turns, tool calls, distinct topics
@@ -83,7 +83,7 @@ Keep to 3-5 lines unless taking confirm-first actions.
 ### B. With arguments — targeted context operation
 
 ```
-/lovstudio-auto-context <free-form instruction>
+/sgc-auto-context <free-form instruction>
 ```
 
 Parse the instruction and route to the right action class:

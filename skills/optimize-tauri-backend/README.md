@@ -1,4 +1,4 @@
-# lovstudio-optimize-tauri-backend
+# sgc-optimize-tauri-backend
 
 ![Version](https://img.shields.io/badge/version-0.1.0-CC785C)
 
@@ -23,7 +23,7 @@ Or through Claude Code plugin marketplace:
 
 ```text
 /plugin marketplace add lovstudio/dev-skills
-/plugin install dev-tools@lovstudio-dev
+/plugin install dev-tools@sgc-dev
 ```
 
 ## What It Covers
@@ -40,15 +40,15 @@ Or through Claude Code plugin marketplace:
 ## Typical Use
 
 ```text
-/lovstudio-optimize-tauri-backend 分析这个 Tauri app 的 Rust 重启问题，并优化后端结构
+/sgc-optimize-tauri-backend 分析这个 Tauri app 的 Rust 重启问题，并优化后端结构
 ```
 
 ```text
-/lovstudio-optimize-tauri-backend lib.rs 太大、commands 太多，帮我降到 100 个以内
+/sgc-optimize-tauri-backend lib.rs 太大、commands 太多，帮我降到 100 个以内
 ```
 
 ```text
-/lovstudio-optimize-tauri-backend fix Tauri stale callback warnings after HMR/reload
+/sgc-optimize-tauri-backend fix Tauri stale callback warnings after HMR/reload
 ```
 
 ## Expected Output

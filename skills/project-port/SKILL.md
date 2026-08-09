@@ -1,5 +1,5 @@
 ---
-name: lovstudio-project-port
+name: sgc-project-port
 category: Dev Tools
 tagline: "Generate stable unique dev port (3000–8999) from project name."
 description: >
