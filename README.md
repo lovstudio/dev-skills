@@ -27,6 +27,8 @@
 
 每个技能仍然在自己的独立仓库 `github.com/lovstudio/{name}-skill` 里。本仓库只维护索引与镜像。
 
+- [`pricing-cards/`](pricing-cards) — 每个 Skill 一张定价卡，记录交付结果、公开价格、价值锚点、使用边界、维护触发与证据缺口；网站只读取整理后的公开字段。
+
 ## 技能列表
 
 每个 Skill 以 `lovstudio/{name}-skill` 独立仓库作为唯一源码；本仓库的

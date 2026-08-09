@@ -27,6 +27,8 @@ This repo is the **developer-focused sub-index** of the Lovstudio skill catalog 
 
 Each skill still lives in its own `github.com/lovstudio/{name}-skill` repo. This repo only maintains the index + mirror.
 
+- [`pricing-cards/`](pricing-cards) — one Pricing Card per Skill, covering the deliverable, public price, value anchor, usage boundary, maintenance trigger, and evidence gaps; the website consumes only the curated public fields.
+
 ## Skills
 
 Each Skill uses `lovstudio/{name}-skill` as its independent source of truth.

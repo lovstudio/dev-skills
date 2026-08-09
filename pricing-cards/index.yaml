@@ -1,0 +1,877 @@
+version: 1
+source: skills.yaml
+public_fields:
+- model
+- list_price_cny
+- price_range_cny
+- delivery_unit_zh
+- delivery_unit_en
+- value_zh
+- value_en
+- anchor_zh
+- anchor_en
+- basis_zh
+- basis_en
+- boundary_zh
+- boundary_en
+- maintenance_zh
+- maintenance_en
+- confidence
+- review_trigger_zh
+- review_trigger_en
+cards:
+- id: skill-creator
+  version: 3.0.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 一条命令生成独立版本仓库，并通过 Release 自动同步到聚合分发仓库。
+  value_en: Scaffold a new skill as an independent source repo with release-driven
+    aggregate distribution.
+  basis_zh: 按一次可复用的判断或处理结果定价，重点看是否减少查找、判断与重复操作。
+  basis_en: Priced around a reusable decision or processing result, with emphasis
+    on reducing lookup and repeated work.
+  boundary_zh: 适合明确的问题与输入；开放式探索、外部数据和第三方服务成本另行计算。
+  boundary_en: Best for a defined question and input; open-ended exploration, external
+    data, and third-party service costs are separate.
+  maintenance_zh: 随上游数据格式、模型能力和使用反馈复评；小版本更新通常沿用原交付范围。
+  maintenance_en: Review against upstream data formats, model capability, and usage
+    feedback; minor updates usually stay within the original scope.
+  anchor_zh: 一次完成通常可省下约 30 分钟至 3 小时的检索、整理或判断时间。
+  anchor_en: A completed run typically saves roughly 30 minutes to 3 hours of research,
+    organization, or judgment work.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 3
+    稀缺性与替代难度: 2
+    质量证据与购买信心: 2
+    价值飞轮潜力: 3
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.53
+  card_path: pricing-cards/skill-creator.md
+- id: skill-optimizer
+  version: 0.6.3
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 一键体检并修复现有技能，自动升版本号并追加 CHANGELOG。
+  value_en: Audit an existing skill, auto-fix issues, and bump its version in one
+    pass.
+  basis_zh: 按一次可复用的判断或处理结果定价，重点看是否减少查找、判断与重复操作。
+  basis_en: Priced around a reusable decision or processing result, with emphasis
+    on reducing lookup and repeated work.
+  boundary_zh: 适合明确的问题与输入；开放式探索、外部数据和第三方服务成本另行计算。
+  boundary_en: Best for a defined question and input; open-ended exploration, external
+    data, and third-party service costs are separate.
+  maintenance_zh: 随上游数据格式、模型能力和使用反馈复评；小版本更新通常沿用原交付范围。
+  maintenance_en: Review against upstream data formats, model capability, and usage
+    feedback; minor updates usually stay within the original scope.
+  anchor_zh: 一次完成通常可省下约 30 分钟至 3 小时的检索、整理或判断时间。
+  anchor_en: A completed run typically saves roughly 30 minutes to 3 hours of research,
+    organization, or judgment work.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 3
+    稀缺性与替代难度: 2
+    质量证据与购买信心: 2
+    价值飞轮潜力: 3
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.53
+  card_path: pricing-cards/skill-optimizer.md
+- id: auto-context
+  version: 0.3.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 监测 Claude Code 上下文是否被污染，适时提示你 /fork 或 /btw。
+  value_en: Watch your Claude Code context for pollution and suggest when to fork
+    or reset.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/auto-context.md
+- id: cc-migrate-session
+  version: 0.2.1
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 项目目录搬家后，让 Claude Code 的历史会话还能正常 `--resume`。
+  value_en: Keep your Claude Code session history working after you move a project
+    folder.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/cc-migrate-session.md
+- id: deploy-to-vercel
+  version: 2.0.2
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 一键把前端部署到 Vercel，自动配好 Cloudflare DNS 和自定义域名。
+  value_en: Ship a frontend to Vercel with custom domain and Cloudflare DNS wired
+    up automatically.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/deploy-to-vercel.md
+- id: finder-action
+  version: 0.3.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 几分钟给 macOS 访达右键菜单加一个你自己的动作。
+  value_en: Add a custom right-click action to macOS Finder in minutes.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/finder-action.md
+- id: gh-access
+  version: 0.1.2
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 一条命令给私有 GitHub 仓库加减协作者权限，或盘点现有访问清单。
+  value_en: Grant, revoke, or audit collaborator access on private GitHub repos in
+    one command.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/gh-access.md
+- id: gh-contribute
+  version: 0.1.1
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 给任意上游 GitHub 仓库提一份干净的 PR——fork、分支、推送、开 PR 一站搞定。
+  value_en: Ship a clean PR to any upstream GitHub repo — fork, branch, push, and
+    open PR for you.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/gh-contribute.md
+- id: gh-tidy
+  version: 0.1.1
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 一次过清理 GitHub 上的 issue、PR、分支和标签，让仓库重新整洁。
+  value_en: Triage and clean up GitHub issues, PRs, branches, and labels in a single
+    pass.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/gh-tidy.md
+- id: install-tanstack-query
+  version: 0.1.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 初始化 TanStack Query，并把分散的请求状态收敛到统一 query keys 和 hooks。
+  value_en: Initialize TanStack Query and migrate request state into shared query
+    keys and hooks.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/install-tanstack-query.md
+- id: release-via-cicd
+  version: 8.5.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 配置发布流水线、发布新版本，并验证 Tauri/macOS 签名与 notarization 产物。
+  value_en: Configure release workflows, publish versions, and verify signed Tauri
+    app artifacts.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 5
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 3
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.75
+  card_path: pricing-cards/release-via-cicd.md
+- id: optimize-tauri-backend
+  version: 0.1.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 优化 Tauri 后端结构、命令边界和长 IPC 生命周期，降低 Rust 重启带来的开发摩擦。
+  value_en: Reduce Tauri Rust restart pain by modularizing the backend, shrinking
+    command surfaces, and hardening long IPC streams.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/optimize-tauri-backend.md
+- id: app-generator
+  version: 0.3.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 按需求生成 Lovstudio 级 web、PWA 或 Tauri App，内置品牌、UI、数据层、部署/发布和开发辅助。
+  value_en: Generate Lovstudio-grade web, PWA, or Tauri apps with brand, UI, data,
+    deploy/release, and developer tooling wired in.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 5
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 3
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.75
+  card_path: pricing-cards/app-generator.md
+- id: electron-delta-updater
+  version: 0.1.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 为 Electron 应用建立可验证的增量自动更新，覆盖 Sparkle、appcast、签名与真实安装验证。
+  value_en: Build verified Electron delta updates with Sparkle, appcasts, signing,
+    and installation proof.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/electron-delta-updater.md
+- id: electron-app-relaunch
+  version: 0.1.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 为 Electron 实现真正的完整应用重启，并清晰区分界面刷新与更新交接。
+  value_en: Add a real Electron relaunch while keeping renderer reload and update
+    handoff separate.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/electron-app-relaunch.md
+- id: install-ai
+  version: 0.1.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 为 App 初始化可上线的 AI 功能，支持 Agent Client、MaaS、模型偏好和配套 UI。
+  value_en: Add an App AI feature with Agent Client, MaaS routing, model intent, and
+    optional UI.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/install-ai.md
+- id: skill-distiller
+  version: 0.3.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 将项目经验蒸馏为边界清晰、可创建且可验收的 Skill 蓝图。
+  value_en: Turn delivery history into a clear, reusable Skill blueprint with boundaries
+    and acceptance checks.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/skill-distiller.md
+- id: skill-publisher
+  version: 0.3.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 将已验证的 Skill 多渠道发布，并分别保留每个渠道的可核验状态。
+  value_en: Publish a validated Skill across channels while keeping each release state
+    independently verifiable.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 5
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 3
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.75
+  card_path: pricing-cards/skill-publisher.md
+- id: obsidian-reset-cache
+  version: 1.0.2
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: Obsidian 卡在 Loading cache 时，一键重置缓存救场。
+  value_en: Reset Obsidian's cache when it gets stuck on "Loading cache".
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/obsidian-reset-cache.md
+- id: project-port
+  version: 0.1.1
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 给每个项目分配一个稳定且唯一的开发端口，彻底告别端口撞车。
+  value_en: Assign each project a stable, unique dev port so services stop colliding.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/project-port.md
+- id: mobile-adapt
+  version: 0.1.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 扫描并修复 Web 项目的移动端适配问题——溢出、安全区、视口单位、响应式布局和多级导航。
+  value_en: Scan a web project for mobile issues and fix them — overflow, safe area,
+    viewport units, responsive layouts, and page navigation.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/mobile-adapt.md
+- id: clash-tun-doctor
+  version: 0.1.0
+  model: free_entry
+  visibility: public
+  list_price_cny: 0.0
+  launch_price_cny: 0
+  price_range_cny:
+  - 0
+  - 0
+  delivery_unit_zh: 公开 Skill 源码与当前版本说明
+  delivery_unit_en: Public Skill source and current-version notes
+  value_zh: 从最终运行态和日志诊断 Clash TUN 故障，执行可回滚修复并验证真实应用链路。
+  value_en: Diagnose Clash TUN failures from runtime evidence, apply reversible fixes,
+    and verify the real application path.
+  basis_zh: 按一次可验证的工程状态改善定价，重点是减少排查往返、回滚风险和重复配置。
+  basis_en: Priced around a verifiable improvement to engineering state, reducing
+    debugging loops, rollback risk, and repeated setup.
+  boundary_zh: 默认在现有项目与工具链上工作；云资源、账号权限、代码审阅和大规模迁移另行确认。
+  boundary_en: Works within the existing project and toolchain; cloud resources, account
+    permissions, code review, and large migrations are separate.
+  maintenance_zh: 随框架、操作系统、CLI、平台 API 和发布流程变化复评。
+  maintenance_en: Review when frameworks, operating systems, CLIs, platform APIs,
+    or release workflows change.
+  anchor_zh: 一次处理通常可省下 30 分钟至半天的排错、配置或发布往返。
+  anchor_en: A run typically saves 30 minutes to half a day of debugging, setup, or
+    release back-and-forth.
+  confidence: entry
+  review_trigger_zh: 版本变化、连续 10 次真实使用或支持成本明显变化时复评。
+  review_trigger_en: Review after a version change, 10 real uses, or a material change
+    in support cost.
+  scores:
+    实际结果价值: 4
+    稀缺性与替代难度: 3
+    质量证据与购买信心: 2
+    价值飞轮潜力: 4
+    维护与交付效率: 4
+    复制与渠道可控性: 2
+  weighted_score: 0.66
+  card_path: pricing-cards/clash-tun-doctor.md

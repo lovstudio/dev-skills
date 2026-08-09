@@ -8,6 +8,8 @@ on:
       - "scripts/render-readme.py"
       - "scripts/render-marketplace.py"
       - "scripts/sync-skills.py"
+      - "scripts/validate_pricing.py"
+      - "pricing-cards/**"
       - "README.md"
       - "README.en.md"
       - ".github/workflows/render-readme.yml"
@@ -48,6 +50,9 @@ jobs:
 
       - name: Install deps
         run: pip install pyyaml
+
+      - name: Validate Pricing Cards
+        run: python3 scripts/validate_pricing.py
 
       - name: Mirror free skill repos
         # Runs on schedule/dispatch (to pull upstream changes) and on push
