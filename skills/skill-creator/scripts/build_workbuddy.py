@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Build a self-contained WorkBuddy Connector ZIP from local Skill source."""
+"""Build a self-contained WorkBuddy skill-only Connector ZIP."""
 
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import shutil
 import sys
@@ -17,9 +16,8 @@ try:
         ValidationFailure,
         compact_text,
         split_frontmatter,
-        validate_connector_meta,
-        validate_source,
         validate_workbuddy_package,
+        validate_workbuddy_source,
     )
 except ImportError as exc:
     print(
@@ -38,7 +36,6 @@ SKIP_FILES = {
     "validate_skill.py",
 }
 SKIP_SUFFIXES = {".pyc", ".pyo"}
-PUBLISHER_SOURCE = Path(__file__).resolve().parent.parent
 
 
 def parse_args() -> argparse.Namespace:
@@ -49,18 +46,6 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=Path.cwd(),
         help="Skill source repository (default: current directory)",
-    )
-    parser.add_argument(
-        "--meta",
-        type=Path,
-        required=True,
-        help="External WorkBuddy connector-meta.json",
-    )
-    parser.add_argument(
-        "--icon",
-        type=Path,
-        required=True,
-        help="External market icon (.svg, .png, .jpg, or .jpeg)",
     )
     parser.add_argument(
         "--output-dir",
@@ -108,39 +93,11 @@ def copy_source_resources(source: Path, target: Path) -> None:
     for dirname in RESOURCE_DIRS:
         candidate = source / dirname
         if candidate.is_dir():
-            # The publisher is itself a distributable Skill. Its validation and
-            # WorkBuddy-builder scripts are runtime dependencies, while those
-            # same files remain distribution tooling for every other Skill.
-            ignore = None if source.resolve() == PUBLISHER_SOURCE else ignore_resources
             shutil.copytree(
                 candidate,
                 target / dirname,
-                ignore=ignore,
-            )
-
-
-def make_module_self_contained(source: Path, target: Path) -> None:
-    """Copy shared kit resources into a standalone module package.
-
-    The combined entrypoint keeps `$KIT_DIR` semantics. WorkBuddy also emits
-    every module as an independently installable Skill, so those siblings need
-    their own copy of shared references/assets/scripts and local `$SKILL_DIR`
-    references.
-    """
-    for dirname in ("assets", "cases", "references", "scripts"):
-        candidate = source / dirname
-        if candidate.is_dir():
-            shutil.copytree(
-                candidate,
-                target / dirname,
-                dirs_exist_ok=True,
                 ignore=ignore_resources,
             )
-    for path in target.rglob("*.md"):
-        original = path.read_text(encoding="utf-8")
-        updated = original.replace("$KIT_DIR/", "$SKILL_DIR/")
-        if updated != original:
-            path.write_text(updated, encoding="utf-8")
 
 
 def workbuddy_frontmatter(
@@ -208,30 +165,15 @@ def write_individual_zips(skills_dir: Path, individual_dir: Path) -> None:
                     )
 
 
-def sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
 def build(
     source: Path,
-    meta_path: Path,
-    icon_path: Path,
     output_dir: Path,
     zip_path: Path,
     individual_dir: Path,
 ) -> None:
     source_errors: list[str] = []
-    validate_source(source, source_errors, require_self_contained=True)
-    validate_connector_meta(meta_path, source_errors)
-    if not icon_path.is_file():
-        source_errors.append(f"{icon_path}: market icon is required")
-    elif icon_path.suffix.lower() not in {".svg", ".png", ".jpg", ".jpeg"}:
-        source_errors.append(f"{icon_path}: unsupported market icon format")
-    fail_on_errors(source_errors, "WorkBuddy input validation")
+    validate_workbuddy_source(source, source_errors)
+    fail_on_errors(source_errors, "WorkBuddy source validation")
 
     if output_dir.exists():
         raise FileExistsError(f"output directory already exists: {output_dir}")
@@ -242,13 +184,26 @@ def build(
             f"individual ZIP directory already exists: {individual_dir}"
         )
 
-    connector = json.loads(meta_path.read_text(encoding="utf-8"))
+    connector_path = source / "workbuddy" / "connector-meta.json"
+    connector = json.loads(connector_path.read_text(encoding="utf-8"))
     source_data, _ = split_frontmatter(source / "SKILL.md")
     root_skill_name = compact_text(source_data.get("name"))
 
     output_dir.mkdir(parents=True)
-    shutil.copy2(meta_path, output_dir / "connector-meta.json")
-    shutil.copy2(icon_path, output_dir / f"icon{icon_path.suffix.lower()}")
+    shutil.copy2(connector_path, output_dir / "connector-meta.json")
+    icon = next(
+        (
+            candidate
+            for candidate in (
+                source / "workbuddy" / "icon.svg",
+                source / "workbuddy" / "icon.png",
+                source / "workbuddy" / "icon.jpg",
+                source / "workbuddy" / "icon.jpeg",
+            )
+            if candidate.is_file()
+        )
+    )
+    shutil.copy2(icon, output_dir / icon.name)
 
     skills_target = output_dir / "skills"
     skill_target = skills_target / root_skill_name
@@ -266,7 +221,6 @@ def build(
             module_target = skills_target / module_name
             module_target.mkdir(parents=True)
             copy_source_resources(module_source, module_target)
-            make_module_self_contained(source, module_target)
 
     transform_skills(skills_target, connector)
 
@@ -278,7 +232,6 @@ def build(
 
     print(f"connector_dir={output_dir}")
     print(f"connector_zip={zip_path}")
-    print(f"connector_sha256={sha256(zip_path)}")
     print(f"individual_zips={individual_dir}")
     print(f"entrypoint={root_skill_name}")
     print(
@@ -291,13 +244,11 @@ def build(
 def main() -> int:
     args = parse_args()
     source = args.source.expanduser().resolve()
-    meta_path = args.meta.expanduser().resolve()
-    icon_path = args.icon.expanduser().resolve()
     output_dir = args.output_dir.expanduser().resolve()
     zip_path = (
         args.zip_path.expanduser().resolve()
         if args.zip_path
-        else output_dir.parent / f"{output_dir.name}.zip"
+        else output_dir.with_suffix(".zip")
     )
     individual_dir = (
         args.individual_dir.expanduser().resolve()
@@ -308,8 +259,8 @@ def main() -> int:
         print(f"ERROR: source directory does not exist: {source}", file=sys.stderr)
         return 2
     try:
-        build(source, meta_path, icon_path, output_dir, zip_path, individual_dir)
-    except (FileExistsError, ValidationFailure, ValueError) as exc:
+        build(source, output_dir, zip_path, individual_dir)
+    except (FileExistsError, ValidationFailure, ValueError, StopIteration) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
     return 0

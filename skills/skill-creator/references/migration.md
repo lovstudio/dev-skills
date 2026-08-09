@@ -1,17 +1,5 @@
 # Migration Notes
 
-## 2026-08: v4 local creation and separate publishing
-
-`sgc-skill-creator` now ends at validated local installation. Remove
-`--distribution`, `--paid`, platform directories, marketplace builders, remote
-repository commands, catalog registration, and live-channel verification from
-creation workflows. Use `--user-config` only when inferred persistent settings
-are required and pass `--install-dir` for local discovery.
-
-Existing platform packaging and release workflows move to
-`sgc-skill-publisher`. Historical sections below describe older layouts and
-remain only for migration audits.
-
 ## 2026-07: v3 source/distribution split
 
 New scaffolds keep portable Agent Skills frontmatter in the canonical source
@@ -60,13 +48,13 @@ The direct-source aggregate model below is retained only as historical context
 and must not be used for new work:
 
 ```bash
-python3 ~/.claude/skills/sgc-skill-creator/scripts/init_skill.py tanstack-query --target dev-skills
+python3 ~/.claude/skills/lovstudio-skill-creator/scripts/init_skill.py tanstack-query --target dev-skills
 ```
 
 The skill directory is:
 
 ```text
-~/lovstudio/coding/sgc-dev-skills/skills/tanstack-query/
+~/lovstudio/coding/lovstudio-dev-skills/skills/tanstack-query/
 ```
 
 `skills.yaml` must include:
@@ -79,14 +67,14 @@ skill_path: skills/tanstack-query
 ## 2026-04: independent per-skill repos
 
 The ecosystem was refactored from a monorepo (`lovstudio/skills` containing
-`skills/sgc-<name>/`) + mirror (`lovstudio/pro-skills`) into independent
+`skills/lovstudio-<name>/`) + mirror (`lovstudio/pro-skills`) into independent
 per-skill repos + central index. The old `lovstudio/pro-skills` was archived.
 
 If working on a legacy skill still in the old structure, migrate it first:
 
 ```bash
 # 1. Extract from monorepo subdirectory
-cp -r ~/projects/sgc-skills/skills/sgc-<name> \
+cp -r ~/projects/lovstudio-skills/skills/lovstudio-<name> \
       ~/lovstudio/coding/skills/<name>-skill
 cd ~/lovstudio/coding/skills/<name>-skill
 

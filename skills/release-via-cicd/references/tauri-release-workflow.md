@@ -6,7 +6,6 @@ for Tauri projects.
 ## Required Shape
 
 - Create one draft release first, build all platform assets into that draft, then publish the draft only after all required build jobs pass.
-- Dispatch regional mirrors only after publishing. Run mirror synchronization in a separate, independently retryable post-CI workflow so it cannot block platform builds or the public Release.
 - Do not rely on workflow success alone. After publishing, download release assets and verify macOS signing/notarization locally.
 - Do not add unsigned macOS `xattr` notes when Developer ID signing and notarization are configured.
 - Windows fallback is allowed: if WiX MSI or NSIS hangs/fails, build the executable with `tauri build --no-bundle` and upload a zip.
@@ -289,9 +288,6 @@ jobs:
   publish-release:
     needs: [create-release, build-tauri]
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
-      contents: write
     steps:
       - name: Publish release
         env:
@@ -300,20 +296,9 @@ jobs:
           gh release edit "${{ needs.create-release.outputs.tag }}" \
             --repo "${{ github.repository }}" \
             --draft=false
-
-      - name: Dispatch regional mirror post-CI
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          tag="${{ needs.create-release.outputs.tag }}"
-          if ! gh workflow run release-mirror.yml --repo "${{ github.repository }}" -f tag="$tag"; then
-            echo "::warning::Mirror dispatch failed; the canonical release remains successful."
-          fi
 ```
 
 `windows-zip-fallback` is intentionally disabled in the template. Enable it only after a real WiX/NSIS failure, and then make `publish-release.needs` depend on the fallback job instead of the failed bundling job.
-
-When a mirror is configured, create the separately dispatched workflow from `references/general-release-playbooks.md`. Make it download canonical assets by tag instead of reusing build-job files.
 
 ## Failed Draft Recovery
 
