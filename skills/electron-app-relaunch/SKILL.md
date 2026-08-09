@@ -1,11 +1,11 @@
 ---
-name: sgc-electron-app-relaunch
+name: lovstudio-electron-app-relaunch
 description: >
   为 Electron 桌面应用实现并验证完整重启，区分 renderer 刷新、用户主动重启、开发态重启和更新安装交接。用户提到重启 App、菜单重启、Cmd+R、app.relaunch 或 restart Electron 时使用。
 license: MIT
 metadata:
   author: lovstudio
-  version: "0.2.0"
+  version: "0.1.0"
   tags:
     - electron
     - relaunch
