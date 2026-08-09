@@ -21,7 +21,7 @@ compatibility: >
   Must be run inside the sgc-skills repo (auto-detects repo root).
 metadata:
   author: lovstudio
-  version: "0.6.3"
+  version: "0.6.4"
   tags: meta skill-maintenance versioning changelog lint
 ---
 

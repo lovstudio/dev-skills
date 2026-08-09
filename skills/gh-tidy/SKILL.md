@@ -13,7 +13,7 @@ compatibility: >
   Requires gh CLI authenticated. Works on any GitHub repo.
 metadata:
   author: lovstudio
-  version: "0.1.1"
+  version: "0.1.2"
   tags: github tidy cleanup issues pr branches hygiene
 ---
 

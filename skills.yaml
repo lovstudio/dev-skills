@@ -7,7 +7,7 @@ skills:
   name_zh: 技能脚手架
   paid: false
   category: Meta
-  version: 3.0.0
+  version: 4.0.0
   description: Scaffold independently versioned lovstudio skill repositories.
   tagline_en: Scaffold a new skill as an independent source repo with release-driven
     aggregate distribution.
@@ -52,7 +52,7 @@ skills:
   name_zh: 技能优化器
   paid: false
   category: Meta
-  version: 0.6.3
+  version: 0.6.4
   description: Audit + auto-fix an existing skill, bump semver, and append a CHANGELOG
     entry.
   tagline_en: Audit an existing skill, auto-fix issues, and bump its version in one
@@ -98,7 +98,7 @@ skills:
   name_zh: 上下文体检
   paid: false
   category: Dev Tools
-  version: 0.3.0
+  version: 0.3.1
   description: Context hygiene checker. Suggests /fork or /btw when context is polluted.
   tagline_en: Watch your Claude Code context for pollution and suggest when to fork
     or reset.
@@ -189,7 +189,7 @@ skills:
   name_zh: 部署到 Vercel
   paid: false
   category: Dev Tools
-  version: 2.0.2
+  version: 2.0.3
   description: Deploy frontend to Vercel with auto Cloudflare DNS + custom domain
     setup.
   tagline_en: Ship a frontend to Vercel with custom domain and Cloudflare DNS wired
@@ -235,7 +235,7 @@ skills:
   name_zh: 访达右键动作
   paid: false
   category: Dev Tools
-  version: 0.3.0
+  version: 0.3.1
   description: Generate Mac Finder right-click menu actions. Quick Action or Finder
     Sync Extension.
   tagline_en: Add a custom right-click action to macOS Finder in minutes.
@@ -279,7 +279,7 @@ skills:
   name_zh: GitHub 协作者管理
   paid: false
   category: Dev Tools
-  version: 0.1.2
+  version: 0.1.3
   description: Grant / revoke / list collaborator access on private GitHub repos by
     username or email. Read-only by default.
   tagline_en: Grant, revoke, or audit collaborator access on private GitHub repos
@@ -325,7 +325,7 @@ skills:
   name_zh: GitHub 投稿 PR
   paid: false
   category: Dev Tools
-  version: 0.1.1
+  version: 0.1.2
   description: Contribute clean, professional PRs to upstream GitHub repos — fork,
     branch, commit, push, open PR, with smart splitting.
   tagline_en: Ship a clean PR to any upstream GitHub repo — fork, branch, push, and
@@ -371,7 +371,7 @@ skills:
   name_zh: GitHub 仓库整理
   paid: false
   category: Dev Tools
-  version: 0.1.1
+  version: 0.1.2
   description: Triage & clean up GitHub issues, PRs, branches, and labels in one pass.
   tagline_en: Triage and clean up GitHub issues, PRs, branches, and labels in a single
     pass.
@@ -416,7 +416,7 @@ skills:
   name_zh: TanStack Query 初始化
   paid: false
   category: Dev Tools
-  version: 0.1.0
+  version: 0.1.1
   description: Initialize or refactor a frontend project to use TanStack Query as
     the unified server-state layer.
   tagline_en: Initialize TanStack Query and migrate request state into shared query
@@ -462,7 +462,7 @@ skills:
   name_zh: CI/CD 发布
   paid: false
   category: Dev Tools
-  version: 8.5.0
+  version: 8.6.0
   description: Configure CI/CD and publish new versions for Node, Tauri, Vite, shell,
     and GitHub Release projects with macOS signing/notarization verification.
   tagline_en: Configure release workflows, publish versions, and verify signed Tauri
@@ -508,7 +508,7 @@ skills:
   name_zh: Tauri 后端优化
   paid: false
   category: Dev Tools
-  version: 0.1.0
+  version: 0.1.1
   description: Optimize Tauri backend architecture, command surfaces, IPC streams,
     and Rust development ergonomics.
   tagline_en: Reduce Tauri Rust restart pain by modularizing the backend, shrinking
@@ -554,7 +554,7 @@ skills:
   name_zh: App 生成器
   paid: false
   category: Dev Tools
-  version: 0.3.0
+  version: 0.3.1
   description: Generate or standardize Lovstudio apps, choosing web-only, PWA,
     or Tauri desktop case-by-case with React/Vite or Next.js, brand, UI, data,
     deploy/release, and lovinsp.
@@ -601,7 +601,7 @@ skills:
   name_zh: Electron 增量更新
   paid: false
   category: Dev Tools
-  version: 0.1.0
+  version: 0.1.1
   description: Build and verify Electron delta updates with Sparkle, appcasts, signing, and release evidence.
   tagline_en: Build verified Electron delta updates with Sparkle, appcasts, signing, and installation proof.
   tagline_zh: 为 Electron 应用建立可验证的增量自动更新，覆盖 Sparkle、appcast、签名与真实安装验证。
@@ -645,7 +645,7 @@ skills:
   name_zh: Electron 应用重启
   paid: false
   category: Dev Tools
-  version: 0.1.0
+  version: 0.2.0
   description: Implement verified full Electron app relaunch across menus, development, and update handoff.
   tagline_en: Add a real Electron relaunch while keeping renderer reload and update handoff separate.
   tagline_zh: 为 Electron 实现真正的完整应用重启，并清晰区分界面刷新与更新交接。
@@ -689,7 +689,7 @@ skills:
   name_zh: AI 功能初始化
   paid: false
   category: Dev Tools
-  version: 0.1.0
+  version: 0.1.1
   description: Add production-ready AI features with Agent Client, MaaS routing, model intent, and optional UI.
   tagline_en: Add an App AI feature with Agent Client, MaaS routing, model intent, and optional UI.
   tagline_zh: 为 App 初始化可上线的 AI 功能，支持 Agent Client、MaaS、模型偏好和配套 UI。
@@ -733,7 +733,7 @@ skills:
   name_zh: Skill 经验蒸馏
   paid: false
   category: Dev Tools
-  version: 0.3.0
+  version: 0.3.1
   description: Distill proven project experience into reusable, testable Agent Skill blueprints.
   tagline_en: Turn delivery history into a clear, reusable Skill blueprint with boundaries and acceptance checks.
   tagline_zh: 将项目经验蒸馏为边界清晰、可创建且可验收的 Skill 蓝图。
@@ -821,7 +821,7 @@ skills:
   name_zh: 重置 Obsidian 缓存
   paid: false
   category: Dev Tools
-  version: 1.0.2
+  version: 1.0.3
   description: 重置 Obsidian 缓存，解决卡在 Loading cache 的问题。
   tagline_en: Reset Obsidian's cache when it gets stuck on "Loading cache".
   tagline_zh: Obsidian 卡在 Loading cache 时，一键重置缓存救场。
@@ -864,7 +864,7 @@ skills:
   name_zh: 项目端口分配
   paid: false
   category: Dev Tools
-  version: 0.1.1
+  version: 0.1.2
   description: Generate stable unique dev port (3000–8999) from project name.
   tagline_en: Assign each project a stable, unique dev port so services stop colliding.
   tagline_zh: 给每个项目分配一个稳定且唯一的开发端口，彻底告别端口撞车。
@@ -907,7 +907,7 @@ skills:
   name_zh: 移动端适配
   paid: false
   category: Dev Tools
-  version: 0.1.0
+  version: 0.1.1
   description: Scan and fix mobile adaptation issues — overflow, safe area, 100vh,
     responsive layout, multi-level navigation, touch targets.
   tagline_en: Scan a web project for mobile issues and fix them — overflow, safe area,
@@ -953,7 +953,7 @@ skills:
   name_zh: Clash TUN 网络医生
   paid: false
   category: Dev Tools
-  version: 0.1.0
+  version: 0.2.0
   description: Diagnose and reversibly repair application connectivity failures caused
     by Clash Verge Rev TUN rules, stale runtime state, proxy timeouts, or unusable IPv6 paths.
   tagline_en: Diagnose Clash TUN failures from runtime evidence, apply reversible fixes,

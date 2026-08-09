@@ -14,7 +14,7 @@ compatibility: >
   Tauri, Electron, and SPA apps. Requires the project's package manager.
 metadata:
   author: lovstudio
-  version: "0.1.0"
+  version: "0.1.1"
   tags: tanstack-query react-query frontend refactor tauri network
 ---
 

@@ -17,7 +17,7 @@ compatibility: >
   must run the Tauri icon pipeline from that logo.
 metadata:
   author: lovstudio
-  version: "0.3.0"
+  version: "0.3.1"
   tags: lovstudio app-generator web vite nextjs tauri react shadcn tanstack-query cicd updater lovinsp
 ---
 

@@ -5,7 +5,7 @@ description: >
 license: MIT
 metadata:
   author: lovstudio
-  version: "0.3.0"
+  version: "0.3.1"
   tags:
     - distillation
     - skill-blueprint

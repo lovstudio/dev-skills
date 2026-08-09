@@ -18,7 +18,7 @@ compatibility: >
   a one-time user answer; do not assume a fixed runtime directory.
 metadata:
   author: lovstudio
-  version: "0.3.0"
+  version: "0.3.1"
   tags: context memory claude-code
 ---
 

@@ -15,7 +15,7 @@ compatibility: >
   manager and honor local AGENTS.md / CLAUDE.md constraints.
 metadata:
   author: lovstudio
-  version: "0.1.0"
+  version: "0.1.1"
   tags: tauri rust backend ipc commands hot-reload modularization dev-experience
 ---
 

@@ -14,7 +14,7 @@ compatibility: >
   (`brew install xcodegen`). Ad-hoc signed — works locally, not distributable.
 metadata:
   author: lovstudio
-  version: "0.3.0"
+  version: "0.3.1"
   tags: macos finder context-menu quick-action finder-sync-extension swift
 examples:
   - name: OpenCC
