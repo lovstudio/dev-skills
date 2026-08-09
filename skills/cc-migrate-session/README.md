@@ -1,16 +1,16 @@
-# lovstudio-cc-mv (skill)
+# sgc-cc-mv (skill)
 
 Claude Code skill that moves a project folder and migrates all its CC state in one shot — session store, prompt-up-arrow history, and running-session records — so `claude --resume` keeps working after the move.
 
-Invoked as `/lovstudio-cc-mv` (or auto-triggered on matching phrases). Wraps `@lovstudio/cc-mv` (the npm CLI).
+Invoked as `/sgc-cc-mv` (or auto-triggered on matching phrases). Wraps `@lovstudio/cc-mv` (the npm CLI).
 
 ## Install
 
 Symlink this directory into `~/.claude/skills/`:
 
 ```bash
-ln -s ~/lovstudio/coding/cc-mv/skill/lovstudio-cc-mv \
-      ~/.claude/skills/lovstudio-cc-mv
+ln -s ~/lovstudio/coding/cc-mv/skill/sgc-cc-mv \
+      ~/.claude/skills/sgc-cc-mv
 ```
 
 Then restart Claude Code.

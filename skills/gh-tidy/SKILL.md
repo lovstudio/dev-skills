@@ -1,5 +1,5 @@
 ---
-name: lovstudio-gh-tidy
+name: sgc-gh-tidy
 category: Developer Tools
 tagline: "Triage & clean up GitHub issues, PRs, branches, and labels in one pass."
 description: >
@@ -17,7 +17,7 @@ metadata:
   tags: github tidy cleanup issues pr branches hygiene
 ---
 
-# lovstudio-gh-tidy
+# sgc-gh-tidy
 
 Interactive GitHub repo triage — issues, PRs, branches, labels in one pass.
 

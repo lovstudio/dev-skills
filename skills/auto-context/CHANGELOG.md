@@ -34,4 +34,4 @@
 ## 0.1.0
 
 - Initial release: hook-triggered `<auto-context>` nudge + manual
-  `/lovstudio-auto-context` health report.
+  `/sgc-auto-context` health report.

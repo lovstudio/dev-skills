@@ -144,7 +144,7 @@ skills:
   paid: false
   category: Dev Tools
   version: 0.2.1
-  skill_path: skill/lovstudio-cc-mv
+  skill_path: skill/sgc-cc-mv
   description: Migrate Claude Code sessions when a project folder moves
   tagline_en: Keep your Claude Code session history working after you move a project
     folder.

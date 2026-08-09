@@ -1,5 +1,5 @@
 ---
-name: lovstudio-clash-tun-doctor
+name: sgc-clash-tun-doctor
 description: >
   Diagnose and repair application connectivity failures caused by Clash Verge
   Rev TUN routing, rule precedence, stale runtime state, proxy timeouts, or
@@ -11,7 +11,7 @@ description: >
 license: MIT
 metadata:
   author: lovstudio
-  version: "0.1.0"
+  version: "0.2.0"
   tags: clash mihomo tun network diagnostics wechat macos
 ---
 
@@ -39,7 +39,7 @@ or bypassing organizational network policy.
 Resolve `SKILL_DIR` from the installed skill context. For manual execution:
 
 ```bash
-export SKILL_DIR="/path/to/lovstudio-clash-tun-doctor"
+export SKILL_DIR="/path/to/sgc-clash-tun-doctor"
 ```
 
 The CLI resolves the Clash Verge Rev data directory in this order:
@@ -88,9 +88,43 @@ Do not route the whole application through a proxy merely because direct media
 failed. First check proxy health and IPv6 errors; a proxy timeout can turn one
 failed image into a fully stuck application.
 
+For a browser site or application with multiple dependency hosts, generate one
+evidence-backed DIRECT list instead of adding domains one by one:
+
+```bash
+python3 "$SKILL_DIR/scripts/clash_tun_doctor.py" direct-list \
+  --app miracleplus \
+  --host apply.miracleplus.com \
+  --output ./miracleplus-direct.yaml
+```
+
+The command reads active connections and recent rotated service logs, deduplicates
+hostnames, and includes only:
+
+- Hosts explicitly supplied with `--host`.
+- Hosts previously observed through a non-DIRECT route.
+- Hosts already maintained as explicit DIRECT rules.
+
+Hosts observed only through a healthy DIRECT route are reported as ignored
+instead of bloating the explicit list.
+
 ### Step 3: Apply only with user authorization
 
-If the user explicitly asked to fix/apply, run:
+For a DIRECT list, preview first, then persist and hot-load it:
+
+```bash
+python3 "$SKILL_DIR/scripts/clash_tun_doctor.py" direct-list \
+  --app miracleplus \
+  --host apply.miracleplus.com \
+  --apply
+```
+
+This path must merge with existing `prepend` rules, create a timestamped backup,
+update the generated config, hot-load Mihomo through its Unix socket, and verify
+every listed host as an exact `DOMAIN -> DIRECT` runtime rule. Keep Clash Verge
+running throughout this rule-only flow.
+
+For the specialized WeChat IPv6 repair, run:
 
 ```bash
 python3 "$SKILL_DIR/scripts/clash_tun_doctor.py" fix-wechat --apply
@@ -136,12 +170,17 @@ automatically.
 | Command / option | Default | Description |
 |---|---|---|
 | `diagnose` | — | Read configuration, runtime state, connections, and logs. |
+| `direct-list` | — | Discover, export, or apply an evidence-backed DIRECT host list. |
 | `fix-wechat` | dry run | Preview or apply the proven WeChat repair. |
 | `rollback` | dry run | Preview or restore the latest repair backup. |
 | `--data-dir PATH` | auto | Clash Verge Rev application data directory. |
 | `--socket PATH` | `<data-dir>/mihomo.sock` fallback | Mihomo controller Unix socket; standard `/tmp/verge/verge-mihomo.sock` is auto-detected. |
 | `--app NAME` | `wechat` | Application filter used by diagnosis. |
+| `--host HOST` | — | Seed an exact host in a DIRECT list; repeatable. |
+| `--output PATH` | — | Save a Mihomo classical rule-provider YAML list. |
+| `--log-limit N` | `4000` | Recent lines inspected in each rotated service log. |
 | `--apply` | false | Authorize filesystem changes and restart/restore actions. |
+| `--no-reload` | false | Persist a DIRECT list without runtime hot-load. |
 | `--no-restart` | false | Apply changes without restarting Clash Verge. |
 | `--json` | false | Emit machine-readable diagnosis output. |
 

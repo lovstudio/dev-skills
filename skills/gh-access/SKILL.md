@@ -1,5 +1,5 @@
 ---
-name: lovstudio-gh-access
+name: sgc-gh-access
 category: Developer Tools
 tagline: "Grant / revoke / list collaborator access on private GitHub repos by username or email."
 description: >
@@ -22,7 +22,7 @@ metadata:
   tags: github collaborator access invite private-repo permissions
 ---
 
-# lovstudio-gh-access
+# sgc-gh-access
 
 Grant, revoke, and audit collaborator access on private GitHub repos — by
 username **or** email, with read-only as the safe default.
